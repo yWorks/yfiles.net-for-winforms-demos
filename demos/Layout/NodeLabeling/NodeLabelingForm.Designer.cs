@@ -1,0 +1,398 @@
+/****************************************************************************
+ ** 
+ ** This demo file is part of yFiles.NET 5.2.
+ ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** 72070 Tuebingen, Germany. All rights reserved.
+ ** 
+ ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
+ ** of demo files in source code or binary form, with or without
+ ** modification, is not permitted.
+ ** 
+ ** Owners of a valid software license for a yFiles.NET version that this
+ ** demo is shipped with are allowed to use the demo source code as basis
+ ** for their own yFiles.NET powered applications. Use of such programs is
+ ** governed by the rights and conditions as set out in the yFiles.NET
+ ** license agreement.
+ ** 
+ ** THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESS OR IMPLIED
+ ** WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ ** MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ ** NO EVENT SHALL yWorks BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+ ** TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ ** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ ** LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ ** NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ ** 
+ ***************************************************************************/
+
+using System.Windows.Forms;
+
+namespace Demo.yFiles.Layout.NodeLabeling
+{
+  partial class NodeLabelingForm
+  {
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing) {
+      if (disposing && (components != null)) {
+        components.Dispose();
+      }
+      base.Dispose(disposing);
+    }
+
+    #region Windows Form Designer generated code
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent() {
+      yWorks.Controls.ViewportLimiter viewportLimiter2 = new yWorks.Controls.ViewportLimiter();
+      this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+      this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+      this.graphControl = new yWorks.Controls.GraphControl();
+      this.propertiesPanel = new System.Windows.Forms.Panel();
+      this.toolStrip = new System.Windows.Forms.ToolStrip();
+      this.ZoomInButton = new System.Windows.Forms.ToolStripButton();
+      this.ZoomOutButton = new System.Windows.Forms.ToolStripButton();
+      this.FitContentButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.placeLabelsButton = new System.Windows.Forms.ToolStripButton();
+      this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.description = new System.Windows.Forms.RichTextBox();
+      this.deleteButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.label5 = new System.Windows.Forms.Label();
+      this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+      this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.fitGraphBoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripContainer.ContentPanel.SuspendLayout();
+      this.toolStripContainer.TopToolStripPanel.SuspendLayout();
+      this.toolStripContainer.SuspendLayout();
+      this.splitContainer2.Panel1.SuspendLayout();
+      this.splitContainer2.Panel2.SuspendLayout();
+      this.splitContainer2.SuspendLayout();
+      this.propertiesPanel.SuspendLayout();
+      this.toolStrip.SuspendLayout();
+      this.splitContainer1.Panel1.SuspendLayout();
+      this.splitContainer1.Panel2.SuspendLayout();
+      this.splitContainer1.SuspendLayout();
+      this.menuStrip1.SuspendLayout();
+      this.SuspendLayout();
+      // 
+      // toolStripContainer
+      // 
+      // 
+      // toolStripContainer.ContentPanel
+      // 
+      this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer2);
+      this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(740, 636);
+      this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
+      this.toolStripContainer.Name = "toolStripContainer";
+      this.toolStripContainer.Size = new System.Drawing.Size(740, 691);
+      this.toolStripContainer.TabIndex = 1;
+      this.toolStripContainer.Text = "toolStripContainer1";
+      // 
+      // toolStripContainer.TopToolStripPanel
+      // 
+      this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip1);
+      this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
+      // 
+      // splitContainer2
+      // 
+      this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+      this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer2.Name = "splitContainer2";
+      // 
+      // splitContainer2.Panel1
+      // 
+      this.splitContainer2.Panel1.Controls.Add(this.graphControl);
+      // 
+      // splitContainer2.Panel2
+      // 
+      this.splitContainer2.Panel2.Controls.Add(this.propertiesPanel);
+      this.splitContainer2.Size = new System.Drawing.Size(740, 636);
+      this.splitContainer2.SplitterDistance = 524;
+      this.splitContainer2.TabIndex = 3;
+      // 
+      // graphControl
+      // 
+      this.graphControl.BackColor = System.Drawing.Color.White;
+      this.graphControl.ContentRect = new yWorks.Geometry.RectD(0D, 0D, 400D, 400D);
+      this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
+      this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.graphControl.FitContentViewMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
+      this.graphControl.Location = new System.Drawing.Point(0, 0);
+      this.graphControl.Name = "graphControl";
+      this.graphControl.Size = new System.Drawing.Size(524, 636);
+      this.graphControl.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+      this.graphControl.TabIndex = 1;
+      this.graphControl.Text = "graphControl";
+      viewportLimiter2.Bounds = null;
+      this.graphControl.ViewportLimiter = viewportLimiter2;
+      // 
+      // propertiesPanel
+      // 
+      this.propertiesPanel.Controls.Add(this.label5);
+      this.propertiesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertiesPanel.Location = new System.Drawing.Point(0, 0);
+      this.propertiesPanel.Name = "propertiesPanel";
+      this.propertiesPanel.Size = new System.Drawing.Size(212, 636);
+      this.propertiesPanel.TabIndex = 2;
+      // 
+      // toolStrip
+      // 
+      this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
+      this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ZoomInButton,
+            this.ZoomOutButton,
+            this.FitContentButton,
+            this.toolStripSeparator1,
+            this.deleteButton,
+            this.toolStripSeparator2,
+            this.placeLabelsButton});
+      this.toolStrip.Location = new System.Drawing.Point(0, 24);
+      this.toolStrip.Name = "toolStrip";
+      this.toolStrip.Padding = new System.Windows.Forms.Padding(4);
+      this.toolStrip.Size = new System.Drawing.Size(740, 31);
+      this.toolStrip.Stretch = true;
+      this.toolStrip.TabIndex = 0;
+      // 
+      // ZoomInButton
+      // 
+      this.ZoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.ZoomInButton.Image = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.plus_16;
+      this.ZoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.ZoomInButton.Name = "ZoomInButton";
+      this.ZoomInButton.Size = new System.Drawing.Size(23, 20);
+      this.ZoomInButton.Text = "Zoom In";
+      // 
+      // ZoomOutButton
+      // 
+      this.ZoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.ZoomOutButton.Image = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.minus_16;
+      this.ZoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.ZoomOutButton.Name = "ZoomOutButton";
+      this.ZoomOutButton.Size = new System.Drawing.Size(23, 20);
+      this.ZoomOutButton.Text = "Zoom Out";
+      // 
+      // FitContentButton
+      // 
+      this.FitContentButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.FitContentButton.Image = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.fit_16;
+      this.FitContentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.FitContentButton.Name = "FitContentButton";
+      this.FitContentButton.Size = new System.Drawing.Size(23, 20);
+      this.FitContentButton.Text = "Fit Content into View";
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+      // 
+      // placeLabelsButton
+      // 
+      this.placeLabelsButton.Image = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.reload_16;
+      this.placeLabelsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.placeLabelsButton.Name = "placeLabelsButton";
+      this.placeLabelsButton.Size = new System.Drawing.Size(91, 20);
+      this.placeLabelsButton.Text = "Place Labels";
+      this.placeLabelsButton.Click += new System.EventHandler(this.PlaceLabelsButton_OnClick);
+      // 
+      // saveFileDialog
+      // 
+      this.saveFileDialog.DefaultExt = "graphml";
+      this.saveFileDialog.Filter = "GraphML Files|*.graphml|XML Files|*.xml|All files|*.*";
+      this.saveFileDialog.Title = "Save GraphML file...";
+      // 
+      // openFileDialog
+      // 
+      this.openFileDialog.DefaultExt = "graphml";
+      this.openFileDialog.Filter = "GraphML Files|*.graphml|XML Files|*.xml|All files|*.*";
+      this.openFileDialog.Title = "Load GraphML file...";
+      // 
+      // splitContainer1
+      // 
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.description);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.toolStripContainer);
+      this.splitContainer1.Size = new System.Drawing.Size(996, 691);
+      this.splitContainer1.SplitterDistance = 252;
+      this.splitContainer1.TabIndex = 2;
+      // 
+      // description
+      // 
+      this.description.BackColor = System.Drawing.SystemColors.Window;
+      this.description.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.description.Location = new System.Drawing.Point(0, 0);
+      this.description.Name = "description";
+      this.description.ReadOnly = true;
+      this.description.Size = new System.Drawing.Size(252, 691);
+      this.description.TabIndex = 5;
+      this.description.Text = "";
+      // 
+      // deleteButton
+      // 
+      this.deleteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.deleteButton.Image = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.delete3_16;
+      this.deleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.deleteButton.Name = "deleteButton";
+      this.deleteButton.Size = new System.Drawing.Size(23, 20);
+      this.deleteButton.Text = "Delete Label";
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
+      // 
+      // label5
+      // 
+      this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label5.Location = new System.Drawing.Point(0, 0);
+      this.label5.Name = "label5";
+      this.label5.Padding = new System.Windows.Forms.Padding(5);
+      this.label5.Size = new System.Drawing.Size(212, 23);
+      this.label5.TabIndex = 8;
+      this.label5.Text = "Node Label Properties";
+      // 
+      // menuStrip1
+      // 
+      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+      this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem});
+      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+      this.menuStrip1.Name = "menuStrip1";
+      this.menuStrip1.Size = new System.Drawing.Size(740, 24);
+      this.menuStrip1.TabIndex = 10;
+      this.menuStrip1.Text = "menuStrip1";
+      // 
+      // fileToolStripMenuItem
+      // 
+      this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+      this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+      this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+      this.fileToolStripMenuItem.Text = "File";
+      // 
+      // exitToolStripMenuItem
+      // 
+      this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+      this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.exitToolStripMenuItem.Text = "Exit";
+      this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+      // 
+      // viewToolStripMenuItem
+      // 
+      this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zoomInToolStripMenuItem,
+            this.zoomOutToolStripMenuItem,
+            this.fitGraphBoundsToolStripMenuItem});
+      this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+      this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+      this.viewToolStripMenuItem.Text = "View";
+      // 
+      // zoomInToolStripMenuItem
+      // 
+      this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
+      this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+      this.zoomInToolStripMenuItem.Text = "Zoom in";
+      // 
+      // zoomOutToolStripMenuItem
+      // 
+      this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
+      this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+      this.zoomOutToolStripMenuItem.Text = "Zoom out";
+      // 
+      // fitGraphBoundsToolStripMenuItem
+      // 
+      this.fitGraphBoundsToolStripMenuItem.Name = "fitGraphBoundsToolStripMenuItem";
+      this.fitGraphBoundsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+      this.fitGraphBoundsToolStripMenuItem.Text = "Fit graph bounds";
+      // 
+      // NodeLabelingForm
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.ClientSize = new System.Drawing.Size(996, 691);
+      this.Controls.Add(this.splitContainer1);
+      this.Icon = global::Demo.yFiles.Layout.NodeLabeling.Properties.Resources.yIcon;
+      this.Name = "NodeLabelingForm";
+      this.Text = "Node Labeling Demo";
+      this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+      this.Load += new System.EventHandler(this.OnLoad);
+      this.toolStripContainer.ContentPanel.ResumeLayout(false);
+      this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+      this.toolStripContainer.TopToolStripPanel.PerformLayout();
+      this.toolStripContainer.ResumeLayout(false);
+      this.toolStripContainer.PerformLayout();
+      this.splitContainer2.Panel1.ResumeLayout(false);
+      this.splitContainer2.Panel2.ResumeLayout(false);
+      this.splitContainer2.ResumeLayout(false);
+      this.propertiesPanel.ResumeLayout(false);
+      this.toolStrip.ResumeLayout(false);
+      this.toolStrip.PerformLayout();
+      this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel2.ResumeLayout(false);
+      this.splitContainer1.ResumeLayout(false);
+      this.menuStrip1.ResumeLayout(false);
+      this.menuStrip1.PerformLayout();
+      this.ResumeLayout(false);
+
+    }
+
+    #endregion
+
+    private System.Windows.Forms.ToolStripContainer toolStripContainer;
+    private System.Windows.Forms.ToolStrip toolStrip;
+    private System.Windows.Forms.ToolStripButton ZoomInButton;
+    private System.Windows.Forms.ToolStripButton ZoomOutButton;
+    private System.Windows.Forms.ToolStripButton FitContentButton;
+    private yWorks.Controls.GraphControl graphControl;
+    private System.Windows.Forms.SaveFileDialog saveFileDialog;
+    private System.Windows.Forms.OpenFileDialog openFileDialog;
+    private System.Windows.Forms.SplitContainer splitContainer1;
+    private System.Windows.Forms.RichTextBox description;
+    private System.Windows.Forms.SplitContainer splitContainer2;
+    private System.Windows.Forms.Panel propertiesPanel;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripButton placeLabelsButton;
+    private ToolStripButton deleteButton;
+    private ToolStripSeparator toolStripSeparator2;
+    private Label label5;
+    private MenuStrip menuStrip1;
+    private ToolStripMenuItem fileToolStripMenuItem;
+    private ToolStripMenuItem exitToolStripMenuItem;
+    private ToolStripMenuItem viewToolStripMenuItem;
+    private ToolStripMenuItem zoomInToolStripMenuItem;
+    private ToolStripMenuItem zoomOutToolStripMenuItem;
+    private ToolStripMenuItem fitGraphBoundsToolStripMenuItem;
+  }
+}

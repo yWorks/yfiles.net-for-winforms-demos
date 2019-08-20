@@ -1,0 +1,190 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CF13DD66-3AC2-4E17-B9F5-B32B677D0C64}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Demo.yFiles.Layout.PreferredLabelPlacement</RootNamespace>
+    <AssemblyName>PreferredLabelPlacementDemo</AssemblyName>
+    <StartupObject></StartupObject>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags></FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation></UpgradeBackupLocation>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="yWorks.yFilesNET.Adapter">
+      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Algorithms">
+      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Viewer">
+      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NonTreeEdgeRouterStage.cs" />
+    <Compile Include="PreferredLabelPlacement.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreferredLabelPlacement.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PreferredLabelPlacementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreferredLabelPlacementForm.Designer.cs">
+      <DependentUpon>PreferredLabelPlacementForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\Option\Option.csproj">
+      <Project>{C5CF497F-BFD2-40E3-B2B9-7DAAD32BBB64}</Project>
+      <Name>Demo.yFiles.Option</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\description.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PreferredLabelPlacement.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PreferredLabelPlacement.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreferredLabelPlacementForm.resx">
+      <DependentUpon>PreferredLabelPlacementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\preferredplacement.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yfiles.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mono16\arrow-down-16.png" />
+    <None Include="Resources\mono16\arrow-left-16.png" />
+    <None Include="Resources\mono16\arrow-right-16.png" />
+    <None Include="Resources\mono16\arrow-up-16.png" />
+    <None Include="Resources\mono16\cancel-16.png" />
+    <None Include="Resources\mono16\copy-16.png" />
+    <None Include="Resources\mono16\cut2-16.png" />
+    <None Include="Resources\mono16\delete2-16.png" />
+    <None Include="Resources\mono16\delete3-16.png" />
+    <None Include="Resources\mono16\demagnify-16.png" />
+    <None Include="Resources\mono16\download-16.png" />
+    <None Include="Resources\mono16\enter-group-16.png" />
+    <None Include="Resources\mono16\exit-group-16.png" />
+    <None Include="Resources\mono16\export-image2-16.png" />
+    <None Include="Resources\mono16\export-image-16.png" />
+    <None Include="Resources\mono16\fit2-16.png" />
+    <None Include="Resources\mono16\fit-16.png" />
+    <None Include="Resources\mono16\grid-16.png" />
+    <None Include="Resources\mono16\group-16.png" />
+    <None Include="Resources\mono16\layout-circular-16.png" />
+    <None Include="Resources\mono16\layout-hierarchic-16.png" />
+    <None Include="Resources\mono16\layout-organic-16.png" />
+    <None Include="Resources\mono16\layout-orthogonal-16.png" />
+    <None Include="Resources\mono16\layout-tree-16.png" />
+    <None Include="Resources\mono16\magnify-16.png" />
+    <None Include="Resources\mono16\minus2-16.png" />
+    <None Include="Resources\mono16\minus-16.png" />
+    <None Include="Resources\mono16\new-document-16.png" />
+    <None Include="Resources\mono16\ok2-16.png" />
+    <None Include="Resources\mono16\ok-16.png" />
+    <None Include="Resources\mono16\open-16.png" />
+    <None Include="Resources\mono16\orthogonal-editing-16.png" />
+    <None Include="Resources\mono16\paste-16.png" />
+    <None Include="Resources\mono16\play2-16.png" />
+    <None Include="Resources\mono16\play-16.png" />
+    <None Include="Resources\mono16\plus2-16.png" />
+    <None Include="Resources\mono16\plus-16.png" />
+    <None Include="Resources\mono16\print-16.png" />
+    <None Include="Resources\mono16\redo-16.png" />
+    <None Include="Resources\mono16\reload-16.png" />
+    <None Include="Resources\mono16\save-16.png" />
+    <None Include="Resources\mono16\search-16.png" />
+    <None Include="Resources\mono16\settings2-16.png" />
+    <None Include="Resources\mono16\settings-16.png" />
+    <None Include="Resources\mono16\snap-16.png" />
+    <None Include="Resources\mono16\undo-16.png" />
+    <None Include="Resources\mono16\ungroup-16.png" />
+    <None Include="Resources\mono16\window-close-16.png" />
+    <None Include="Resources\mono16\window-maximize-16.png" />
+    <None Include="Resources\mono16\window-minimize-16.png" />
+    <None Include="Resources\mono16\window-restore-16.png" />
+    <None Include="Resources\mono16\zoom-original3-16.png" />
+  </ItemGroup>
+  <ItemGroup></ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!--The following target ensures that the project will build even when the ZIP file has been-->
+  <!--extracted with Explorer or another tool that retains the origin zone marker for the files.-->
+  <!--If that does not work, an error message will be shown in Visual Studio's Error List.-->
+  <!--See http://kb.yworks.com/article/736 for details.-->
+  <Target Name="BeforeBuild">
+    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at http://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  </Target>
+</Project>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Created by yFiles.NET 5.0-->
+<graphml xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:yforms="http://www.yworks.com/xml/yfiles.net/5.0/forms" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.wpf/3.0/ygraphml.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="d0" attr.type="boolean" attr.name="Expanded" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/Expanded">
+    <default>true</default>
+  </key>
+  <key id="d1" attr.name="NodeLabels" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeLabels" />
+  <key id="d2" attr.name="NodeGeometry" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeGeometry" />
+  <key id="d3" attr.name="UserTags" for="all" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/UserTags" />
+  <key id="d4" attr.name="NodeStyle" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeStyle" />
+  <key id="d5" attr.name="NodeViewState" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/NodeViewState" />
+  <key id="d6" attr.name="EdgeLabels" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeLabels" />
+  <key id="d7" attr.name="EdgeGeometry" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeGeometry" />
+  <key id="d8" attr.name="EdgeStyle" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeStyle" />
+  <key id="d9" attr.name="EdgeViewState" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/EdgeViewState" />
+  <key id="d10" attr.name="PortLocationParameter" for="port" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLocationParameter">
+    <default>
+      <x:Static Member="y:FreeNodePortLocationModel.NodeCenterAnchored" />
+    </default>
+  </key>
+  <key id="d11" attr.name="PortStyle" for="port" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortStyle">
+    <default>
+      <x:Static Member="y:VoidPortStyle.Instance" />
+    </default>
+  </key>
+  <key id="d12" attr.name="PortViewState" for="port" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/PortViewState" />
+  <key id="d13" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
+  <data key="d13">
+    <y:SharedData>
+      <yforms:ShinyPlateNodeStyle x:Key="1" Brush="Orange" />
+      <yforms:PolylineEdgeStyle x:Key="2" TargetArrow="Default" />
+    </y:SharedData>
+  </data>
+  <graph id="G">
+    <node id="n0">
+      <data key="d2">
+        <y:RectD X="-397" Y="-177" Width="57" Height="30" />
+      </data>
+      <data key="d4">
+        <y:GraphMLReference ResourceKey="1" />
+      </data>
+      <port name="p0" />
+      <port name="p1" />
+    </node>
+    <node id="n1">
+      <data key="d2">
+        <y:RectD X="-294" Y="-177" Width="57" Height="30" />
+      </data>
+      <data key="d4">
+        <y:GraphMLReference ResourceKey="1" />
+      </data>
+      <port name="p0" />
+      <port name="p1" />
+      <port name="p2" />
+    </node>
+    <node id="n2">
+      <data key="d2">
+        <y:RectD X="-397" Y="-10" Width="57" Height="30" />
+      </data>
+      <data key="d4">
+        <yforms:ShinyPlateNodeStyle Brush="Orange" />
+      </data>
+      <port name="p0" />
+      <port name="p1" />
+    </node>
+    <node id="n3">
+      <data key="d2">
+        <y:RectD X="-198.64393289894838" Y="-10" Width="30" Height="30" />
+      </data>
+      <data key="d4">
+        <y:GraphMLReference ResourceKey="1" />
+      </data>
+      <port name="p0" />
+      <port name="p1" />
+    </node>
+    <node id="n4">
+      <data key="d2">
+        <y:RectD X="-339.64393289894838" Y="-92.292652606310071" Width="30" Height="30" />
+      </data>
+      <data key="d4">
+        <y:GraphMLReference ResourceKey="1" />
+      </data>
+      <port name="p0" />
+    </node>
+    <edge id="e0" source="n0" target="n2" sourceport="p0" targetport="p0">
+      <data key="d7">
+        <x:List>
+          <y:Bend Location="-368.5,-106.29265260631" />
+          <y:Bend Location="-429.643932898948,-106.29265260631" />
+          <y:Bend Location="-429.643932898948,-49.2926526063101" />
+          <y:Bend Location="-368.5,-49.2926526063101" />
+        </x:List>
+      </data>
+      <data key="d8">
+        <y:GraphMLReference ResourceKey="2" />
+      </data>
+    </edge>
+    <edge id="e1" source="n1" target="n2" sourceport="p0" targetport="p1">
+      <data key="d7">
+        <x:List>
+          <y:Bend Location="-265.5,5" />
+        </x:List>
+      </data>
+      <data key="d8">
+        <y:GraphMLReference ResourceKey="2" />
+      </data>
+    </edge>
+    <edge id="e2" source="n3" target="n0" sourceport="p0" targetport="p1">
+      <data key="d7">
+        <x:List>
+          <y:Bend Location="-183.643932898948,-236.29265260631" />
+          <y:Bend Location="-368.5,-236.29265260631" />
+        </x:List>
+      </data>
+      <data key="d8">
+        <y:GraphMLReference ResourceKey="2" />
+      </data>
+    </edge>
+    <edge id="e3" source="n4" target="n1" sourceport="p0" targetport="p1">
+      <data key="d7">
+        <x:List>
+          <y:Bend Location="-324.643932898948,-162" />
+        </x:List>
+      </data>
+      <data key="d8">
+        <y:GraphMLReference ResourceKey="2" />
+      </data>
+    </edge>
+    <edge id="e4" source="n1" target="n3" sourceport="p2" targetport="p1">
+      <data key="d7">
+        <x:List>
+          <y:Bend Location="-224.643932898948,-98.2926526063101" />
+          <y:Bend Location="-224.643932898948,-29.2926526063101" />
+        </x:List>
+      </data>
+      <data key="d8">
+        <y:GraphMLReference ResourceKey="2" />
+      </data>
+    </edge>
+  </graph>
+</graphml>
