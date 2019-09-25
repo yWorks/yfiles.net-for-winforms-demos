@@ -33,6 +33,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
@@ -65,11 +66,6 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// </summary>
     private EditorControl editorControl;
 
-    /// <summary>
-    /// Indicates whether there is a running layout operation
-    /// </summary>
-    private bool runningLayout;
-
     #endregion
 
     #region constructor
@@ -77,12 +73,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     public EdgeLabelingForm() {
       InitializeComponent();
       // load description
-      try {
-        description.LoadFile(new MemoryStream(EdgeLabeling.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(EdgeLabeling.description), RichTextBoxStreamType.RichText);
 
       // set commands to buttons and menu items
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
@@ -115,7 +106,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// This method initializes the graph and the input mode.
     /// </summary>
     /// <seealso cref="InitializeGraph"/>
-    protected virtual void OnLoad(object src, EventArgs e) {
+    protected virtual async void OnLoad(object src, EventArgs e) {
       // initialize the graph
       InitializeGraph();
       // initialize the styles
@@ -127,7 +118,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
 
       // do initial label placement
       UpdateEdgeLabels();
-      DoLabelPlacement();
+      await DoLabelPlacement();
       graphControl.FitGraphBounds();
     }
 
@@ -148,9 +139,6 @@ namespace Demo.yFiles.Layout.EdgeLabeling
       SetOrthogonalEdgeEditing(toggleOrthogonalEdgesButton.Checked);
     }
 
-    /// <summary>
-    /// Initializes the default node style.
-    /// </summary>
     private void InitializeStyles() {
       graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange, DrawShadow = false };
       graphControl.Graph.NodeDefaults.Size = new SizeD(60, 30);
@@ -161,6 +149,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// </summary>
     private void InitializeGraph() {
       graphControl.ImportFromGraphML("Resources\\orthogonal.graphml");
+      var graph = graphControl.Graph;
     }
 
     #endregion
@@ -169,8 +158,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// Does the label placement using the generic labeling algorithm. Before this, the model of the labels is
     /// set according to the option handlers settings.
     /// </summary>
-    private async void DoLabelPlacement() {
-      // do nothing if we're already in a layout operation
+    private async Task DoLabelPlacement() {
       if (runningLayout) {
         return;
       }
@@ -199,19 +187,13 @@ namespace Demo.yFiles.Layout.EdgeLabeling
       SetRunningLayout(false);
     }
 
-    /// <summary>
-    /// Tells the application whether it is currently running a layout operation.
-    /// </summary>
-    /// <remarks>
-    /// Calling this method will enable or disable (depending on the parameter) a number of controls to reflect
-    /// the state of the application.
-    /// </remarks>
-    /// <param name="running">if <c>true</c> a number of controls will be disabled; otherwise, the controls will be enabled.</param>
     private void SetRunningLayout(bool running) {
       runningLayout = running;
       editorControl.Enabled = !running;
       toolBar.Enabled = !running;
     }
+
+    private bool runningLayout;
 
     /// <summary>
     /// Updates the labels' properties as specified in the option handler
@@ -248,7 +230,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
       double angle = ToRadians((double) handler[LABEL_ANGLE].Value);
 
       // initialize a composite label model containing the specified label model
-      CompositeLabelModel compositeLabelModel = new CompositeLabelModel {
+      CompositeLabelModel compositeLabelModel = new CompositeLabelModel { 
         LabelModels = {
           GetEdgeLabelModel((bool)handler[LABEL_AUTOROTATION].Value, (double)handler[LABEL_EDGE_TO_LABEL_DIST].Value, angle, angle)}};
 
@@ -296,11 +278,7 @@ namespace Demo.yFiles.Layout.EdgeLabeling
 
     #region option handler
 
-    /// <summary>
-    /// Setups the option editor control.
-    /// </summary>
     private void SetupOptions() {
-      // create the options
       SetupHandler();
       
       // create the EditorControl
@@ -340,13 +318,8 @@ namespace Demo.yFiles.Layout.EdgeLabeling
 
     }
 
-    /// <summary>
-    /// Callback for property changed event of <see cref="OptionHandler"/>.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
-    private void HandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
-      DoLabelPlacement();
+    private async void HandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
+      await DoLabelPlacement();
     }
 
     #endregion
@@ -378,9 +351,9 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void Orthogonal_OnClick(object sender, EventArgs e) {
+    private async void Orthogonal_OnClick(object sender, EventArgs e) {
       graphControl.ImportFromGraphML("Resources/orthogonal.graphml");
-      DoLabelPlacement();
+      await DoLabelPlacement();
     }
 
     /// <summary>
@@ -388,9 +361,9 @@ namespace Demo.yFiles.Layout.EdgeLabeling
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void Organic_OnClick(object sender, EventArgs e) {
+    private async void Organic_OnClick(object sender, EventArgs e) {
       graphControl.ImportFromGraphML("Resources/organic.graphml");
-      DoLabelPlacement();
+      await DoLabelPlacement();
     }
 
     /// <summary>

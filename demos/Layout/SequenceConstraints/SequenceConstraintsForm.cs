@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Layout.SequenceConstraints.Properties;
@@ -94,17 +95,12 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// </summary>
     /// <seealso cref="InitializeInputModes"/>
     /// <seealso cref="InitializeGraph"/>
-    private void OnLoaded(object sender, EventArgs e) {
+    private async void OnLoaded(object sender, EventArgs e) {
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       // initialize the graph
-      InitializeGraph();
+      await InitializeGraph();
 
       // initialize the input mode
       InitializeInputModes();
@@ -114,7 +110,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// Initializes the graph instance setting default styles
     /// and creating a small sample graph.
     /// </summary>
-    protected virtual void InitializeGraph() {
+    protected virtual async Task InitializeGraph() {
       IGraph graph = graphControl.Graph;
       // set the style as the default for all new nodes
       graph.NodeDefaults.Style = defaultStyle;
@@ -134,7 +130,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 
       // create the graph and perform a layout operation
       CreateNewGraph();
-      DoLayout();
+      await DoLayout();
     }
 
     /// <summary>
@@ -163,8 +159,8 @@ namespace Demo.yFiles.Layout.SequenceConstraints
       };
 
 	    // register command bindings
-	    mode.KeyboardInputMode.AddCommandBinding(DecreaseLayerCommand, DecreaseLayerExecuted, CanExecuteDecreaseLayer);
-	    mode.KeyboardInputMode.AddCommandBinding(IncreaseLayerCommand, IncreaseLayerExecuted, CanExecuteIncreaseLayer);
+	    mode.KeyboardInputMode.AddCommandBinding(DecreaseSequenceCommand, DecreaseSequenceExecuted, CanExecuteDecreaseSequence);
+	    mode.KeyboardInputMode.AddCommandBinding(IncreaseSequenceCommand, IncreaseSequenceExecuted, CanExecuteIncreaseSequence);
 	    mode.KeyboardInputMode.AddCommandBinding(ToggleConstraintsStateCommand, ToggleConstraintsStateExecuted, CanExecuteToggleConstraintsState);
 	    mode.KeyboardInputMode.AddCommandBinding(InvalidateControlCommand, delegate(object sender,
 	                                                                                           ExecutedCommandEventArgs e) {
@@ -215,7 +211,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// <remarks>
     /// This command requires the corresponding <see cref="INode"/> as the <see cref="ExecutedCommandEventArgs.Parameter"/>.
     /// </remarks>
-    public static readonly ICommand IncreaseLayerCommand = Commands.CreateCommand("Increase Layer");
+    public static readonly ICommand IncreaseSequenceCommand = Commands.CreateCommand("Move forward in sequence");
 
     /// <summary>
     /// The command that can be used by the buttons to toggle the enabled state of the node.
@@ -223,7 +219,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// <remarks>
     /// This command requires the corresponding <see cref="INode"/> as the <see cref="ExecutedCommandEventArgs.Parameter"/>.
     /// </remarks>
-    public static readonly ICommand DecreaseLayerCommand = Commands.CreateCommand("Decrease Layer");
+    public static readonly ICommand DecreaseSequenceCommand = Commands.CreateCommand("Move backward in sequence");
 
     /// <summary>
     /// The command that triggers invalidation of the graph control.
@@ -253,9 +249,9 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     }
 
     /// <summary>
-    /// Helper method that determines whether the <see cref="IncreaseLayerCommand"/> can be executed.
+    /// Helper method that determines whether the <see cref="IncreaseSequenceCommand"/> can be executed.
     /// </summary>
-    private void CanExecuteIncreaseLayer(object sender, CanExecuteCommandEventArgs e) {
+    private void CanExecuteIncreaseSequence(object sender, CanExecuteCommandEventArgs e) {
       var node = e.Parameter as INode;
       if (node != null) {
         var data = (SequenceConstraintsInfo)node.Tag;
@@ -267,9 +263,9 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     }
 
     /// <summary>
-    /// Helper method that determines whether the <see cref="DecreaseLayerCommand"/> can be executed.
+    /// Helper method that determines whether the <see cref="DecreaseSequenceCommand"/> can be executed.
     /// </summary>
-    private void CanExecuteDecreaseLayer(object sender, CanExecuteCommandEventArgs e) {
+    private void CanExecuteDecreaseSequence(object sender, CanExecuteCommandEventArgs e) {
       var node = e.Parameter as INode;
       if (node != null) {
         var data = (SequenceConstraintsInfo)node.Tag;
@@ -281,9 +277,9 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     }
 
     /// <summary>
-    /// Handler for the <see cref="IncreaseLayerCommand"/>
+    /// Handler for the <see cref="IncreaseSequenceCommand"/>
     /// </summary>
-    private void IncreaseLayerExecuted(object sender, ExecutedCommandEventArgs e) {
+    private void IncreaseSequenceExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = e.Parameter as INode;
       if (node != null) {
         var data = (SequenceConstraintsInfo)node.Tag;
@@ -292,9 +288,9 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     }
 
     /// <summary>
-    /// Handler for the <see cref="DecreaseLayerCommand"/>
+    /// Handler for the <see cref="DecreaseSequenceCommand"/>
     /// </summary>
-    private void DecreaseLayerExecuted(object sender, ExecutedCommandEventArgs e) {
+    private void DecreaseSequenceExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = e.Parameter as INode;
       if (node != null) {
         var data = (SequenceConstraintsInfo)node.Tag;
@@ -313,16 +309,16 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// <summary>
     /// Formats the current graph.
     /// </summary>
-    private void OnLayoutClick(object sender, EventArgs e) {
-      DoLayout();
+    private async void OnLayoutClick(object sender, EventArgs e) {
+      await DoLayout();
     }
 
     /// <summary>
     /// Creates a new graph and formats it.
     /// </summary>
-    private void OnNewGraphClick(object sender, EventArgs e) {
+    private async void OnNewGraphClick(object sender, EventArgs e) {
       CreateNewGraph();
-      DoLayout();
+      await DoLayout();
     }
 
     #endregion
@@ -354,7 +350,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// <summary>
     /// Performs the layout operation after applying all required constraints
     /// </summary>
-    private async void DoLayout() {
+    private async Task DoLayout() {
       // layout starting, disable button
       runButton.Enabled = false;
 

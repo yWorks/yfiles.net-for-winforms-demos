@@ -38,13 +38,13 @@
                     <bpmn:StripeDescriptor BackgroundBrush="#FFABC8E2" InsetBrush="#FFE0E0E0" />
                 </bpmn:AlternatingLeafStripeStyle.OddLeafDescriptor>
             </bpmn:AlternatingLeafStripeStyle>
-            <yforms:DefaultLabelStyle x:Key="2" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="2" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <forms:StringFormat x:Key="3" Alignment="Center" LineAlignment="Center" />
             <yforms:NodeStyleStripeStyleAdapter x:Key="5">
                 <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
             </yforms:NodeStyleStripeStyleAdapter>
             <y:InteriorLabelModel x:Key="6" />
-            <yforms:DefaultLabelStyle x:Key="7" Font="Microsoft Sans Serif, 6.5pt" />
+            <yforms:DefaultLabelStyle x:Key="7" Font="Microsoft Sans Serif, 9px" />
             <bpmn:BpmnEdgeStyle x:Key="8" />
         </y:SharedData>
     </data>
@@ -62,28 +62,28 @@
                                     <y:Column Style="{y:GraphMLReference 1}" MinimumSize="10" Size="150" Insets="0,20,0,0">
                                         <y:Column Style="{y:GraphMLReference 1}" MinimumSize="10" Size="122.17777777777778" Insets="0,20,0,0">
                                             <y:Column.Labels>
-                                                <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" PreferredSize="65,14">
+                                                <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" >
                                                     <y:Label.Text><![CDATA[Sales Force]]></y:Label.Text>
                                                 </y:Label>
                                             </y:Column.Labels>
                                         </y:Column>
                                         <y:Column Style="{y:GraphMLReference 1}" MinimumSize="10" Size="110" Insets="0,40,0,0">
                                             <y:Column.Labels>
-                                                <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" PreferredSize="60,28">
+                                                <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" >
                                                     <y:Label.Text><![CDATA[Order
 Processing]]></y:Label.Text>
                                                 </y:Label>
                                             </y:Column.Labels>
                                         </y:Column>
                                         <y:Column.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" PreferredSize="31,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" >
                                                 <y:Label.Text>Sales</y:Label.Text>
                                             </y:Label>
                                         </y:Column.Labels>
                                     </y:Column>
                                     <y:Column Style="{y:GraphMLReference 1}" MinimumSize="10" Size="110.00000000000003" Insets="0,20,0,0">
                                         <y:Column.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" PreferredSize="61,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 2}" >
                                                 <y:Label.Text>Warehouse</y:Label.Text>
                                             </y:Label>
                                         </y:Column.Labels>
@@ -94,7 +94,7 @@ Processing]]></y:Label.Text>
                                         <y:StripeDefaults.Labels>
                                             <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" ShareStyleInstance="True">
                                                 <y:LabelDefaults.Style>
-                                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" />
+                                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
                                                 </y:LabelDefaults.Style>
                                             </y:LabelDefaults>
                                         </y:StripeDefaults.Labels>
@@ -117,10 +117,10 @@ Processing]]></y:Label.Text>
             </data>
             <data key="d1">
                 <x:List>
-                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.North}" PreferredSize="89,14">
+                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.North}" >
                         <y:Label.Text><![CDATA[Order Fulfillment]]></y:Label.Text>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False"  Font="Microsoft Sans Serif, 10px"/>
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -149,7 +149,7 @@ Processing]]></y:Label.Text>
                     </data>
                     <data key="d1">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 7}" PreferredSize="60,12">
+                            <y:Label Style="{y:GraphMLReference 7}" >
                                 <y:Label.Text><![CDATA[Win an Order]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 6}" />
@@ -187,7 +187,7 @@ Processing]]></y:Label.Text>
                     </data>
                     <data key="d1">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 7}" PreferredSize="38,24">
+                            <y:Label Style="{y:GraphMLReference 7}" >
                                 <y:Label.Text><![CDATA[Register
 Order]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -217,7 +217,7 @@ Order]]></y:Label.Text>
                     </data>
                     <data key="d1">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 7}" PreferredSize="53,35">
+                            <y:Label Style="{y:GraphMLReference 7}" >
                                 <y:Label.Text><![CDATA[Remove
 Goods from
 Stock]]></y:Label.Text>
@@ -248,7 +248,7 @@ Stock]]></y:Label.Text>
                     </data>
                     <data key="d1">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 7}" PreferredSize="53,12">
+                            <y:Label Style="{y:GraphMLReference 7}" >
                                 <y:Label.Text><![CDATA[Ship Goods]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 6}" />

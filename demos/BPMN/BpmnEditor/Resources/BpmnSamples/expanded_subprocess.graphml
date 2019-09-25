@@ -51,7 +51,7 @@
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="38,24">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Identify
 Demand]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -62,7 +62,7 @@ Demand]]></y:Label.Text>
                             </y:InteriorLabelModelParameter>
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -89,7 +89,7 @@ Demand]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="55,12">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Obtain Offer]]></y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:InteriorLabelModelParameter Position="NorthWest">
@@ -99,7 +99,7 @@ Demand]]></y:Label.Text>
                             </y:InteriorLabelModelParameter>
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -127,7 +127,7 @@ Demand]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label PreferredSize="37,24">
+                            <y:Label >
                                 <y:Label.Text><![CDATA[Select
 Supplier]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -138,7 +138,7 @@ Supplier]]></y:Label.Text>
                                     </y:InteriorLabelModelParameter>
                                 </y:Label.LayoutParameter>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -164,7 +164,7 @@ Supplier]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label PreferredSize="45,28">
+                            <y:Label >
                                 <y:Label.Text><![CDATA[Request
 Offer]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -175,7 +175,7 @@ Offer]]></y:Label.Text>
                                     </y:InteriorLabelModelParameter>
                                 </y:Label.LayoutParameter>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -201,7 +201,7 @@ Offer]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label PreferredSize="38,24">
+                            <y:Label >
                                 <y:Label.Text><![CDATA[Offer
 received]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -212,7 +212,7 @@ received]]></y:Label.Text>
                                     </y:ExteriorLabelModelParameter>
                                 </y:Label.LayoutParameter>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -255,7 +255,7 @@ received]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label PreferredSize="54,12">
+                            <y:Label >
                                 <y:Label.Text><![CDATA[Check Offer]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:InteriorLabelModelParameter Position="Center">
@@ -265,7 +265,7 @@ received]]></y:Label.Text>
                                     </y:InteriorLabelModelParameter>
                                 </y:Label.LayoutParameter>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -348,7 +348,7 @@ received]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="26,24">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Place
 Order]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -359,7 +359,7 @@ Order]]></y:Label.Text>
                             </y:InteriorLabelModelParameter>
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>

@@ -77,12 +77,7 @@ namespace Demo.yFiles.Graph.SimpleEditor
       RegisterToolStripCommands();
       RegisterMenuItemCommands();
 
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     #region Command registration
@@ -302,8 +297,11 @@ namespace Demo.yFiles.Graph.SimpleEditor
 
     private void ExportImage() {
       graphControl.UpdateContentRect(new InsetsD(5, 5, 5, 5));
-      SaveFileDialog dialog = new SaveFileDialog();
-      dialog.Filter = "JPEG Files|*.jpg";
+      if (graphControl.ContentRect.IsEmpty) {
+        MessageBox.Show("Canvas is empty.", "Image Export");
+        return;
+      }
+      var dialog = new SaveFileDialog { Filter = "JPEG Files|*.jpg" };
       if (dialog.ShowDialog(FindForm()) == DialogResult.OK) {
         graphControl.ExportToBitmap(dialog.FileName, "image/jpeg");
       }

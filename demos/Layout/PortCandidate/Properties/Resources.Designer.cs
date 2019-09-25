@@ -510,16 +510,6 @@ namespace Demo.yFiles.Layout.PortCandidateDemo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] sample_flat {
-            get {
-                object obj = ResourceManager.GetObject("sample_flat", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap save_16 {

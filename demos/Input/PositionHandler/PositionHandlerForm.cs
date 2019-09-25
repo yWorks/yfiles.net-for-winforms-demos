@@ -79,17 +79,12 @@ namespace Demo.yFiles.Graph.Input.PositionHandler
         });
 
     }
-    
+
     #region Initialization
 
     public PositionHandlerForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     private void FormLoaded(object sender, EventArgs e) {
@@ -105,6 +100,8 @@ namespace Demo.yFiles.Graph.Input.PositionHandler
       graphEditorInputMode.DeletableItems = GraphItemTypes.None;
       // don't show resize handles,
       graphEditorInputMode.ShowHandleItems = GraphItemTypes.None;
+      // disable clipboard,
+      graphEditorInputMode.AllowClipboardOperations = false;
       // and enable the undo feature.
       graph.SetUndoEngineEnabled(true);
 
@@ -120,6 +117,8 @@ namespace Demo.yFiles.Graph.Input.PositionHandler
       RegisterPositionHandler(boundaryRectangle);
 
       CreateSampleGraph(graph);
+      // reset the Undo queue so the initial graph creation cannot be undone
+      graph.GetUndoEngine().Clear();
     }
 
     #endregion

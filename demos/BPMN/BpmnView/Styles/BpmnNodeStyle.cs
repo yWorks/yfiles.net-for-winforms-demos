@@ -125,6 +125,7 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
           }
         }
       }
+      container.Bounds = newBounds;
 
       // update the transformation that moves the container to the location of the node
       container.Transform = new Matrix(1,0,0,1,(float) newBounds.X, (float) newBounds.Y);

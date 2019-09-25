@@ -32,7 +32,7 @@
                     <y:InteriorLabelModel />
                 </y:InteriorLabelModelParameter.Model>
             </y:InteriorLabelModelParameter>
-            <yforms:DefaultLabelStyle x:Key="2" Font="Microsoft Sans Serif, 6.5pt" />
+            <yforms:DefaultLabelStyle x:Key="2" Font="Microsoft Sans Serif, 9px" />
             <bpmn:BpmnEdgeStyle x:Key="3" />
             <bpmn:BpmnEdgeStyle x:Key="4" Type="DefaultFlow" />
         </y:SharedData>
@@ -88,7 +88,7 @@
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="36,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Analyze
 Sample]]></y:Label.Text>
                             </y:Label>
@@ -127,7 +127,7 @@ Sample]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="48,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Repair
 Equipment]]></y:Label.Text>
                             </y:Label>
@@ -176,7 +176,7 @@ Equipment]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="29,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Check
 Result]]></y:Label.Text>
                             </y:Label>
@@ -238,7 +238,7 @@ Result]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 2}" PreferredSize="46,24">
+                            <y:Label Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Result not
 plausible]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -266,7 +266,7 @@ plausible]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 2}" PreferredSize="52,24">
+                            <y:Label Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Equipment
 out of order]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -339,7 +339,7 @@ out of order]]></y:Label.Text>
                     </data>
                     <data key="d8">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 2}" PreferredSize="47,24">
+                            <y:Label Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Repair not
 successful]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -359,7 +359,7 @@ successful]]></y:Label.Text>
                     </data>
                     <data key="d8">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 2}" PreferredSize="40,24">
+                            <y:Label Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Result
 plausible]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -379,7 +379,7 @@ plausible]]></y:Label.Text>
                     </data>
                     <data key="d8">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 2}" PreferredSize="47,24">
+                            <y:Label Style="{y:GraphMLReference 2}" >
                                 <y:Label.Text><![CDATA[Repair
 successful]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -453,7 +453,7 @@ successful]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="34,24">
+                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                         <y:Label.Text><![CDATA[Take
 Sample]]></y:Label.Text>
                     </y:Label>
@@ -527,7 +527,7 @@ Sample]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="51,35">
+                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                         <y:Label.Text><![CDATA[Arrange for
 External
 Analysis]]></y:Label.Text>
@@ -555,7 +555,7 @@ Analysis]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" PreferredSize="59,35">
+                    <y:Label LayoutParameter="{y:GraphMLReference 1}" Style="{y:GraphMLReference 2}" >
                         <y:Label.Text><![CDATA[Arrange for
 Repair by
 Manufacturer]]></y:Label.Text>

@@ -58,12 +58,7 @@ namespace Demo.yFiles.IO.GraphML.Compat
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
       fitContentButton.SetCommand(Commands.FitContent, graphControl);
 
-      try {
-        descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        descriptionTextBox.Text = "The description is not available with this version of .NET Core.";
-      }
+      descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
     }
 

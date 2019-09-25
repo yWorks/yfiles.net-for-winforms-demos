@@ -34,15 +34,15 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 {
   /// <summary>
   /// A business object that represents the weight (through property "Value") of the node and whether or not
-  /// its weight should be taken into account as a layer constraint.
+  /// its weight should be taken into account as a sequence constraint.
   /// </summary>
   public class SequenceConstraintsInfo
   {
     /// <summary>
-    /// The weight of the object. An object with a lower number will be layered in a higher layer.
+    /// The weight of the object. An object with a lower number will be arranged earlier in the same layer.
     /// </summary>
     /// <remarks>
-    /// The number 0 means the node should be the in the first, 7 means it should be the last layer.
+    /// The number 0 means the node should be the in the first, 7 means it should be the last item in its layer.
     /// </remarks>
     private int value;
 
@@ -53,7 +53,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     ///   <c>true</c> if this instances value can be increased; otherwise, <c>false</c>.
     /// </returns>
     public bool CanIncreaseValue() {
-      return Constraints && 0 < value;
+      return Constraints && value < 7;
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     ///   <c>true</c> if this instance value can be decreased; otherwise, <c>false</c>.
     /// </returns>
     public bool CanDecreaseValue() {
-      return Constraints && value < 7;
+      return Constraints && 0 < value;
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// </summary>
     public void IncreaseValue() {
       if(CanIncreaseValue()) {
-        Value--;
+        Value++;
       }
     }
 
@@ -80,7 +80,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     /// </summary>
     public void DecreaseValue() {
       if(CanDecreaseValue()) {
-        Value++;
+        Value--;
       }
     }
 
@@ -109,10 +109,10 @@ namespace Demo.yFiles.Layout.SequenceConstraints
     }
 
     /// <summary>
-    /// The weight of the object. An object with a lower number will be layered in a higher layer.
+    /// The weight of the object. An object with a lower number will be arranged earlier in the same layer.
     /// </summary>
     /// <remarks>
-    /// The number 0 means the node should be the in the first, 7 means it should be the last layer.
+    /// The number 0 means the node should be the in the first, 7 means it should be the last item in its layer.
     /// </remarks>
     public int Value {
       get { return value; }

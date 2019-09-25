@@ -57,7 +57,6 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      yWorks.Controls.ViewportLimiter viewportLimiter1 = new yWorks.Controls.ViewportLimiter();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.description = new System.Windows.Forms.RichTextBox();
       this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -66,6 +65,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
       this.zoomInButton = new System.Windows.Forms.ToolStripButton();
       this.zoomOutButton = new System.Windows.Forms.ToolStripButton();
       this.fitToSizeButton = new System.Windows.Forms.ToolStripButton();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -98,6 +98,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
       this.description.Dock = System.Windows.Forms.DockStyle.Fill;
       this.description.Location = new System.Drawing.Point(0, 0);
       this.description.Name = "description";
+      this.description.ReadOnly = true;
       this.description.Size = new System.Drawing.Size(252, 597);
       this.description.TabIndex = 0;
       this.description.Text = "";
@@ -127,21 +128,20 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
       // graphControl
       // 
       this.graphControl.BackColor = System.Drawing.Color.White;
-      this.graphControl.ContentRect = new yWorks.Geometry.RectD(0D, 0D, 400D, 400D);
       this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
       this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.graphControl.FitContentViewMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
+      this.graphControl.DoubleClickSize = new yWorks.Geometry.SizeD(4D, 4D);
+      this.graphControl.DoubleClickTime = System.TimeSpan.Parse("00:00:00.5000000");
+      this.graphControl.DragSize = new yWorks.Geometry.SizeD(4D, 4D);
       this.graphControl.Location = new System.Drawing.Point(0, 0);
       this.graphControl.Name = "graphControl";
       this.graphControl.Size = new System.Drawing.Size(634, 566);
       this.graphControl.TabIndex = 0;
-      this.graphControl.Text = "graphControl1";
-      viewportLimiter1.Bounds = null;
-      this.graphControl.ViewportLimiter = viewportLimiter1;
       // 
       // toolStrip1
       // 
       this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+      this.toolStrip1.ImageScalingSize = new System.Drawing.Size(18, 18);
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zoomInButton,
             this.zoomOutButton,
@@ -180,19 +180,20 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
       this.fitToSizeButton.Size = new System.Drawing.Size(23, 20);
       this.fitToSizeButton.Text = "Fit Graph Bounds";
       // 
-      // IncrementalHierarchicGroupingForm
+      // HierarchicGroupingForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(890, 597);
       this.Controls.Add(this.splitContainer1);
       this.Icon = global::Demo.yFiles.Graph.HierarchicGrouping.Properties.Resources.yIcon;
-      this.Name = "IncrementalHierarchicGroupingForm";
+      this.Name = "HierarchicGroupingForm";
       this.Text = "yFiles Incremental Hierarchic Grouping Demo";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
       this.Load += new System.EventHandler(this.IncrementalHierarchicGroupingForm_Load);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
       this.toolStripContainer1.ContentPanel.ResumeLayout(false);
       this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);

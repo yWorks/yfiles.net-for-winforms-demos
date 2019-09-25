@@ -53,7 +53,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>1</y:Label.Text>
           </y:Label>
         </x:List>
@@ -88,7 +88,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}" PreferredSize="7,14">
+          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}">
             <y:Label.Text>5</y:Label.Text>
           </y:Label>
         </x:List>
@@ -103,7 +103,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>2</y:Label.Text>
               </y:Label>
             </x:List>
@@ -128,7 +128,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>3</y:Label.Text>
               </y:Label>
             </x:List>
@@ -153,7 +153,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>4</y:Label.Text>
               </y:Label>
             </x:List>
@@ -202,7 +202,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}" PreferredSize="13,14">
+          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}">
             <y:Label.Text>11</y:Label.Text>
           </y:Label>
         </x:List>
@@ -217,7 +217,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>6</y:Label.Text>
               </y:Label>
             </x:List>
@@ -252,7 +252,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>7</y:Label.Text>
               </y:Label>
             </x:List>
@@ -282,7 +282,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>8</y:Label.Text>
               </y:Label>
             </x:List>
@@ -312,7 +312,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="7,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>9</y:Label.Text>
               </y:Label>
             </x:List>
@@ -337,7 +337,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>10</y:Label.Text>
               </y:Label>
             </x:List>
@@ -404,7 +404,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>12</y:Label.Text>
           </y:Label>
         </x:List>
@@ -439,7 +439,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>13</y:Label.Text>
           </y:Label>
         </x:List>
@@ -474,7 +474,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>14</y:Label.Text>
           </y:Label>
         </x:List>
@@ -494,7 +494,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>15</y:Label.Text>
           </y:Label>
         </x:List>
@@ -519,7 +519,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>16</y:Label.Text>
           </y:Label>
         </x:List>
@@ -539,7 +539,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>17</y:Label.Text>
           </y:Label>
         </x:List>
@@ -564,7 +564,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>18</y:Label.Text>
           </y:Label>
         </x:List>
@@ -589,7 +589,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>22</y:Label.Text>
           </y:Label>
         </x:List>
@@ -609,7 +609,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text>23</y:Label.Text>
           </y:Label>
         </x:List>
@@ -639,7 +639,7 @@
       </data>
       <data key="d1">
         <x:List>
-          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}" PreferredSize="14,14">
+          <y:Label LayoutParameter="{x:Static y:InteriorStretchLabelModel.North}" Style="{y:GraphMLReference 7}">
             <y:Label.Text>24</y:Label.Text>
           </y:Label>
         </x:List>
@@ -654,7 +654,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>19</y:Label.Text>
               </y:Label>
             </x:List>
@@ -689,7 +689,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>20</y:Label.Text>
               </y:Label>
             </x:List>
@@ -709,7 +709,7 @@
           </data>
           <data key="d1">
             <x:List>
-              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="14,14">
+              <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
                 <y:Label.Text>21</y:Label.Text>
               </y:Label>
             </x:List>

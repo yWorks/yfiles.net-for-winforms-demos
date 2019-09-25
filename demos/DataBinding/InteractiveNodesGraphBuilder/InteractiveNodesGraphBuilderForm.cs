@@ -34,6 +34,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder.Properties;
 using yWorks.Controls;
@@ -59,7 +60,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
       RegisterToolStripCommands();
 
       // create new input mode
-      GraphViewerInputMode inputMode = new GraphViewerInputMode {SelectableItems = GraphItemTypes.None};
+      GraphViewerInputMode inputMode = new GraphViewerInputMode { SelectableItems = GraphItemTypes.None };
       // add a custom input mode that allows dragging nodes from the graph to the lists
       inputMode.Add(new NodeDragInputMode {Priority = -1});
       graphControl.InputMode = inputMode;
@@ -72,7 +73,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
         NodesSource = nodeSource = CreateInitialBusinessData(),
         SuccessorProvider = data => data.Successors,
         PredecessorProvider = data => data.Predecessors,
-        NodeLabelProvider = data => data.NodeName,
+        NodeLabelProvider = data => data.NodeName
       };
       graphBuilder.NodeCreated += (sender, e) => {
         // Set optimal node size
@@ -88,12 +89,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
       graphBuilder.BuildGraph();
 
       // Load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
     
     private void RegisterToolStripCommands() {
@@ -125,8 +121,8 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
 
     #endregion
 
-    private void OnLoad(object sender, EventArgs e) {
-      ApplyLayout(false);
+    private async void OnLoad(object sender, EventArgs e) {
+      await ApplyLayout(false);
       foreach (var data in nodeSource) {
         nodesListBox.Items.Add(data);
       }
@@ -139,19 +135,20 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// </summary>
     /// <returns>A collection of type BusinessData</returns>
     private static ObservableCollection<BusinessData> CreateInitialBusinessData() {
-      var nameDataMap = new Dictionary<string, BusinessData> {
-        {"Jenny", new BusinessData("Jenny")},
-        {"Julia", new BusinessData("Julia")},
-        {"Marc", new BusinessData("Marc")},
-        {"Martin", new BusinessData("Martin")},
-        {"Natalie", new BusinessData("Natalie")},
-        {"Nicole", new BusinessData("Nicole")},
-        {"Petra", new BusinessData("Petra")},
-        {"Stephen", new BusinessData("Stephen")},
-        {"Tim", new BusinessData("Tim")},
-        {"Tom", new BusinessData("Tom")},
-        {"Tony", new BusinessData("Tony")}
-      };
+      var nameDataMap = new Dictionary<string, BusinessData>
+                          {
+                            {"Jenny", new BusinessData("Jenny")},
+                            {"Julia", new BusinessData("Julia")},
+                            {"Marc", new BusinessData("Marc")},
+                            {"Martin", new BusinessData("Martin")},
+                            {"Natalie", new BusinessData("Natalie")},
+                            {"Nicole", new BusinessData("Nicole")},
+                            {"Petra", new BusinessData("Petra")},
+                            {"Stephen", new BusinessData("Stephen")},
+                            {"Tim", new BusinessData("Tim")},
+                            {"Tom", new BusinessData("Tom")},
+                            {"Tony", new BusinessData("Tony")}
+                          };
 
       nameDataMap["Julia"].Predecessors.Add(nameDataMap["Jenny"]);
       nameDataMap["Julia"].Successors.Add(nameDataMap["Petra"]);
@@ -167,11 +164,12 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
       nameDataMap["Tony"].Predecessors.Add(nameDataMap["Julia"]);
       nameDataMap["Stephen"].Successors.Add(nameDataMap["Tom"]);
 
-      return new ObservableCollection<BusinessData> {
-        nameDataMap["Marc"],
-        nameDataMap["Martin"],
-        nameDataMap["Stephen"]
-      };
+      return new ObservableCollection<BusinessData>
+               {
+                 nameDataMap["Marc"],
+                 nameDataMap["Martin"],
+                 nameDataMap["Stephen"]
+               };
     }
 
     private BusinessData currentItem;
@@ -231,9 +229,9 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// </summary>
     /// <param name="incremental">Whether to keep the unchanged parts of the graph stable.</param>
     /// <param name="incrementalNodes">The nodes which have changed.</param>
-    public void Update(bool incremental, params BusinessData[] incrementalNodes) {
+    public async Task Update(bool incremental, params BusinessData[] incrementalNodes) {
       graphBuilder.UpdateGraph();
-      ApplyLayout(incremental, incrementalNodes);
+      await ApplyLayout(incremental, incrementalNodes);
     }
     
     /// <summary>
@@ -247,7 +245,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// </remarks>
     /// <param name="incremental">if set to <see langword="true"/> [incremental].</param>
     /// <param name="incrementalNodes">The incremental nodes.</param>
-    private async void ApplyLayout(bool incremental, params BusinessData[] incrementalNodes) {
+    private async Task ApplyLayout(bool incremental, params BusinessData[] incrementalNodes) {
       var layout = new HierarchicLayout();
       HierarchicLayoutData layoutData = null;
       if (!incremental) {
@@ -258,7 +256,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
         if (incrementalNodes.Any()) {
           // we need to add hints for incremental nodes
           layoutData = new HierarchicLayoutData {
-            IncrementalHints = {IncrementalLayeringNodes = {Source = incrementalNodes.Select(graphBuilder.GetNode)}}
+            IncrementalHints = { IncrementalLayeringNodes = { Source = incrementalNodes.Select(graphBuilder.GetNode) } }
           };
         }
       }
@@ -275,13 +273,13 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Asks for a name for the new element and updates the lists.
     /// </remarks>
-    private void AddSuccessor(object sender, EventArgs e) {
+    private async void AddSuccessor(object sender, EventArgs e) {
       if (currentItem != null) {
         var businessData = AddNewItem();
         if (businessData == null) return;
         currentItem.Successors.Add(businessData);
         successorListBox.Items.Add(businessData);
-        Update(true, businessData);
+        await Update(true, businessData);
       }
     }
     
@@ -291,16 +289,15 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Removes the current item and updates the list.
     /// </remarks>
-    private void RemoveSuccessor(object sender, EventArgs e) {
+    private async void RemoveSuccessor(object sender, EventArgs e) {
       if (currentItem != null) {
         var item = (BusinessData) successorListBox.SelectedItem;
         if (item != null) {
           currentItem.Successors.Remove(item);
           successorListBox.Items.Remove(item);
         }
-        Update(true);
+        await Update(true);
       }
-
     }
     
     /// <summary>
@@ -309,13 +306,13 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Asks for a name for the new element and updates the lists.
     /// </remarks>
-    private void AddPredecessor(object sender, EventArgs e) {
+    private async void AddPredecessor(object sender, EventArgs e) {
       if (currentItem != null) {
         var businessData = AddNewItem();
         if (businessData == null) return;
         currentItem.Predecessors.Add(businessData);
         predecessorsListBox.Items.Add(businessData);
-        Update(true, businessData);
+        await Update(true, businessData);
       }
 
     }
@@ -326,15 +323,14 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Removes the current item and updates the list.
     /// </remarks>
-    private void RemovePredecessor(object sender, EventArgs e) {
+    private async void RemovePredecessor(object sender, EventArgs e) {
       if (currentItem != null) {
-
         var item = (BusinessData) predecessorsListBox.SelectedItem;
         if (item != null) {
           currentItem.Predecessors.Remove(item);
           predecessorsListBox.Items.Remove(item);
         }
-        Update(true);
+        await Update(true);
       }
     }
     
@@ -344,12 +340,12 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Asks for a name for the new element and updates the lists.
     /// </remarks>
-    private void AddNode(object sender, EventArgs e) {
+    private async void AddNode(object sender, EventArgs e) {
       var businessData = AddNewItem();
       if (businessData == null) return;
       nodeSource.Add(businessData);
       nodesListBox.Items.Add(businessData);
-      Update(true, businessData);
+      await Update(true, businessData);
     }
     
     /// <summary>
@@ -358,13 +354,13 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Removes the current item and updates the list.
     /// </remarks>
-    private void RemoveNode(object sender, EventArgs e) {
+    private async void RemoveNode(object sender, EventArgs e) {
       var item = (BusinessData) nodesListBox.SelectedItem;
       if (item != null) {
         nodeSource.Remove(item);
         nodesListBox.Items.Remove(item);
       }
-      Update(true);
+      await Update(true);
     }
 
     /// <summary>
@@ -437,31 +433,31 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <summary>
     /// Handles drop on the "node source list".
     /// </summary>
-    private void nodeSourceList_DragDrop(object sender, DragEventArgs e) {
+    private async void nodeSourceList_DragDrop(object sender, DragEventArgs e) {
       var item = GetDroppedItem(sender, e);
       nodeSource.Add(item);
-      Update(false);
+      await Update(false);
     }
     
     /// <summary>
     /// Handles drop on the "predecessor list".
     /// </summary>
-    private void predecessorList_DragDrop(object sender, DragEventArgs e) {
+    private async void predecessorList_DragDrop(object sender, DragEventArgs e) {
       BusinessData item;
       if (currentItem != null && ((item = GetDroppedItem(sender, e)) != null)) {
         currentItem.Predecessors.Add(item);
-        Update(false);
+        await Update(false);
       }
     }
     
     /// <summary>
     /// Handles drop on the "successor list".
     /// </summary>
-    private void successorList_DragDrop(object sender, DragEventArgs e) {
+    private async void successorList_DragDrop(object sender, DragEventArgs e) {
       BusinessData item;
       if (currentItem != null && ((item = GetDroppedItem(sender, e)) != null)) {
         currentItem.Successors.Add(item);
-        Update(false);
+        await Update(false);
       }
     }
 
@@ -489,28 +485,60 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     /// <remarks>
     /// Removes the dropped item from all lists.
     /// </remarks>
-    private void trashcan_DragDrop(object sender, DragEventArgs e) {
+    private async void trashcan_DragDrop(object sender, DragEventArgs e) {
       if (e.Data.GetDataPresent(typeof (BusinessData))) {
-        var item = (BusinessData) e.Data.GetData(typeof (BusinessData));
-        bool changed = false;
-        foreach (var data in nodeSource) {
-          changed |= data.Successors.Remove(item);
-          changed |= data.Predecessors.Remove(item);
-          if (data == currentItem) {
-            successorListBox.Items.Remove(item);
-            predecessorsListBox.Items.Remove(item);
+        var draggedData = (BusinessData) e.Data.GetData(typeof (BusinessData));
+        var node = graphBuilder.GetNode(draggedData);
+        // after dragging a node from the graph to the trashcan we have to remove it entirely from the graph
+        // first remove it from all predecessors and successors
+        var successorsToRemove = new List<BusinessData>();
+        var changed = false;
+        foreach (var edge in graphControl.Graph.InEdgesAt(node)) {
+          var otherData = graphBuilder.GetSourceObject(edge.SourcePort.Owner) as BusinessData;
+          if (otherData != null) {
+            successorsToRemove.Add(otherData);
           }
         }
-        changed |= nodeSource.Remove(item);
-        nodesListBox.Items.Remove(item);
+        var predecessorsToRemove = new List<BusinessData>();
+        foreach (var edge in graphControl.Graph.OutEdgesAt(node)) {
+          var otherData = graphBuilder.GetSourceObject(edge.TargetPort.Owner) as BusinessData;
+          if (otherData != null) {
+            predecessorsToRemove.Add(otherData);
+          }
+        }
+        foreach (var data in predecessorsToRemove) {
+          changed |= data.Predecessors.Remove(draggedData);
+          predecessorsListBox.Items.Remove(draggedData);
+        }
+        foreach (var data in successorsToRemove) {
+          changed |= data.Successors.Remove(draggedData);
+          successorListBox.Items.Remove(draggedData);
+        }
+        // finally remove the node itself
+        changed |= nodeSource.Remove(draggedData);
+        nodesListBox.Items.Remove(draggedData);
         if (changed) {
-          Update(false);
+          await Update(false);
         }
       }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #endregion
-    
+
     /// <summary>
     /// The main entry point for the application.
     /// </summary>
@@ -543,7 +571,7 @@ namespace Demo.yFiles.DataBinding.InteractiveNodesGraphBuilder
     public ObservableCollection<BusinessData> Predecessors { get; set; }
 
     public override string ToString() {
-      return NodeName;
+      return string.Format("Name: {0}", NodeName);
     }
 
     public object Clone() {

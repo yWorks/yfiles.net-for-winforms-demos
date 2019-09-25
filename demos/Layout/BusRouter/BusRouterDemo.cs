@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Layout.BusRouterDemo.Properties;
@@ -46,24 +47,19 @@ using yWorks.Layout.Router;
 [assembly: XmlnsPrefix("http://www.yworks.com/yfiles.net/5.0/demos/BusRouterWindow", "demo")]
 namespace Demo.yFiles.Layout.BusRouterDemo
 {
-
   /// <summary>
   /// This Demo shows how to use a <see cref="BusRouter"/> as layout.
   /// </summary>
   public partial class BusRouterDemo : Form
   {
-    /// <summary>
-    /// The <see cref="BusRouter"/> for this demo.
-    /// </summary>
     private readonly BusRouter layout = new BusRouter
-    {
-
-      Scope = Scope.RouteAllEdges,
-      MinimumDistanceToNode = 10,
-      MinimumDistanceToEdge = 5,
-      PreferredBackboneSegmentCount = 1,
-      CrossingCost = 1,
-    };
+                                   {
+                                     Scope = Scope.RouteAllEdges,
+                                     MinimumDistanceToNode = 10,
+                                     MinimumDistanceToEdge = 5,
+                                     PreferredBackboneSegmentCount = 1,
+                                     CrossingCost = 1,
+                                   };
 
     #region Initialization
 
@@ -72,12 +68,7 @@ namespace Demo.yFiles.Layout.BusRouterDemo
     /// </summary>
     public BusRouterDemo() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       RegisterMenuCommands();
       RegisterToolStripCommands();
     }
@@ -109,17 +100,29 @@ namespace Demo.yFiles.Layout.BusRouterDemo
     /// </summary>
     /// <seealso cref="InitializeInputModes"/>
     /// <seealso cref="InitializeGraph"/>
-    private void Demo_Load(object sender, EventArgs e) {
-      InitializeGraph();
+    protected async void Demo_Load(object sender, EventArgs e) {
+      // initialize the input mode
       InitializeInputModes();
+
+      // initialize the graph
+      await InitializeGraph();
     }
 
     /// <summary>
-    /// Creates a small graph and various layouts to it.
+    /// Initializes the graph instance setting default styles
+    /// and creating a small sample graph.
     /// </summary>
-    private void InitializeGraph() {
+    protected virtual async Task InitializeGraph() {
       graphControl.ImportFromGraphML("Resources/default.graphml");
-      DoLayout(Scope.RouteAllEdges);
+      await DoLayout(Scope.RouteAllEdges);
+    }
+
+    /// <summary>
+    /// Calls <see cref="CreateEditorMode"/> and registers
+    /// the result as the <see cref="CanvasControl.InputMode"/>.
+    /// </summary>
+    protected virtual void InitializeInputModes() {
+      graphControl.InputMode = CreateEditorMode();
     }
 
     /// <summary>
@@ -130,7 +133,8 @@ namespace Demo.yFiles.Layout.BusRouterDemo
     /// The control uses a custom node creation callback that creates business objects for newly
     /// created nodes.
     /// </remarks>
-    private void InitializeInputModes() {
+    /// <returns>a new GraphEditorInputMode instance</returns>
+    protected virtual IInputMode CreateEditorMode() {
       var mode = new GraphEditorInputMode
       {
         // don't allow nodes to be created using a mouse click
@@ -147,7 +151,7 @@ namespace Demo.yFiles.Layout.BusRouterDemo
         // enable context snapping
         SnapContext = new GraphSnapContext()
       };
-      graphControl.InputMode = mode;
+      return mode;
     }
 
     #endregion
@@ -159,19 +163,19 @@ namespace Demo.yFiles.Layout.BusRouterDemo
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void OnRunButtonClicked(object sender, EventArgs e) {
-      DoLayout(Scope.RouteAllEdges);
+    private async void OnRunButtonClicked(object sender, EventArgs e) {
+      await DoLayout(Scope.RouteAllEdges);
     }
 
     /// <summary>
-    /// Creates the edges between the selected nodes if there are any unconnected nodes left.
+    /// Creates the edges between all selected nodes, resulting in a complete subgraph.
     /// </summary>
-    private void OnConnectNodesClick(object sender, EventArgs e) {
+    private async void OnConnectNodesClick(object sender, EventArgs e) {
       var graph = graphControl.Graph;
 
       // find the first "Network" node, if any
       var selectedNodes = new HashSet<INode>(graph.Nodes.Where(graphControl.Selection.IsSelected));
-      if (selectedNodes.Count == 0) {
+      if(selectedNodes.Count == 0) {
         return;
       }
 
@@ -179,18 +183,18 @@ namespace Demo.yFiles.Layout.BusRouterDemo
 
       // iterate over all selected nodes to see if we need to create a new edge or modify the old one
       var edgeStyle = new PolylineEdgeStyle {Pen = PenStyles.GetRandomPen()};
-
-
+      
+      
       foreach (var node in selectedNodes) {
         //Create a complete subgraph
         foreach (var otherNode in selectedNodes) {
-          if (otherNode != node) {
+          if(otherNode != node) {
             edgesToRoute.Add(graph.CreateEdge(node, otherNode, edgeStyle));
           }
         }
       }
       graphControl.Invalidate();
-      DoLayout(Scope.RouteAffectedEdges);
+      await DoLayout(Scope.RouteAffectedEdges);
     }
 
     #endregion
@@ -203,7 +207,7 @@ namespace Demo.yFiles.Layout.BusRouterDemo
     /// <summary>
     /// Perform the layout operation
     /// </summary>
-    private async void DoLayout(Scope scope) {
+    private async Task DoLayout(Scope scope) {
       // layout starting, disable button
       runButton.Enabled = false;
 
@@ -225,9 +229,9 @@ namespace Demo.yFiles.Layout.BusRouterDemo
       // layout finished, enable layout button again
       runButton.Enabled = true;
     }
-    
-    private void OnRefreshButtonClicked(object sender, EventArgs e) {
-      InitializeGraph();
+
+    private async void OnRefreshButtonClicked(object sender, EventArgs e) {
+      await InitializeGraph();
     }
 
     /// <summary>

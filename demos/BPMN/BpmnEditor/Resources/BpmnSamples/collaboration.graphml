@@ -27,7 +27,7 @@
     <key id="d13" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
     <data key="d13">
         <y:SharedData>
-            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <bpmn:AlternatingLeafStripeStyle x:Key="2">
                 <bpmn:AlternatingLeafStripeStyle.EvenLeafDescriptor>
                     <bpmn:StripeDescriptor BackgroundBrush="#FFC4D7ED" InsetBrush="#FFE0E0E0" />
@@ -44,7 +44,7 @@
                 <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
             </yforms:NodeStyleStripeStyleAdapter>
             <y:InteriorLabelModel x:Key="5" />
-            <yforms:DefaultLabelStyle x:Key="6" Font="Microsoft Sans Serif, 6.5pt">
+            <yforms:DefaultLabelStyle x:Key="6" Font="Microsoft Sans Serif, 9px">
                 <yforms:DefaultLabelStyle.StringFormat>
                     <forms:StringFormat Alignment="Near" LineAlignment="Near" />
                 </yforms:DefaultLabelStyle.StringFormat>
@@ -60,7 +60,7 @@
                 <y:StripeDefaults.Labels>
                     <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" ShareStyleInstance="True">
                         <y:LabelDefaults.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
                         </y:LabelDefaults.Style>
                     </y:LabelDefaults>
                 </y:StripeDefaults.Labels>
@@ -78,7 +78,7 @@
                                 <y:Table.Rows>
                                     <y:Row MinimumSize="10" Size="80" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="50,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                                                 <y:Label.Text>Applicant</y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
@@ -115,7 +115,7 @@
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="49,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Write Job
 Application]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -149,7 +149,7 @@ Application]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="57,35">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Receive
 Confirmation
 of Receipt]]></y:Label.Text>
@@ -189,7 +189,7 @@ of Receipt]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="52,35">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Receive
 Invitation to
 Interview]]></y:Label.Text>
@@ -229,7 +229,7 @@ Interview]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="53,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Take Part in
 Interview]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -268,7 +268,7 @@ Interview]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="56,35">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Receive
 Employment
 Contract]]></y:Label.Text>
@@ -308,7 +308,7 @@ Contract]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="61,35">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Sign Contract
 and Send It
 Back]]></y:Label.Text>
@@ -396,7 +396,7 @@ Back]]></y:Label.Text>
                                 <y:Table.Rows>
                                     <y:Row MinimumSize="10" Size="97" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="55,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                                                 <y:Label.Text>Enterprise</y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
@@ -438,7 +438,7 @@ Back]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="49,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Receive
 Application]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -477,7 +477,7 @@ Application]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="36,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Confirm
 Receipt]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -511,7 +511,7 @@ Receipt]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="41,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Invite to
 Interview]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -545,7 +545,7 @@ Interview]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="44,24">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Carry Out
 Interview]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -584,7 +584,7 @@ Interview]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="56,35">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Send
 Employment
 Contract]]></y:Label.Text>
@@ -619,7 +619,7 @@ Contract]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 6}" PreferredSize="56,47">
+                            <y:Label Style="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Receive
 Signed
 Employment
@@ -720,7 +720,7 @@ Contract]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="49,12">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text>Application</y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:EdgeSegmentLabelModelParameter SideOfEdge="LeftOfEdge" SegmentRatio="0">
@@ -739,7 +739,7 @@ Contract]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="57,24">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text><![CDATA[Confirmation
 of Receipt]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -759,7 +759,7 @@ of Receipt]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="41,12">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text>Invitation</y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:EdgeSegmentLabelModelParameter SideOfEdge="LeftOfEdge" SegmentRatio="0">
@@ -778,7 +778,7 @@ of Receipt]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="56,24">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text><![CDATA[Employment
 Contract]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -798,7 +798,7 @@ Contract]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="56,35">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text><![CDATA[Signed
 Employment
 Contract]]></y:Label.Text>
@@ -819,7 +819,7 @@ Contract]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="41,12">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text>Question</y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:EdgeSegmentLabelModelParameter SideOfEdge="LeftOfEdge" SegmentRatio="0">
@@ -838,7 +838,7 @@ Contract]]></y:Label.Text>
             </data>
             <data key="d8">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 6}" PreferredSize="34,12">
+                    <y:Label Style="{y:GraphMLReference 6}" >
                         <y:Label.Text>Answer</y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:EdgeSegmentLabelModelParameter SideOfEdge="LeftOfEdge" SegmentRatio="0">

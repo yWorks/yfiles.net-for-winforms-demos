@@ -33,6 +33,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Layout.LogicGate.Properties;
@@ -81,12 +82,7 @@ namespace Demo.yFiles.Layout.LogicGate
     /// </summary>
     public LogicGateForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       RegisterMenuCommands();
       RegisterToolStripCommands();
       PopulateNodesList();
@@ -273,9 +269,11 @@ namespace Demo.yFiles.Layout.LogicGate
     /// </summary>
     /// <seealso cref="InitializeInputModes"/>
     /// <seealso cref="InitializeGraph"/>
-    private void Demo_Load(object sender, EventArgs e) {
+    private async void Demo_Load(object sender, EventArgs e) {
       InitializeLayout();
-      InitializeGraph();
+      await InitializeGraph();
+
+      // initialize the input mode
       InitializeInputModes();
     }
 
@@ -283,7 +281,7 @@ namespace Demo.yFiles.Layout.LogicGate
     /// Initializes the graph instance setting default styles
     /// and creating a small sample graph.
     /// </summary>
-    private void InitializeGraph() {
+    protected virtual async Task InitializeGraph() {
       IGraph graph = graphControl.Graph;
 
       // set the style as the default for all new nodes
@@ -317,7 +315,7 @@ namespace Demo.yFiles.Layout.LogicGate
       graphControl.FitGraphBounds();
 
       // do the layout
-      DoLayout(hl, hlData);
+      await DoLayout(hl, hlData);
     }
 
     /// <summary>
@@ -451,8 +449,8 @@ namespace Demo.yFiles.Layout.LogicGate
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void OnRunIHLButtonClicked(object sender, EventArgs e) {
-      DoLayout(hl, hlData);
+    private async void OnRunIHLButtonClicked(object sender, EventArgs e) {
+      await DoLayout(hl, hlData);
     }
 
     /// <summary>
@@ -460,8 +458,8 @@ namespace Demo.yFiles.Layout.LogicGate
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void OnRunOrthoButtonClicked(object sender, EventArgs e) {
-      DoLayout(orthogonalEdgeRouter, oerData);
+    private async void OnRunOrthoButtonClicked(object sender, EventArgs e) {
+      await DoLayout(orthogonalEdgeRouter, oerData);
     }
 
     #endregion
@@ -471,7 +469,7 @@ namespace Demo.yFiles.Layout.LogicGate
     /// <summary>
     /// Perform the layout operation
     /// </summary>
-    private async void DoLayout(ILayoutAlgorithm layout, LayoutData layoutData) {
+    private async Task DoLayout(ILayoutAlgorithm layout, LayoutData layoutData) {
       // layout starting, disable button
       
       toolStripButton2.Enabled = false;

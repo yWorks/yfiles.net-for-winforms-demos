@@ -42,10 +42,10 @@
             <yforms:NodeStyleStripeStyleAdapter x:Key="3">
                 <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
             </yforms:NodeStyleStripeStyleAdapter>
-            <yforms:DefaultLabelStyle x:Key="4" StringFormat="{y:GraphMLReference 2}" Font="Microsoft Sans Serif, 6.5pt" />
+            <yforms:DefaultLabelStyle x:Key="4" StringFormat="{y:GraphMLReference 2}" Font="Microsoft Sans Serif, 9px" />
             <bpmn:BpmnEdgeStyle x:Key="5" />
             <yforms:ShapeNodeStyle x:Key="6" Brush="#FFE0E0E0" />
-            <yforms:DefaultLabelStyle x:Key="7" StringFormat="{y:GraphMLReference 2}" />
+            <yforms:DefaultLabelStyle x:Key="7" StringFormat="{y:GraphMLReference 2}"  Font="Microsoft Sans Serif, 10px"/>
             <y:StripeDefaults x:Key="8" Insets="20,0,0,0" Style="{y:GraphMLReference 1}">
                 <y:StripeDefaults.Labels>
                     <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 7}" ShareStyleInstance="True" />
@@ -55,12 +55,12 @@
                 <y:StripeDefaults.Labels>
                     <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" ShareStyleInstance="True">
                         <y:LabelDefaults.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 2}" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 2}"  Font="Microsoft Sans Serif, 10px"/>
                         </y:LabelDefaults.Style>
                     </y:LabelDefaults>
                 </y:StripeDefaults.Labels>
             </y:StripeDefaults>
-            <yforms:DefaultLabelStyle x:Key="10" StringFormat="{y:GraphMLReference 2}" AutoFlip="False" />
+            <yforms:DefaultLabelStyle x:Key="10" StringFormat="{y:GraphMLReference 2}" AutoFlip="False"  Font="Microsoft Sans Serif, 10px"/>
             <y:InteriorLabelModel x:Key="11" />
             <bpmn:BpmnEdgeStyle x:Key="12" Type="MessageFlow" />
         </y:SharedData>
@@ -85,7 +85,7 @@
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" PreferredSize="43,14">
+                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" >
                         <y:Label.Text>Support</y:Label.Text>
                     </y:Label>
                 </x:List>
@@ -100,7 +100,7 @@
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,47">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Receive
 Constraint
 Analysis
@@ -135,7 +135,7 @@ Request]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Send
 Constraint
 Analysis]]></y:Label.Text>
@@ -169,7 +169,7 @@ Analysis]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Prepare
 Constraint
 Analysis]]></y:Label.Text>
@@ -214,14 +214,14 @@ Analysis]]></y:Label.Text>
                                 <y:Table.Rows>
                                     <y:Row MinimumSize="10" Size="127.60000000000002" Insets="40,0,0,0" Style="{y:GraphMLReference 1}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 7}" PreferredSize="113,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 7}" >
                                                 <y:Label.Text><![CDATA[Planning Department]]></y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
                                     </y:Row>
                                     <y:Row MinimumSize="10" Size="93.4" Insets="40,0,0,0" Style="{y:GraphMLReference 1}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 7}" PreferredSize="121,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 7}" >
                                                 <y:Label.Text><![CDATA[Administration Contact]]></y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
@@ -237,7 +237,7 @@ Analysis]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" PreferredSize="77,14">
+                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" >
                         <y:Label.Text>Administration</y:Label.Text>
                     </y:Label>
                 </x:List>
@@ -252,7 +252,7 @@ Analysis]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="38,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Receive
 Request]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -285,7 +285,7 @@ Request]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Receive
 Constraint
 Analysis]]></y:Label.Text>
@@ -319,7 +319,7 @@ Analysis]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Request
 Constraint
 Analysis]]></y:Label.Text>
@@ -353,7 +353,7 @@ Analysis]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="42,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Issue
 Estimate/
 Study]]></y:Label.Text>
@@ -387,7 +387,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="33,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Type of
 Study]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -448,7 +448,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="39,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Process
 Budget
 Estimate]]></y:Label.Text>
@@ -478,7 +478,7 @@ Estimate]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="45,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Process
 Feasibility
 Study]]></y:Label.Text>
@@ -508,7 +508,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="38,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Valid
 Request]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -560,7 +560,7 @@ Request]]></y:Label.Text>
                     </data>
                     <data key="d8">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="45,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Feasibility
 Study]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -585,7 +585,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d8">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="39,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Budget
 Estimate]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -645,7 +645,7 @@ Estimate]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" PreferredSize="63,14">
+                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" Style="{y:GraphMLReference 10}" >
                         <y:Label.Text>Department</y:Label.Text>
                     </y:Label>
                 </x:List>
@@ -660,7 +660,7 @@ Estimate]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="22,12">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text>Start</y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:ExteriorLabelModelParameter Position="West">
@@ -692,7 +692,7 @@ Estimate]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="42,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Receive
 Estimate/
 Study]]></y:Label.Text>
@@ -726,7 +726,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="38,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Send
 Request]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -764,7 +764,7 @@ Request]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="18,12">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text>End</y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:ExteriorLabelModelParameter Position="East">
@@ -791,7 +791,7 @@ Request]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="38,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Project
 Stopped]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -824,7 +824,7 @@ Stopped]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="45,47">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Budget
 Estimate/
 Feasibility
@@ -864,7 +864,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="46,12">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text>Continue?</y:Label.Text>
                                 <y:Label.LayoutParameter>
                                     <y:ExteriorLabelModelParameter Position="North">
@@ -901,7 +901,7 @@ Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="32,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Decide
 for
 Project]]></y:Label.Text>
@@ -940,7 +940,7 @@ Project]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="51,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Provide
 Information]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -969,7 +969,7 @@ Information]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="73,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Request Budget
 Estimate/
 Feasibility Study]]></y:Label.Text>
@@ -999,7 +999,7 @@ Feasibility Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="73,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Analyse Budget
 Estimate/
 Feasibility Study]]></y:Label.Text>
@@ -1029,7 +1029,7 @@ Feasibility Study]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="41,24">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Abandon
 Project]]></y:Label.Text>
                                 <y:Label.LayoutParameter>
@@ -1058,7 +1058,7 @@ Project]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label Style="{y:GraphMLReference 4}" PreferredSize="50,35">
+                            <y:Label Style="{y:GraphMLReference 4}" >
                                 <y:Label.Text><![CDATA[Optain
 Planning
 Permission]]></y:Label.Text>

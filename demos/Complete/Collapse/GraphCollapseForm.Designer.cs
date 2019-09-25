@@ -67,7 +67,7 @@ namespace Demo.yFiles.Graph.Collapse
       this.ZoomOutButton = new System.Windows.Forms.ToolStripButton();
       this.FitContentButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.layouterComboBox = new System.Windows.Forms.ToolStripComboBox();
+      this.layoutComboBox = new System.Windows.Forms.ToolStripComboBox();
       this.graphControl = new yWorks.Controls.GraphControl();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.descriptionTextBox = new System.Windows.Forms.RichTextBox();
@@ -110,7 +110,7 @@ namespace Demo.yFiles.Graph.Collapse
             this.ZoomOutButton,
             this.FitContentButton,
             this.toolStripSeparator1,
-            this.layouterComboBox});
+            this.layoutComboBox});
       this.toolStrip1.Location = new System.Drawing.Point(0, 24);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Padding = new System.Windows.Forms.Padding(4);
@@ -151,12 +151,12 @@ namespace Demo.yFiles.Graph.Collapse
       this.toolStripSeparator1.Name = "toolStripSeparator1";
       this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
       // 
-      // layouterComboBox
+      // layoutComboBox
       // 
-      this.layouterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.layouterComboBox.Name = "layouterComboBox";
-      this.layouterComboBox.Size = new System.Drawing.Size(121, 23);
-      this.layouterComboBox.SelectedIndexChanged += new System.EventHandler(this.layouterComboBox_SelectedIndexChanged);
+      this.layoutComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.layoutComboBox.Name = "layoutComboBox";
+      this.layoutComboBox.Size = new System.Drawing.Size(121, 23);
+      this.layoutComboBox.SelectedIndexChanged += new System.EventHandler(this.layoutComboBox_SelectedIndexChanged);
       // 
       // graphControl
       // 
@@ -237,7 +237,7 @@ namespace Demo.yFiles.Graph.Collapse
     private System.Windows.Forms.ToolStripButton FitContentButton;
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-    private System.Windows.Forms.ToolStripComboBox layouterComboBox;
+    private System.Windows.Forms.ToolStripComboBox layoutComboBox;
     private SplitContainer splitContainer1;
     private RichTextBox descriptionTextBox;
   }

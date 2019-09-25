@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using yWorks.Controls;
 using yWorks.Layout;
@@ -65,22 +66,13 @@ namespace Demo.yFiles.Layout.BasicLayout
       get { return layouts; }
     }
 
-    private ILayoutAlgorithm currentLayout;
+    public ILayoutAlgorithm CurrentLayout { get; set; }
 
-    public ILayoutAlgorithm CurrentLayout {
-      get { return currentLayout; }
-      set {
-        currentLayout = value;
-        if (currentLayout != null) {
-          ApplyLayout();
-        }
-      }
-    }
 
-    private async void ApplyLayout() {
+    private async Task ApplyLayout() {
       // launch the layout in a separate thread and animate the result
       try {
-        await graphControl.MorphLayout(currentLayout, TimeSpan.FromSeconds(1));
+        await graphControl.MorphLayout(CurrentLayout, TimeSpan.FromSeconds(1));
       } catch (Exception e) {
         MessageBox.Show(this, "Layout did not complete successfully.\n" + e.Message);
       }
@@ -88,12 +80,7 @@ namespace Demo.yFiles.Layout.BasicLayout
 
     public BasicLayoutDemo() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       RegisterToolStripCommands();
     }
 
@@ -124,7 +111,7 @@ namespace Demo.yFiles.Layout.BasicLayout
       hierarchicLayout.EdgeLayoutDescriptor.RoutingStyle = new yWorks.Layout.Hierarchic.RoutingStyle(
         yWorks.Layout.Hierarchic.EdgeRoutingStyle.Orthogonal);
 
-      currentLayout = hierarchicLayout;
+      CurrentLayout = hierarchicLayout;
       layouts.Add("Hierarchic", hierarchicLayout);
 
       //using organic layout style
@@ -232,12 +219,13 @@ namespace Demo.yFiles.Layout.BasicLayout
       }
     }
 
-    private void layoutComboBox_SelectedValueChanged(object sender, EventArgs e) {
+    private async void layoutComboBox_SelectedValueChanged(object sender, EventArgs e) {
       CurrentLayout = layouts[(string)layoutComboBox.SelectedItem];
+      await ApplyLayout();
     }
 
-    private void OnRunButtonClicked(object sender, EventArgs e) {
-      CurrentLayout = layouts[(string)layoutComboBox.SelectedItem];
+    private async void OnRunButtonClicked(object sender, EventArgs e) {
+      await ApplyLayout();
     }
 
     /// <summary>

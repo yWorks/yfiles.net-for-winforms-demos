@@ -108,12 +108,7 @@ namespace Demo.yFiles.Graph.Undo
     /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       //Keep shared instances of copied node styles
       graphControl.Clipboard.FromClipboardCopier.Clone = graphControl.Clipboard.FromClipboardCopier.Clone & ~GraphCopier.CloneTypes.NodeStyle;
@@ -154,6 +149,9 @@ namespace Demo.yFiles.Graph.Undo
 
       // initialize the graph
       InitializeGraph();
+
+      // reset the Undo queue so the initial graph creation cannot be undone
+      graphControl.Graph.GetUndoEngine().Clear();
 
       // initialize the input mode
       InitializeInputModes();

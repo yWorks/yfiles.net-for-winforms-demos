@@ -41,12 +41,7 @@ namespace Demo.yFiles.GraphEditor.UI
     }
 
     private void HelpDialog_Load(object sender, EventArgs e) {
-      try {
-        textBox.LoadFile(new MemoryStream(Resources.QuickReference), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        textBox.Text = "The description is not available with this version of .NET Core.";
-      }
+      textBox.LoadFile(new MemoryStream(Resources.QuickReference), RichTextBoxStreamType.RichText);
     }
 
     private void closeButton_Click(object sender, EventArgs e) {

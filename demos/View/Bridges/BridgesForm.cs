@@ -70,12 +70,7 @@ namespace Demo.yFiles.Graph.Bridges
     /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       graphControl.Graph.NodeDefaults.Style = new BevelNodeStyle { Color = Color.Orange };
       PanelNodeStyle style = new PanelNodeStyle {Color = Color.LightBlue, Insets = new InsetsD(20, 40, 20, 20)};

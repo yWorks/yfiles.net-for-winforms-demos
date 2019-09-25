@@ -1625,10 +1625,15 @@ namespace Demo.yFiles.GraphEditor
       labelPropertiesPanel.Controls.Add(labelPropertyPane);
       labelPropertiesPanel.PerformLayout();
 
+      EditorControl portPropertyPane = this.tableEditorFactory.CreateControl(portPropertyHandler, true, true);
+      portPropertyPane.Dock = DockStyle.Fill;
+      portPropertiesPanel.Controls.Add(portPropertyPane);
+      portPropertiesPanel.PerformLayout();
+
     }
 
     /// <summary>
-    /// Just focuses the property tab for the properties of the first item in the selection
+    /// Chooses the right property tab for the first item in the selection.
     /// </summary>
     private void FocusPropertyTab() {
       if (Selection.Count > 0) {
@@ -1637,6 +1642,7 @@ namespace Demo.yFiles.GraphEditor
         IEnumerator<IModelItem> enumerator = Selection.GetEnumerator();
         enumerator.MoveNext();
         IModelItem item = enumerator.Current;
+        var focused = graphControl.Focused;
         if (item is INode) {
           propertyTabControl.SelectedIndex = 0;
         } else if (item is IEdge) {
@@ -1645,6 +1651,11 @@ namespace Demo.yFiles.GraphEditor
           propertyTabControl.SelectedIndex = 2;
         } else if (item is IPort) {
           propertyTabControl.SelectedIndex = 3;
+        }
+        if (focused) {
+          // switching the tab will pass the focus to the new tab
+          // if the GraphControl had the focus before we re-claim it
+          graphControl.Focus();
         }
       }
     }

@@ -50,17 +50,12 @@ namespace Demo.yFiles.Graph.Input.ReparentHandler
 
     public ReparentHandlerForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     private void FormLoaded(object sender, EventArgs e) {
       IGraph graph = graphControl.Graph;
-      
+
       // Create a default editor input mode and configure it
       GraphEditorInputMode graphEditorInputMode = new GraphEditorInputMode
       {
@@ -86,11 +81,13 @@ namespace Demo.yFiles.Graph.Input.ReparentHandler
       graphControl.InputMode = graphEditorInputMode;
 
       CreateSampleGraph(graph);
+      // reset the Undo queue so the initial graph creation cannot be undone
+      graph.GetUndoEngine().Clear();
     }
 
     #endregion
 
-     /// <summary>
+    /// <summary>
     /// Customized variant of the default <see cref="ReparentNodeHandler"/> that
     /// determines the possible reparenting operations based on the node's tag.
     /// </summary>

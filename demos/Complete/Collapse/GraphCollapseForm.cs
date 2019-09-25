@@ -31,8 +31,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Collapse.Properties;
+using yWorks.Algorithms;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -40,6 +42,7 @@ using yWorks.Graph;
 using yWorks.Graph.Styles;
 using yWorks.Layout;
 using yWorks.Layout.Organic;
+using yWorks.Layout.Orthogonal;
 using yWorks.Layout.Tree;
 
 namespace Demo.yFiles.Graph.Collapse
@@ -59,19 +62,19 @@ namespace Demo.yFiles.Graph.Collapse
     // graph that contains visible nodes
     private FilteredGraphWrapper filteredGraph;
     // graph containing all nodes
-    private DefaultGraph fullGraph;
+    private IGraph fullGraph;
     private readonly INodeStyle leafNodeStyle = new LeafNodeStyle();
-    // currently selected layouter
-    private ILayoutAlgorithm currentLayouter;
-    // list of all layouts
+    // currently selected layout algorithm
+    private ILayoutAlgorithm currentLayout;
+    // list of all layout algorithms
     private readonly List<ILayoutAlgorithm> layouts = new List<ILayoutAlgorithm>();
-    // mapper for mapping layouts to their string representation in the combobox
-    private IMapper<string, ILayoutAlgorithm> layouterMapper = new DictionaryMapper<string, ILayoutAlgorithm>();
+    // mapper for mapping layout algorithms to their string representation in the combobox
+    private IMapper<string, ILayoutAlgorithm> layoutMapper = new DictionaryMapper<string, ILayoutAlgorithm>();
     // the node that has just been toggled and should stay fixed.
     private INode toggledNode;
 
     /// <summary>
-    /// Returns all available layouts.
+    /// Returns all available layout algorithms.
     /// </summary>
     public List<ILayoutAlgorithm> Layouts {
       get { return layouts; }
@@ -87,12 +90,7 @@ namespace Demo.yFiles.Graph.Collapse
       ZoomOutButton.SetCommand((Commands.DecreaseZoom), graphControl);
       FitContentButton.SetCommand(Commands.FitContent, graphControl);
       // load description
-      try {
-        descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        descriptionTextBox.Text = "The description is not available with this version of .NET Core.";
-      }
+      descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     #region Handling Expand/Collapse Clicks
@@ -112,14 +110,14 @@ namespace Demo.yFiles.Graph.Collapse
     /// <remarks>
     /// Toggles the visiblity of the node's children.
     /// </remarks>
-    public void ToggleChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
+    public async void ToggleChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = (e.Parameter ?? graphControl.CurrentItem) as INode;
       if (node != null) {
         bool canExpand = filteredGraph.OutDegree(node) != filteredGraph.WrappedGraph.OutDegree(node);
         if (canExpand) {
-          Expand(node);
+          await Expand(node);
         } else {
-          Collapse(node);
+          await Collapse(node);
         }
       }
     }
@@ -128,14 +126,14 @@ namespace Demo.yFiles.Graph.Collapse
     /// Show the children of a collapsed node.
     /// </summary>
     /// <param name="node">The node that should be expanded</param>
-    private void Expand(INode node) {
+    private async Task Expand(INode node) {
       if (collapsedNodes.Contains(node)) {
         toggledNode = node;
         SetCollapsedTag(node, false);
         AlignChildren(node);
         collapsedNodes.Remove(node);
         filteredGraph.NodePredicateChanged();
-        RunLayout(false);
+        await RunLayout(false);
       }
     }
 
@@ -143,13 +141,13 @@ namespace Demo.yFiles.Graph.Collapse
     /// Hide the children of a expanded node.
     /// </summary>
     /// <param name="node">The node that should be collapsed</param>
-    private void Collapse(INode node) {
+    private async Task Collapse(INode node) {
       if (!collapsedNodes.Contains(node)) {
         toggledNode = node;
         SetCollapsedTag(node, true);
         collapsedNodes.Add(node);
         filteredGraph.NodePredicateChanged();
-        RunLayout(false);
+        await RunLayout(false);
       }
     }
 
@@ -249,7 +247,7 @@ namespace Demo.yFiles.Graph.Collapse
       // initialize the graph
       InitializeGraph();
 
-      layouterComboBox.SelectedIndex = 0;
+      layoutComboBox.SelectedIndex = 0;
     }
 
     /// <summary>
@@ -287,10 +285,8 @@ namespace Demo.yFiles.Graph.Collapse
       // center the graph to prevent the initial layout fading in from the top left corner
       graphControl.FitGraphBounds();
 
-      // create layouts
-      SetupLayouters();
-      // calculate and run the initial layout.
-      RunLayout(true);
+      // create layout algorithms
+      SetupLayouts();
     }
 
     /// <summary>
@@ -307,39 +303,50 @@ namespace Demo.yFiles.Graph.Collapse
           ToggleChildrenCommand.Execute((INode) args.Item, graphControl);
         }
       };
-			graphViewerInputMode.KeyboardInputMode.AddCommandBinding(ToggleChildrenCommand, ToggleChildrenExecuted);
+      graphViewerInputMode.KeyboardInputMode.AddCommandBinding(ToggleChildrenCommand, ToggleChildrenExecuted);
       graphControl.InputMode = graphViewerInputMode;
     }
 
-    private void SetupLayouters() {
+    private void SetupLayouts() {
       // create TreeLayout
-      var treeLayout = new TreeLayout();
+      var treeLayout = new TreeLayout {LayoutOrientation = LayoutOrientation.LeftToRight};
       treeLayout.PrependStage(new FixNodeLayoutStage());
       layouts.Add(treeLayout);
-      layouterMapper["Tree"] = treeLayout;
-      layouterComboBox.Items.Add("Tree");
-
-      // set it as initial value
-      currentLayouter = treeLayout;
+      layoutMapper["Tree"] = treeLayout;
+      layoutComboBox.Items.Add("Tree");
 
       // create BalloonLayout
-      var balloonLayouter = new BalloonLayout
+      var balloonLayout = new BalloonLayout
       {
         FromSketchMode = true,
         CompactnessFactor = 1.0,
         AllowOverlaps = true
       };
-      balloonLayouter.PrependStage(new FixNodeLayoutStage());
-      layouts.Add(balloonLayouter);
-      layouterMapper["Balloon"] = balloonLayouter;
-      layouterComboBox.Items.Add("Balloon");
+      balloonLayout.PrependStage(new FixNodeLayoutStage());
+      layouts.Add(balloonLayout);
+      layoutMapper["Balloon"] = balloonLayout;
+      layoutComboBox.Items.Add("Balloon");
 
-      // create OrganicLayouter
-      var organicLayouter = new ClassicOrganicLayout { InitialPlacement = InitialPlacement.AsIs };
-      organicLayouter.PrependStage(new FixNodeLayoutStage());
-      layouts.Add(organicLayouter);
-      layouterMapper["Organic"] = organicLayouter;
-      layouterComboBox.Items.Add("Organic");
+      // create OrganicLayout
+      var organicLayout = new OrganicLayout {
+        MinimumNodeDistance = 40,
+        Deterministic = true
+      };
+      organicLayout.PrependStage(new FixNodeLayoutStage());
+      layouts.Add(organicLayout);
+      layoutMapper["Organic"] = organicLayout;
+      layoutComboBox.Items.Add("Organic");
+
+      // create OrthogonalLayout
+      var orthogonalLayout = new OrthogonalLayout();
+      orthogonalLayout.PrependStage(new FixNodeLayoutStage());
+      layouts.Add(orthogonalLayout);
+      layoutMapper["Orthogonal"] = orthogonalLayout;
+      layoutComboBox.Items.Add("Orthogonal");
+
+      // set it as initial value
+      currentLayout = treeLayout;
+      layoutComboBox.SelectedIndex = 0;
     }
 
     #endregion
@@ -356,31 +363,30 @@ namespace Demo.yFiles.Graph.Collapse
     }
 
     #endregion
-
-    private async void RunLayout(bool animateViewport) {
-      if (currentLayouter != null) {
+    
+    private async Task RunLayout(bool animateViewport) {
+      if (currentLayout != null) {
         // provide additional data to configure the FixNodeLayoutStage
         FixNodeLayoutData fixNodeLayoutData = new FixNodeLayoutData();
         // specify the node whose position is to be fixed during layout
         fixNodeLayoutData.FixedNodes.Item = toggledNode;
 
-        var layoutExecutor = new LayoutExecutor(graphControl, currentLayouter)
+        // run the layout and animate the result
+        var layoutExecutor = new LayoutExecutor(graphControl, currentLayout)
         {
           UpdateContentRect = true,
           AnimateViewport = animateViewport,
           Duration = TimeSpan.FromSeconds(0.3d),
           LayoutData = fixNodeLayoutData
         };
-
         await layoutExecutor.Start();
-
         toggledNode = null;
       }
     }
 
-    private void layouterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-      currentLayouter = layouterMapper[layouterComboBox.SelectedItem as string];
-      RunLayout(true);
+    private async void layoutComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+      currentLayout = layoutMapper[layoutComboBox.SelectedItem as string];
+      await RunLayout(true);
     }
 
     #region Main
@@ -407,4 +413,20 @@ namespace Demo.yFiles.Graph.Collapse
     Collapsed = 1,
     Expanded = 2,
   }
+
+  internal class XCoordComparer : IComparer<object>
+  {
+    /// <summary>Compares two edges by the x-coordinates of the centers of their target nodes.</summary>
+    /// <param name="edge1">the first edge</param>
+    /// <param name="edge2">the second edge</param>
+    /// <returns>a negative value if the first target node is left of the second target node, a positive value if it's the
+    /// other way round and <c>0</c> if both target nodes are at the same x-coordinate</returns>
+    public virtual int Compare(object edge1, object edge2) {
+      Node va = ((Edge) edge1).Target;
+      Node vb = ((Edge) edge2).Target;
+      LayoutGraph graph = (LayoutGraph) va.Graph;
+      return (int) ((100.0 * (graph.GetCenterX(va) - graph.GetCenterX(vb))));
+    }
+  }
+
 }

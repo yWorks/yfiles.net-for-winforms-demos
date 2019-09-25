@@ -60,7 +60,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
   /// This demo shows how an editor for business process diagrams can be created using yFiles WPF.
   /// </summary>
   /// <remarks>
-  /// The visualization and business logic is based on the BPMN 1.1 specification but isn't meant to
+  /// The visualization and business logic is based on the BPMN 2.0 specification but isn't meant to
   /// implement all aspects of the specification but to demonstrate what techniques offered by
   /// yFiles WPF can be used to create such an editor:
   /// <list type="bullet">
@@ -118,12 +118,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
 
     public BpmnEditorForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       newButton.SetCommand(Commands.New, graphControl);
       openButton.Click += OpenFile;
       saveButton.SetCommand(Commands.SaveAs, graphControl);
@@ -262,7 +257,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
 
       graphControl.InputMode = geim;
     }
-    
+
     /// <summary>
     /// Event, if there was a double click on an Item
     /// </summary>
@@ -291,7 +286,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         e.Handled = true;
         return;
       }
-
+      
       var edge = e.Item as IEdge;
       if (edge != null && edge.Labels.Count > 0) {
         ((GraphEditorInputMode) graphControl.InputMode).EditLabel(edge.Labels.First());
@@ -328,7 +323,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       return new Label {
                  Text = text,
                  TextAlign = ContentAlignment.MiddleLeft,
-                 Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Italic, GraphicsUnit.Point),
+                 Font = new Font(FontFamily.GenericSansSerif, 13, FontStyle.Italic, GraphicsUnit.Pixel),
                  Padding = new Padding(5,5,0,0),
                  Height = 50,
                  Width = 150
@@ -362,8 +357,8 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       // Ports should not be removed when an attached edge is deleted
       graph.NodeDefaults.Ports.AutoCleanUp = false;
       // Folding edges should use existing ports
-      ((DefaultFoldingEdgeConverter)foldingManager.FoldingEdgeConverter).ReuseMasterPorts = true;
-      ((DefaultFoldingEdgeConverter)foldingManager.FoldingEdgeConverter).ReuseFolderNodePorts = true;
+      ((DefaultFoldingEdgeConverter) foldingManager.FoldingEdgeConverter).ReuseMasterPorts = true;
+      ((DefaultFoldingEdgeConverter) foldingManager.FoldingEdgeConverter).ReuseFolderNodePorts = true;
 
       // Set default styles and label model parameter
       //foldingView.GroupedGraph.GroupNodeDefaults.Style = new GroupNodeStyle();
@@ -452,13 +447,11 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
               if (!choreographyNodeStyle.TopParticipants.Remove(participant)) {
                 choreographyNodeStyle.BottomParticipants.Remove(participant);
               }
-              graphControl.Invalidate();
               graphControl.Focus();
             });
             // or toggle its Multi-Instance flag
             AddMenuItem(items, "Toggle Participant Multi-Instance", (o, args) => {
               participant.MultiInstance = !participant.MultiInstance;
-              graphControl.Invalidate();
               graphControl.Focus();
             });
             // or edit its Label
@@ -500,9 +493,6 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
                 taskNameBandLabel = graphControl.Graph.AddLabel(node, "");
                 graphControl.Graph.SetLabelLayoutParameter(taskNameBandLabel, parameter);
                 graphControl.Graph.SetStyle(taskNameBandLabel, BpmnLabelStyle.NewDefaultInstance());
-                // We want the taskNameBandLabel to be the first in the list
-                ((List<ILabel>) node.Labels).Remove(taskNameBandLabel);
-                ((List<ILabel>) node.Labels).Insert(0, taskNameBandLabel);
               } else {
                 taskNameBandLabel = GetLabelFromParameter(node.Labels, ChoreographyLabelModel.TaskNameBand);
               }
@@ -593,6 +583,8 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         e.Handled = true;
       }
     }
+    
+    
 
     /// <summary>
     /// Helper method that retrieves the label to the corresponding choreography participant
@@ -617,7 +609,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
     }
 
     /// <summary>
-    /// Initializes the panel from where BPMN elements an be dragged onto the graph.
+    /// Initializes the panel from where BPMN elements can be dragged onto the graph.
     /// </summary>
     private void InitializeStylePanel() {
       // Create a new Graph in which the palette nodes live
@@ -827,7 +819,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
           var checkBox = new CheckBox {
             Text = p.Name,
             TextAlign = ContentAlignment.MiddleLeft,
-            Font = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular, GraphicsUnit.Point),
+            Font = new Font(FontFamily.GenericSansSerif, 10.5f, FontStyle.Regular, GraphicsUnit.Pixel),
             Padding = new Padding(2),
             Height = 20,
             Width = 150,
@@ -861,7 +853,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         // Label and ComboBox for enum properties
         if (p.PropertyType.IsEnum) {
           var label = new Label {Text = p.Name, TextAlign = ContentAlignment.MiddleLeft,
-                 Font = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Bold, GraphicsUnit.Point),
+                 Font = new Font(FontFamily.GenericSansSerif, 10.5f, FontStyle.Bold, GraphicsUnit.Pixel),
                  Padding = new Padding(2),
                  Height = 20,
                  Width = 150};
@@ -928,7 +920,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         sampleGraphDiComboBox.SelectedItem = null;
       }
     }
-
+    
     /// <summary>
     /// Called when the selection of the bpmn graph selection combo box is changed.
     /// </summary>
@@ -956,7 +948,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
     /// <summary>
     /// Event callback to handle the automatic layout.
     /// </summary>
-    private void OnLayoutClick(object sender, EventArgs e) {
+    private async void OnLayoutClick(object sender, EventArgs e) {
       // Create a new BpmnLayout using a Left-To-Right layout orientation
       var bpmnLayout = new BpmnLayout { LayoutOrientation = yWorks.Layout.Bpmn.LayoutOrientation.LeftToRight };
 
@@ -977,7 +969,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
           StartNodesFirst = true
         }
       };
-      layoutExecutor.Start();
+      await layoutExecutor.Start();
     }
 
     /// <summary>
@@ -1034,12 +1026,10 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       }
     }
 
-
     /// <summary>
-    /// Custom Opener for .bpmn - Files
+    /// Custom Open File Dialog for .bpmn and GraphML files.
     /// </summary>
-    private void OpenFile(object sender, EventArgs eventArgs) {
-      
+    private void OpenFile(object sender, EventArgs e) {
       var openFileDialog = new OpenFileDialog();
       openFileDialog.Filter = "All graphs|*.bpmn;*.graphml|BPMN files (*.bpmn)|*.bpmn|GraphML files (*.graphml)|*.graphml|XML files (*.xml)|*.xml|All files (*.*)|*.*";
       openFileDialog.FilterIndex = 1;
@@ -1048,14 +1038,14 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         var fileName = openFileDialog.FileName;
         if (Path.GetExtension(openFileDialog.FileName) == ".bpmn") {
           var parser = new BpmnDiParser();
-          parser.Load(graphControl.Graph, fileName);
+          parser.Load(graphControl.Graph, fileName, SelectDiagram);
         } else {
           graphControl.GraphMLIOHandler.Read(graphControl.Graph,fileName);
         }
         graphControl.FitGraphBounds();
       }
     }
-    
+
     /// <summary>
     /// Lets the user select a diagram from a list of possible diagrams
     /// </summary>

@@ -33,6 +33,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Demo.yFiles.Layout.Tree.Configuration;
@@ -49,13 +50,12 @@ using yWorks.Utils;
 
 namespace Demo.yFiles.Layout.Tree
 {
-  /// <summary>
-  /// This demo presents Undo/Redo functionality.
+  ///<summary>This demo demonstrates the different <see cref="INodePlacer"/> implementations for the
+  /// <see cref="TreeLayout"/>.
   /// </summary>
-  /// <remarks>
-  /// This demo shows how to use the undo/redo framework in yFiles .NET both for predefined
-  /// Undo/Redo operations (e.g. structural modifications) as well as for custom undo functionality.
-  /// </remarks>
+  ///<remarks>
+  /// An <see cref="INodePlacer"/> can be assigned to each node separately. It arranges the node it is
+  ///assigned to and its sub trees. In this demo all nodes of the same layer have the same node placer.</remarks>
   public partial class TreeForm : Form
   {
 
@@ -82,16 +82,16 @@ namespace Demo.yFiles.Layout.Tree
     ///<summary>
     /// Apply the current settings to the graph.
     ///</summary>
-    private void ApplyConfigurations() {
+    private async Task ApplyConfigurations() {
       IGraph graph = graphControl.Graph;
       // Get the root node of the tree.
       var graphAdapter = new YGraphAdapter(graph);
       INode root = graphAdapter.GetOriginalNode(Trees.GetRoot(graphAdapter.YGraph));
       // apply the current setting to all nodes of the same layer.
       ApplySettingsRecursively(graph, root, 0);
-      DoLayout();
+      await ApplyLayout();
     }
-    
+
     ///<summary>
     /// Apply the new settings to the selected layer and descend recursively
     /// </summary>
@@ -112,19 +112,14 @@ namespace Demo.yFiles.Layout.Tree
     /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       nodePlacerPanel.ReloadConfiguration += delegate { UpdatePlacerList(); };
       nodePlacerPanel.ApplyConfiguration += delegate { ApplyConfigurations(); };
 
       RegisterToolStripCommands();
-      InitializeInputModes();
       // initialize the graph
       InitializeGraph();
+      InitializeInputModes();
     }
 
     private IMapper<INode, INodePlacer> placers;
@@ -173,28 +168,91 @@ namespace Demo.yFiles.Layout.Tree
     }
 
     private void InitializeInputModes() {
-      var geim = graphControl.InputMode as GraphEditorInputMode;
+      var geim = new GraphEditorInputMode();
+      graphControl.InputMode = geim;
 
       // forbid node and edge creation
-      if (geim != null) {
-        geim.AllowCreateEdge = false;
-        geim.AllowCreateNode = false;
-        // Allow ownly node deletion
-        geim.DeletableItems = GraphItemTypes.Node;
+      geim.AllowCreateEdge = true;
+      geim.AllowCreateNode = false;
+      // Allow ownly node deletion
+      geim.DeletableItems = GraphItemTypes.Node;
 
-        geim.ContextMenuItems = GraphItemTypes.Node;
-        geim.PopulateItemContextMenu += ContextMenuInputModePopulateContextMenu;
-        geim.DeletingSelection += GeimDeletingSelection;
-        geim.DeletedSelection += delegate {
-                                   //And trigger new layout
-                                   DoLayout();
-                                 };
-        //Disallow multi selection
-        geim.MarqueeSelectionInputMode.Enabled = false;
-        geim.MultiSelectionRecognizer = EventRecognizers.Never;
-      }
+      geim.ContextMenuItems = GraphItemTypes.Node;
+      geim.PopulateItemContextMenu += ContextMenuInputModePopulateContextMenu;
+      geim.DeletingSelection += GeimDeletingSelection;
+      geim.DeletedSelection += async delegate {
+        //And trigger new layout
+        await ApplyLayout();
+      };
+      //Disallow multi selection
+      geim.MarqueeSelectionInputMode.Enabled = false;
+      geim.MultiSelectionRecognizer = EventRecognizers.Never;
 
       graphControl.Selection.ItemSelectionChanged += ItemSelectionChanged;
+
+      // Modify edge creation to always create a new target node
+
+      var createEdgeInputMode = geim.CreateEdgeInputMode;
+
+      // never search for target ports
+      createEdgeInputMode.EndHitTestable = HitTestables.Never;
+      // any location is a valid target location
+      createEdgeInputMode.PrematureEndHitTestable = HitTestables.Always;
+
+      // ignore port candidates and don't show highlights:
+      // we don't want to connect to existing nodes
+      createEdgeInputMode.ForceSnapToCandidate = false;
+      createEdgeInputMode.SnapToTargetCandidate = false;
+      createEdgeInputMode.ShowPortCandidates = ShowPortCandidates.None;
+      createEdgeInputMode.AllowSelfloops = false;
+      graphControl.Graph.GetDecorator().NodeDecorator.HighlightDecorator.HideImplementation();
+
+      // display the new target node during edge creation
+      // provide the default size
+      createEdgeInputMode.DummyEdgeGraph.NodeDefaults.Size = graphControl.Graph.NodeDefaults.Size;
+      // set the style according to the layer
+      createEdgeInputMode.GestureStarted += (sender, args) => {
+        int layer = GetLayer((INode) createEdgeInputMode.SourcePortCandidate.Owner) + 1;
+        createEdgeInputMode.DummyEdgeGraph.SetStyle(createEdgeInputMode.DummyTargetNode,
+            new ShinyPlateNodeStyle {Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer % NodePlacerPanel.LayerBrushes.Length])});
+      };
+
+      // let the EdgeCreator create a new target node and connect the new edge to it
+      createEdgeInputMode.EdgeCreator = (context, graph, sourcePortCandidate, targetPortCandidate, dummyEdge) => {
+        // copy the style from the dummy node
+        var dummyTargetNode = createEdgeInputMode.DummyTargetNode;
+        var node = graph.CreateNode(dummyTargetNode.Layout.ToRectD(), dummyTargetNode.Style, dummyTargetNode.Tag);
+        // create a port at the center
+        var targetPort = graph.AddPort(node, createEdgeInputMode.DummyTargetNodePort.LocationParameter);
+        // create the edge from the source port candidate to the new node
+        return graph.CreateEdge(sourcePortCandidate.CreatePort(context), targetPort, dummyEdge.Style);
+      };
+
+      // run a new layout after the edge has been created
+      createEdgeInputMode.EdgeCreated += InteractiveEdgeCreated;
+    }
+
+    private async void InteractiveEdgeCreated(object sender, EdgeEventArgs e) {
+      INode node = (INode) e.Item.TargetPort.Owner;
+      int layer = GetLayer(node);
+      IGraph graph = graphControl.Graph;
+
+      // set the correct color for the layer
+      graph.SetStyle(node,
+        new ShinyPlateNodeStyle {Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer%NodePlacerPanel.LayerBrushes.Length])});
+      // and the correct placer for the layer
+      INodePlacer placer = null;
+      if (layer >= nodePlacerPanel.NodePlacers.Count) {
+        nodePlacerPanel.NodePlacers.Add(NodePlacerConfigurations.None);
+      } else {
+        INodePlacerConfiguration nodePlacerConfiguration = nodePlacerPanel.NodePlacers[layer].Configuration;
+        placer = nodePlacerConfiguration.CreateNodePlacer();
+      }
+      placers[node] = placer ?? new DefaultNodePlacer();
+      // execute the layout
+      await ApplyLayout();
+      // set the placer panel to the node's layer
+      nodePlacerPanel.Level = layer;
     }
 
     private void ItemSelectionChanged(object source, ItemSelectionChangedEventArgs<IModelItem> evt) {
@@ -215,7 +273,7 @@ namespace Demo.yFiles.Layout.Tree
         if (inEdges.Count == 0) {
           break;
         } else {
-          node = (INode)inEdges.First().SourcePort.Owner;
+          node = (INode) inEdges.First().SourcePort.Owner;
           layer++;
         }
       }
@@ -242,7 +300,7 @@ namespace Demo.yFiles.Layout.Tree
       nodesToDelete.Add(selectedNode);
       IListEnumerable<IEdge> outEdges = graphControl.Graph.EdgesAt(selectedNode, AdjacencyTypes.Outgoing);
       foreach (IEdge outEdge in outEdges) {
-        var target = (INode)outEdge.TargetPort.Owner;
+        var target = (INode) outEdge.TargetPort.Owner;
         CollectSubtreeNodes(target, nodesToDelete);
       }
     }
@@ -253,7 +311,7 @@ namespace Demo.yFiles.Layout.Tree
       bool assistant = assistants[node];
 
       var menuItem = new ToolStripMenuItem("Set as " + (assistant ? "normal" : "assistant"));// { Header = "Set as " + (assistant ? "normal" : "assistant") };
-      menuItem.Click += delegate {
+      menuItem.Click += async delegate {
                           //Toggle the value in the map and set the style to indicate an assistant node
                           assistants[node] = !assistant;
                           var shinyPlateNodeStyle = node.Style.Clone() as ShinyPlateNodeStyle;
@@ -263,7 +321,7 @@ namespace Demo.yFiles.Layout.Tree
                                                         : null;
                             graphControl.Graph.SetStyle(node, shinyPlateNodeStyle);
                           }
-                          DoLayout();
+                          await ApplyLayout();
                         };
       e.Menu.Items.Add(menuItem);
       e.ShowMenu = true;
@@ -280,7 +338,7 @@ namespace Demo.yFiles.Layout.Tree
       }
     }
 
-    private void SampleComboBoxSelectedValueChanged(object sender, EventArgs e) {
+    private async void SampleComboBoxSelectedValueChanged(object sender, EventArgs e) {
       switch ((string) sampleComboBox.SelectedItem) {
         case "Example Tree":
           CreateSampleGraph(graphControl.Graph);
@@ -294,7 +352,7 @@ namespace Demo.yFiles.Layout.Tree
       //Center the graph to prevent the initial layout fading in from the top left corner
       graphControl.FitGraphBounds();
       //And trigger new layout
-      DoLayout();
+      await ApplyLayout();
       //Clear the undo engine afterwards
       var undoEngine = graphControl.Graph.GetUndoEngine();
       if (undoEngine != null) {
@@ -345,7 +403,7 @@ namespace Demo.yFiles.Layout.Tree
     ///<summary>
     /// Execute the layout algorithm.
     /// </summary>
-    private void DoLayout() {
+    private async Task ApplyLayout() {
       var treeLayout = new TreeLayout();
       var executor = new LayoutExecutor(graphControl, treeLayout) {
         AnimateViewport = true,
@@ -365,7 +423,7 @@ namespace Demo.yFiles.Layout.Tree
       };
 
       try {
-        executor.Start();
+        await executor.Start();
       } catch (Exception e) {
         MessageBox.Show(this,
           "Layout did not complete successfully.\n" + e.Message);

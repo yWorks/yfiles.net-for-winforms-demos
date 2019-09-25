@@ -770,7 +770,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -788,7 +788,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -800,7 +800,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -817,7 +817,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -829,7 +829,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -846,7 +846,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -863,7 +863,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -875,7 +875,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -892,7 +892,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -910,7 +910,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -922,7 +922,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -939,7 +939,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -951,7 +951,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -968,7 +968,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -980,7 +980,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -992,7 +992,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1004,7 +1004,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1016,7 +1016,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1028,7 +1028,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1045,7 +1045,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1057,7 +1057,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1074,7 +1074,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1091,7 +1091,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1108,7 +1108,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1120,7 +1120,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1137,7 +1137,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1154,7 +1154,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1166,7 +1166,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1178,7 +1178,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1190,7 +1190,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1207,7 +1207,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1219,7 +1219,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1236,7 +1236,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1248,7 +1248,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1260,7 +1260,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1272,7 +1272,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1284,7 +1284,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1296,7 +1296,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1308,7 +1308,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1320,7 +1320,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1332,7 +1332,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1349,7 +1349,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1361,7 +1361,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1373,7 +1373,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1390,7 +1390,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1402,7 +1402,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1419,7 +1419,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1431,7 +1431,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1443,7 +1443,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>
@@ -1455,7 +1455,7 @@
       </data>
       <data key="d5">
         <x:List>
-          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}" PreferredSize="61,14">
+          <y:Label LayoutParameter="{y:GraphMLReference 3}" Style="{y:GraphMLReference 4}">
             <y:Label.Text><![CDATA[Edge Label]]></y:Label.Text>
           </y:Label>
         </x:List>

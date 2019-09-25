@@ -89,7 +89,6 @@ namespace Demo.yFiles.Layout.Tree
       this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.graphControl = new yWorks.Controls.GraphControl();
-      this.graphEditorInputMode1 = new yWorks.Controls.Input.GraphEditorInputMode();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.description = new System.Windows.Forms.RichTextBox();
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -255,7 +254,6 @@ namespace Demo.yFiles.Layout.Tree
       this.graphControl.ContentRect = new yWorks.Geometry.RectD(0D, 0D, 400D, 400D);
       this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.graphControl.FitContentViewMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
-      this.graphControl.InputMode = this.graphEditorInputMode1;
       this.graphControl.Location = new System.Drawing.Point(0, 0);
       this.graphControl.Name = "graphControl";
       this.graphControl.Size = new System.Drawing.Size(448, 701);
@@ -263,64 +261,6 @@ namespace Demo.yFiles.Layout.Tree
       this.graphControl.Text = "graphControl1";
       viewportLimiter1.Bounds = null;
       this.graphControl.ViewportLimiter = viewportLimiter1;
-      // 
-      // graphEditorInputMode1
-      // 
-      this.graphEditorInputMode1.AllowAdjustGroupNodeSize = true;
-      this.graphEditorInputMode1.AllowCreateBend = true;
-      this.graphEditorInputMode1.AllowClearSelection = true;
-      this.graphEditorInputMode1.ClickableItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.ClickHitTestOrder = new yWorks.Graph.GraphItemTypes[] {
-        yWorks.Graph.GraphItemTypes.Bend,
-        yWorks.Graph.GraphItemTypes.EdgeLabel,
-        yWorks.Graph.GraphItemTypes.Edge,
-        yWorks.Graph.GraphItemTypes.Node,
-        yWorks.Graph.GraphItemTypes.NodeLabel,
-        yWorks.Graph.GraphItemTypes.Port,
-        ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-                    | yWorks.Graph.GraphItemTypes.NodeLabel) 
-                    | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-                    | yWorks.Graph.GraphItemTypes.Port) 
-                    | yWorks.Graph.GraphItemTypes.Bend)))};
-      this.graphEditorInputMode1.ClickSelectableItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.AllowClipboardOperations = true;
-      this.graphEditorInputMode1.ContentRectMargins = new yWorks.Geometry.InsetsD(0D, 0D, 0D, 0D);
-      this.graphEditorInputMode1.DeletableItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.AllowCreateEdge = true;
-      this.graphEditorInputMode1.AllowGroupSelection = true;
-      this.graphEditorInputMode1.AllowAddLabel = true;
-      this.graphEditorInputMode1.LabelEditableItems = ((yWorks.Graph.GraphItemTypes)((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel)));
-      this.graphEditorInputMode1.AllowAddLabel = true;
-      this.graphEditorInputMode1.MarqueeSelectableItems = ((yWorks.Graph.GraphItemTypes)(((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.MovableItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.AllowCreateNode = true;
-      this.graphEditorInputMode1.AllowPaste = true;
-      this.graphEditorInputMode1.ReparentNodeHandler = reparentNodeHandler1;
-      this.graphEditorInputMode1.AllowReparentNodes = true;
-      this.graphEditorInputMode1.SelectableItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
       labelDefaults1.AutoAdjustPreferredSize = true;
       labelDefaults1.ShareLayoutParameterInstance = true;
       labelDefaults1.ShareStyleInstance = true;
@@ -360,14 +300,6 @@ namespace Demo.yFiles.Layout.Tree
       nodeDefaults1.Style = shapeNodeStyle1;
       defaultGraph1.NodeDefaults = nodeDefaults1;
       graphSelection1.Graph = defaultGraph1;
-      this.graphEditorInputMode1.ShowHandleItems = ((yWorks.Graph.GraphItemTypes)((((((yWorks.Graph.GraphItemTypes.Node | yWorks.Graph.GraphItemTypes.Edge) 
-            | yWorks.Graph.GraphItemTypes.NodeLabel) 
-            | yWorks.Graph.GraphItemTypes.EdgeLabel) 
-            | yWorks.Graph.GraphItemTypes.Port) 
-            | yWorks.Graph.GraphItemTypes.Bend)));
-      this.graphEditorInputMode1.AllowUndoOperations = true;
-      this.graphEditorInputMode1.AllowUngroupSelection = true;
-      this.graphEditorInputMode1.Waiting = false;
       // 
       // splitContainer1
       // 
@@ -472,7 +404,6 @@ namespace Demo.yFiles.Layout.Tree
     private System.Windows.Forms.SplitContainer splitContainer2;
     private yWorks.Controls.GraphControl graphControl;
     private NodePlacerPanel nodePlacerPanel;
-    private yWorks.Controls.Input.GraphEditorInputMode graphEditorInputMode1;
   }
 }
 

@@ -28,7 +28,7 @@
     <key id="d13" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
     <data key="d13">
         <y:SharedData>
-            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <bpmn:AlternatingLeafStripeStyle x:Key="2">
                 <bpmn:AlternatingLeafStripeStyle.EvenLeafDescriptor>
                     <bpmn:StripeDescriptor BackgroundBrush="#FFC4D7ED" InsetBrush="#FFE0E0E0" />
@@ -44,7 +44,7 @@
             <yforms:NodeStyleStripeStyleAdapter x:Key="4">
                 <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
             </yforms:NodeStyleStripeStyleAdapter>
-            <yforms:DefaultLabelStyle x:Key="5" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="5" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <y:InteriorLabelModelParameter x:Key="6" Position="Center">
                 <y:InteriorLabelModelParameter.Model>
                     <y:InteriorLabelModel />
@@ -66,14 +66,14 @@
                                 <y:Table.Rows>
                                     <y:Row MinimumSize="10" Size="80" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="39,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                                                 <y:Label.Text>Branch</y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
                                     </y:Row>
                                     <y:Row MinimumSize="10" Size="80" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                                         <y:Row.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="73,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                                                 <y:Label.Text>Headquarters</y:Label.Text>
                                             </y:Label>
                                         </y:Row.Labels>
@@ -82,14 +82,14 @@
                                 <y:Table.Columns>
                                     <y:Column Style="{y:GraphMLReference 4}" MinimumSize="10" Size="271" Insets="0,30,0,0">
                                         <y:Column.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 5}" PreferredSize="115,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 5}" >
                                                 <y:Label.Text><![CDATA[Business Department]]></y:Label.Text>
                                             </y:Label>
                                         </y:Column.Labels>
                                     </y:Column>
                                     <y:Column Style="{y:GraphMLReference 4}" MinimumSize="10" Size="301" Insets="0,30,0,0">
                                         <y:Column.Labels>
-                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 5}" PreferredSize="69,14">
+                                            <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" Style="{y:GraphMLReference 5}" >
                                                 <y:Label.Text>Procurement</y:Label.Text>
                                             </y:Label>
                                         </y:Column.Labels>
@@ -116,10 +116,10 @@
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" PreferredSize="85,14">
+                    <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" >
                         <y:Label.Text><![CDATA[Procure Articles]]></y:Label.Text>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False"  Font="Microsoft Sans Serif, 10px"/>
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -147,11 +147,11 @@
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 6}" PreferredSize="38,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Report
 Demand]]></y:Label.Text>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -176,11 +176,11 @@ Demand]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 6}" PreferredSize="58,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Approve of
 Procurement]]></y:Label.Text>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -205,12 +205,12 @@ Procurement]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 6}" PreferredSize="59,35">
+                            <y:Label LayoutParameter="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Close
 Contract with
 Supplier]]></y:Label.Text>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>
@@ -235,11 +235,11 @@ Supplier]]></y:Label.Text>
                     </data>
                     <data key="d3">
                         <x:List>
-                            <y:Label LayoutParameter="{y:GraphMLReference 6}" PreferredSize="43,24">
+                            <y:Label LayoutParameter="{y:GraphMLReference 6}" >
                                 <y:Label.Text><![CDATA[Carry out
 Purchase]]></y:Label.Text>
                                 <y:Label.Style>
-                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 6.5pt" />
+                                    <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" Font="Microsoft Sans Serif, 9px" />
                                 </y:Label.Style>
                             </y:Label>
                         </x:List>

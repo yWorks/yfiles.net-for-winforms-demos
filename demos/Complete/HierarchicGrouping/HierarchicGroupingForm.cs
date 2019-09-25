@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.HierarchicGrouping.Properties;
 using yWorks.Algorithms;
@@ -59,18 +60,13 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
     public HierarchicGroupingForm() {
       InitializeComponent();
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
       fitToSizeButton.SetCommand(Commands.FitGraphBounds, graphControl.FitContentViewMargins, graphControl);
     }
 
-    private void ApplyLayout() {
+    private async Task ApplyLayout() {
       // create a pre-configured HierarchicLayout
       var hl = CreateHierarchicLayout();
       // rearrange only the incremental graph elements, the
@@ -100,7 +96,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
         LayoutData = hlData
       };
       // compose layout data from HierarchicLayoutData and FixNodeLayoutData
-      executor.Start();
+      await executor.Start();
     }
 
 
@@ -170,7 +166,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
     /// <remarks>This method performs an incremental layout on the newly collapsed group node.</remarks>
     /// <param name="source"></param>
     /// <param name="evt"></param>
-    private void NavigationInputMode_GroupCollapsed(object source, ItemEventArgs<INode> evt) {
+    private async void NavigationInputMode_GroupCollapsed(object source, ItemEventArgs<INode> evt) {
       incrementalNodes.Clear();
       incrementalEdges.Clear();
       // we mark the group node and its adjacent edges as incremental
@@ -191,7 +187,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
         graphControl.Graph.ClearBends(edge);
       }
 
-      ApplyLayout();
+      await ApplyLayout();
     }
 
     /// <summary>
@@ -200,7 +196,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
     /// <remarks>This method performs an incremental layout on the newly expanded group node and its descendants.</remarks>
     /// <param name="source"></param>
     /// <param name="evt"></param>
-    private void NavigationInputMode_GroupExpanded(object source, ItemEventArgs<INode> evt) {
+    private async void NavigationInputMode_GroupExpanded(object source, ItemEventArgs<INode> evt) {
       incrementalNodes.Clear();
       incrementalEdges.Clear();
       // we mark the group node and its descendants as incremental
@@ -232,7 +228,7 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
         graphControl.Graph.ClearBends(edge);
       }
 
-      ApplyLayout();
+      await ApplyLayout();
     }
 
     /// <summary>

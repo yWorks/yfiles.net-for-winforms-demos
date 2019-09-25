@@ -32,6 +32,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.LayerConstraints.Properties;
 using yWorks.Controls;
@@ -92,17 +93,12 @@ namespace Demo.yFiles.Layout.LayerConstraints
     /// </summary>
     /// <seealso cref="InitializeInputModes"/>
     /// <seealso cref="InitializeGraph"/>
-    private void OnLoaded(object sender, EventArgs e) {
+    private async void OnLoaded(object sender, EventArgs e) {
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       // initialize the graph
-      InitializeGraph();
+      await InitializeGraph();
 
       // initialize the input mode
       InitializeInputModes();
@@ -112,7 +108,7 @@ namespace Demo.yFiles.Layout.LayerConstraints
     /// Initializes the graph instance setting default styles
     /// and creating a small sample graph.
     /// </summary>
-    protected virtual void InitializeGraph() {
+    protected virtual async Task InitializeGraph() {
       IGraph graph = graphControl.Graph;
 
       // set the style as the default for all new nodes
@@ -134,7 +130,7 @@ namespace Demo.yFiles.Layout.LayerConstraints
 
       // create the graph and perform a layout operation
       CreateNewGraph();
-      DoLayout();
+      await DoLayout();
     }
 
     /// <summary>
@@ -342,16 +338,16 @@ namespace Demo.yFiles.Layout.LayerConstraints
     /// <summary>
     /// Formats the current graph.
     /// </summary>
-    private void OnLayoutClick(object sender, EventArgs e) {
-      DoLayout();
+    private async void OnLayoutClick(object sender, EventArgs e) {
+      await DoLayout();
     }
 
     /// <summary>
     /// Creates a new graph and formats it.
     /// </summary>
-    private void OnNewGraphClick(object sender, EventArgs e) {
+    private async void OnNewGraphClick(object sender, EventArgs e) {
       CreateNewGraph();
-      DoLayout();
+      await DoLayout();
     }
 
     /// <summary>
@@ -408,7 +404,7 @@ namespace Demo.yFiles.Layout.LayerConstraints
 
     #endregion
 
-    private async void DoLayout() {
+    private async Task DoLayout() {
       // layout starting, disable button
       runButton.Enabled = false;
 

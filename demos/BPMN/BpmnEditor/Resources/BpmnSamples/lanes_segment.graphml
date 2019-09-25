@@ -28,7 +28,7 @@
   <key id="d13" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
   <data key="d13">      
     <y:SharedData>
-      <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}" />
+      <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
       <bpmn:AlternatingLeafStripeStyle x:Key="2">
         <bpmn:AlternatingLeafStripeStyle.EvenLeafDescriptor>
           <bpmn:StripeDescriptor BackgroundBrush="#FFC4D7ED" InsetBrush="#FFE0E0E0" />
@@ -45,7 +45,7 @@
         <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
       </yforms:NodeStyleStripeStyleAdapter>
       <y:InteriorLabelModel x:Key="5" />
-      <yforms:DefaultLabelStyle x:Key="6" Font="Microsoft Sans Serif, 6.5pt">
+      <yforms:DefaultLabelStyle x:Key="6" Font="Microsoft Sans Serif, 9px">
         <yforms:DefaultLabelStyle.StringFormat>
           <forms:StringFormat Alignment="Near" LineAlignment="Near" />
         </yforms:DefaultLabelStyle.StringFormat>
@@ -67,21 +67,21 @@
                 <y:Table.Rows>
                   <y:Row MinimumSize="10" Size="91" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                     <y:Row.Labels>
-                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="77,14">
+                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                         <y:Label.Text>Administration</y:Label.Text>
                       </y:Label>
                     </y:Row.Labels>
                   </y:Row>
                   <y:Row MinimumSize="10" Size="106" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                     <y:Row.Labels>
-                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="71,14">
+                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                         <y:Label.Text>Management</y:Label.Text>
                       </y:Label>
                     </y:Row.Labels>
                   </y:Row>
                   <y:Row MinimumSize="10" Size="80" Insets="20,0,0,0" Style="{y:GraphMLReference 2}">
                     <y:Row.Labels>
-                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" PreferredSize="58,14">
+                      <y:Label LayoutParameter="{x:Static y:StretchStripeLabelModel.West}" Style="{y:GraphMLReference 1}" >
                         <y:Label.Text>Webserver</y:Label.Text>
                       </y:Label>
                     </y:Row.Labels>
@@ -102,7 +102,7 @@
                     <y:StripeDefaults.Labels>
                       <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" ShareStyleInstance="True">
                         <y:LabelDefaults.Style>
-                          <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" />
+                          <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
                         </y:LabelDefaults.Style>
                       </y:LabelDefaults>
                     </y:StripeDefaults.Labels>
@@ -136,7 +136,7 @@
           </data>
           <data key="d3">
             <x:List>
-              <y:Label Style="{y:GraphMLReference 6}" PreferredSize="51,24">
+              <y:Label Style="{y:GraphMLReference 6}" >
                 <y:Label.Text><![CDATA[Dispatch to
 Approver]]></y:Label.Text>
                 <y:Label.LayoutParameter>
@@ -180,7 +180,7 @@ Approver]]></y:Label.Text>
           </data>
           <data key="d3">
             <x:List>
-              <y:Label PreferredSize="86,66">
+              <y:Label >
                 <y:Label.Text><![CDATA[These
 activities can
 be started at
@@ -208,7 +208,7 @@ the same time]]></y:Label.Text>
               </data>
               <data key="d3">
                 <x:List>
-                  <y:Label Style="{y:GraphMLReference 6}" PreferredSize="53,12">
+                  <y:Label Style="{y:GraphMLReference 6}" >
                     <y:Label.Text><![CDATA[Prepare PO]]></y:Label.Text>
                     <y:Label.LayoutParameter>
                       <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 5}" />
@@ -241,7 +241,7 @@ the same time]]></y:Label.Text>
               </data>
               <data key="d3">
                 <x:List>
-                  <y:Label Style="{y:GraphMLReference 6}" PreferredSize="43,24">
+                  <y:Label Style="{y:GraphMLReference 6}" >
                     <y:Label.Text><![CDATA[Apporove
 Request]]></y:Label.Text>
                     <y:Label.LayoutParameter>
@@ -277,7 +277,7 @@ Request]]></y:Label.Text>
           </data>
           <data key="d3">
             <x:List>
-              <y:Label Style="{y:GraphMLReference 6}" PreferredSize="62,12">
+              <y:Label Style="{y:GraphMLReference 6}" >
                 <y:Label.Text><![CDATA[Purchase Info]]></y:Label.Text>
                 <y:Label.LayoutParameter>
                   <y:ExteriorLabelModelParameter Position="NorthEast">
@@ -309,7 +309,7 @@ Request]]></y:Label.Text>
           </data>
           <data key="d3">
             <x:List>
-              <y:Label Style="{y:GraphMLReference 6}" PreferredSize="40,35">
+              <y:Label Style="{y:GraphMLReference 6}" >
                 <y:Label.Text><![CDATA[Approval
 Request
 Email]]></y:Label.Text>

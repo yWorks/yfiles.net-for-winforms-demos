@@ -88,12 +88,7 @@ namespace Demo.yFiles.Graph.Input.SizeConstraintProvider
 
     public SizeConstraintProviderForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     private void FormLoaded(object sender, EventArgs e) {
@@ -124,6 +119,9 @@ namespace Demo.yFiles.Graph.Input.SizeConstraintProvider
       RegisterSizeConstraintProvider(boundaryRectangle);
 
       CreateSampleGraph(graph);
+
+      // reset the Undo queue so the initial graph creation cannot be undone
+      graph.GetUndoEngine().Clear();
     }
 
     #endregion

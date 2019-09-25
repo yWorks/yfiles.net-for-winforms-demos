@@ -69,12 +69,7 @@ namespace Demo.yFiles.Graph.Clipboard
     /// </summary>
     public GraphClipboardForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       
       // set focusedGraphControl to currently focused graphcontrol
       tabControl.SelectedIndexChanged += delegate(object sender, EventArgs args) {
@@ -144,7 +139,7 @@ namespace Demo.yFiles.Graph.Clipboard
     /// </summary>
     protected virtual void InitializeGraph() {
       IGraph graph = graphControl.Graph;
-
+      
       /// Enable undo/redo.
       graph.SetUndoEngineEnabled(true);
 
@@ -172,6 +167,9 @@ namespace Demo.yFiles.Graph.Clipboard
       graph.AddLabel(node1, "Label 1");
       graph.AddLabel(node2, "Label 2");
       graph.AddLabel(graph.CreateEdge(node1, node2), "Shared Object");
+
+      // reset the Undo queue so the initial graph creation cannot be undone
+      graph.GetUndoEngine().Clear();
 
       // register specialized copiers that can deal with our business objects
       graphControl.Clipboard.FromClipboardCopier.NodeCopied += NodeCopiedOnPaste;
@@ -211,8 +209,8 @@ namespace Demo.yFiles.Graph.Clipboard
 
       // also, we enable clipboard operations (basically the key bindings/commands)
       mode.AllowClipboardOperations = true;
-	    // register command bindings for our custom command in the GraphControls
-	    mode.KeyboardInputMode.AddCommandBinding(PasteSpecialCommand, OnPasteSpecialCommandExecuted);
+      // register command bindings for our custom command in the GraphControls
+      mode.KeyboardInputMode.AddCommandBinding(PasteSpecialCommand, OnPasteSpecialCommandExecuted);
       return mode;
     }
 
@@ -372,7 +370,7 @@ namespace Demo.yFiles.Graph.Clipboard
     /// </summary>
     /// <remarks>The customized paste operations (i.e. label text change) from <see cref="TaggedNodeClipboardHelper"/> 
     /// will still be used.</remarks>
-    private static void OnPasteSpecialCommandExecuted(object sender, ExecutedCommandEventArgs executedCommandEventArgs) {
+    private void OnPasteSpecialCommandExecuted(object sender, ExecutedCommandEventArgs executedCommandEventArgs) {
       var control = (GraphControl)sender;
 
       GraphClipboard clipboard = control.Clipboard;
@@ -389,9 +387,8 @@ namespace Demo.yFiles.Graph.Clipboard
           }
         };
       clipboard.Paste(control.Graph, filter, pasted);
-
-      // Set the different paste delta.
-      clipboard.PasteDelta = new PointD(clipboard.PasteDelta.X + 30, clipboard.PasteDelta.Y + 30);
+      // The next paste location should be shifted a little (just like the normal paste)
+      clipboard.PasteDelta += ((GraphEditorInputMode) graphControl.InputMode).PasteDelta;
     }
 
     #endregion

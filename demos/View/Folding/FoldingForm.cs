@@ -71,12 +71,7 @@ namespace Demo.yFiles.Graph.Folding
     public FoldingForm() {
       InitializeComponent();
       graphControl.FileOperationsEnabled = true;
-      try {
-        richTextBox1.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        richTextBox1.Text = "The description is not available with this version of .NET Core.";
-      }
+      richTextBox1.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);

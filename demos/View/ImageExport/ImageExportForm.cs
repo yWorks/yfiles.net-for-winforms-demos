@@ -79,12 +79,7 @@ namespace Demo.yFiles.ImageExport
 
       SetupOptions();
 
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       // Make the commands use the currently focused CanvasControl
       zoomOutButton.Click += (sender, args) => Commands.DecreaseZoom.Execute(null, GetFocusedCanvas());
@@ -222,15 +217,15 @@ namespace Demo.yFiles.ImageExport
 
 
       OptionItem sizeItem = currentGroup.AddList(SIZE, SizeModes, USE_ORIGINAL_SIZE);
-      OptionItem widthItem = currentGroup.AddInt(WIDTH, DefaultWidth);
-      OptionItem heightItem = currentGroup.AddInt(HEIGHT, DefaultHeight);
+      IOptionItem widthItem = currentGroup.AddInt(WIDTH, DefaultWidth, 1, int.MaxValue);
+      IOptionItem heightItem = currentGroup.AddInt(HEIGHT, DefaultHeight, 1, Int32.MaxValue);
 
       currentGroup.AddDouble(SCALE, DefaultScale);
       currentGroup.AddDouble(ZOOM, DefaultZoom);
 
       currentGroup = handler.AddGroup(GRAPHICS);
 
-      currentGroup.AddGeneric(SMOOTHING, SmoothingMode.Default).SetAttribute(
+      currentGroup.AddGeneric(SMOOTHING, SimpleSmoothingMode.HighSpeed).SetAttribute(
         OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, false);
       currentGroup.AddGeneric(TEXTRENDERING, TextRenderingHint.SystemDefault).SetAttribute(
         OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, false);
@@ -280,6 +275,19 @@ namespace Demo.yFiles.ImageExport
       var rmf = new ResourceManagerI18NFactory();
       rmf.AddResourceManager(Handler.Name, rm);
       Handler.I18nFactory = rmf;
+    }
+
+    /// <summary>
+    /// Replaces the <see cref="SmoothingMode"/> enum.
+    /// </summary>
+    /// <remarks>
+    /// Simplifies the choice by leaving out equivalent modes. Also has no <see cref="SmoothingMode.Invalid"/>
+    /// mode which would cause the rendering to break.
+    /// </remarks>
+    private enum SimpleSmoothingMode
+    {
+      HighSpeed = SmoothingMode.HighSpeed,
+      HighQuality = SmoothingMode.HighQuality
     }
 
     #endregion

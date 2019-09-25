@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.OrgChart.Properties;
 using yWorks.Algorithms;
@@ -118,12 +119,7 @@ namespace Demo.yFiles.Graph.OrgChart
     private void FormLoaded() {
 
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       InitializeGraph();
 
@@ -170,9 +166,9 @@ namespace Demo.yFiles.Graph.OrgChart
     /// </summary>
     /// <param name="o">The source of the event.</param>
     /// <param name="itemClickedEventArgs">The event argument instance containing the event data.</param>
-    private void OnItemDoubleClicked(object o, ItemClickedEventArgs<IModelItem> itemClickedEventArgs) {
+    private async void OnItemDoubleClicked(object o, ItemClickedEventArgs<IModelItem> itemClickedEventArgs) {
       graphControl.CurrentItem = itemClickedEventArgs.Item;
-      ZoomToCurrentItem();
+      await ZoomToCurrentItem();
     }
 
     /// <summary>
@@ -459,17 +455,17 @@ namespace Demo.yFiles.Graph.OrgChart
     #region Tree Layout Configuration and initial execution
 
     /// <summary>
-    /// Does a tree layout of the Graph provided by the <see cref="TreeBuilder"/>.
+    /// Does a tree layout of the graph.
     /// The layout and assistant attributes from the business data of the employees are used to
     /// guide the the layout.
     /// </summary>
     public void DoLayout() {
       IGraph tree = graphControl.Graph;
-      var layoutData = CreateLayoutData(tree);
+      var layoutData = CreateLayoutData(tree, null);
       tree.ApplyLayout(new BendDuplicatorStage(new TreeLayout()), layoutData);
     }
 
-    private static LayoutData CreateLayoutData(IGraph tree) {
+    private static LayoutData CreateLayoutData(IGraph tree, INode centerNode) {
       var data = new TreeLayoutData
       {
         NodePlacers =
@@ -513,7 +509,7 @@ namespace Demo.yFiles.Graph.OrgChart
         }
       };
 
-      return data;
+      return data.CombineWith(new FixNodeLayoutData { FixedNodes = { Item = centerNode } });
     }
 
     #endregion
@@ -536,7 +532,7 @@ namespace Demo.yFiles.Graph.OrgChart
     /// <summary>
     /// Handler for the <see cref="ShowChildrenCommand"/>
     /// </summary>
-    public void ShowChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
+    public async void ShowChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = (e.Parameter ?? graphControl.CurrentItem) as INode;
       if (node != null && !doingLayout) {
         int count = hiddenNodesSet.Count;
@@ -547,7 +543,7 @@ namespace Demo.yFiles.Graph.OrgChart
             filteredGraphWrapper.WrappedGraph.ClearBends(childEdge);
           }
         }
-        RefreshLayout(count, node);
+        await RefreshLayout(count, node);
       }
     }
 
@@ -567,7 +563,7 @@ namespace Demo.yFiles.Graph.OrgChart
     /// <summary>
     /// Handler for the <see cref="ShowParentCommand"/>
     /// </summary>
-    private void ShowParentExecuted(object sender, ExecutedCommandEventArgs e) {
+    private async void ShowParentExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = (e.Parameter ?? graphControl.CurrentItem) as INode;
       if (node != null && !doingLayout) {
         int count = hiddenNodesSet.Count;
@@ -578,7 +574,7 @@ namespace Demo.yFiles.Graph.OrgChart
             filteredGraphWrapper.WrappedGraph.ClearBends(parentEdge);
           }
         }
-        RefreshLayout(count, node);
+        await RefreshLayout(count, node);
       }
     }
 
@@ -598,7 +594,7 @@ namespace Demo.yFiles.Graph.OrgChart
     /// <summary>
     /// Handler for the <see cref="HideParentCommand"/>
     /// </summary>
-    private void HideParentExecuted(object sender, ExecutedCommandEventArgs e) {
+    private async void HideParentExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = (e.Parameter ?? graphControl.CurrentItem) as INode;
       if (node != null && !doingLayout) {
         int count = hiddenNodesSet.Count;
@@ -610,7 +606,7 @@ namespace Demo.yFiles.Graph.OrgChart
             HideAllExcept(testNode, node);
           }
         }
-        RefreshLayout(count, node);
+        await RefreshLayout(count, node);
       }
     }
 
@@ -630,14 +626,14 @@ namespace Demo.yFiles.Graph.OrgChart
     /// <summary>
     /// Handler for the <see cref="HideChildrenCommand"/>
     /// </summary>
-    private void HideChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
+    private async void HideChildrenExecuted(object sender, ExecutedCommandEventArgs e) {
       var node = (e.Parameter ?? graphControl.CurrentItem) as INode;
       if (node != null && !doingLayout) {
         int count = hiddenNodesSet.Count;
         foreach (var child in filteredGraphWrapper.Successors(node)) {
           HideAllExcept(child, node);
         }
-        RefreshLayout(count, node);
+        await RefreshLayout(count, node);
       }
     }
 
@@ -652,10 +648,10 @@ namespace Demo.yFiles.Graph.OrgChart
     /// <summary>
     /// Handler for the <see cref="ShowAllCommand"/>
     /// </summary>
-    private void ShowAllExecuted(object sender, ExecutedCommandEventArgs e) {
+    private async void ShowAllExecuted(object sender, ExecutedCommandEventArgs e) {
       if (!doingLayout) {
         hiddenNodesSet.Clear();
-        RefreshLayout(-1, graphControl.CurrentItem as INode);
+        await RefreshLayout(-1, graphControl.CurrentItem as INode);
       }
     }
 
@@ -680,7 +676,7 @@ namespace Demo.yFiles.Graph.OrgChart
     /// Helper method that refreshes the layout after children or parent nodes have been added
     /// or removed.
     /// </summary>
-    private async void RefreshLayout(int count, INode centerNode) {
+    private async Task RefreshLayout(int count, INode centerNode) {
       if (doingLayout) {
         return;
       }
@@ -694,14 +690,12 @@ namespace Demo.yFiles.Graph.OrgChart
         // now layout the graph in animated fashion
         IGraph tree = graphControl.Graph;
 
-        // we mark a node as the center node
-        var data = new FixNodeLocationStage.Data{CenterNode = centerNode};
 
         // configure the layout data
-        var layoutData = new CompositeLayoutData {Items = {CreateLayoutData(tree), data}};
+        var layoutData = CreateLayoutData(tree, centerNode);
 
         // create the layout algorithm (with a stage that fixes the center node in the coordinate system
-        var layout = new BendDuplicatorStage(new FixNodeLocationStage(new TreeLayout()));
+        var layout = new BendDuplicatorStage(new FixNodeLayoutStage(new TreeLayout()));
 
         // configure a LayoutExecutor
         var executor = new LayoutExecutor(graphControl, layout)
@@ -719,7 +713,7 @@ namespace Demo.yFiles.Graph.OrgChart
       }
     }
 
-    private void ZoomToCurrentItem() {
+    private async Task ZoomToCurrentItem() {
       var currentItem = GraphControl.CurrentItem as INode;
       // visible current item
       if (GraphControl.Graph.Contains(currentItem)) {
@@ -742,7 +736,7 @@ namespace Demo.yFiles.Graph.OrgChart
           foreach (var edge in filteredGraphWrapper.Edges) {
             filteredGraphWrapper.ClearBends(edge);
           }
-          RefreshLayout(-1, null);
+          await RefreshLayout(-1, null);
         }
       }
     }
@@ -827,27 +821,27 @@ namespace Demo.yFiles.Graph.OrgChart
       }
     }
 
-    private void structureTreeView_MouseDoubleClick(object sender, MouseEventArgs e) {
-      ZoomToTreeItem();
+    private async void structureTreeView_MouseDoubleClick(object sender, MouseEventArgs e) {
+      await ZoomToTreeItem();
     }
 
-    private void structureTreeView_KeyPress(object sender, KeyPressEventArgs e) {
+    private async void structureTreeView_KeyPress(object sender, KeyPressEventArgs e) {
       if (e.KeyChar == '\r') {
-        ZoomToTreeItem();
+        await ZoomToTreeItem();
       }
     }
 
     /// <summary>
     /// Selects the employee and zooms in on it.
     /// </summary>
-    private void ZoomToTreeItem() {
+    private async Task ZoomToTreeItem() {
       // get the selected employee
       Employee selectedEmployee = structureTreeView.SelectedNode.Tag as Employee;
       // get the correspondent node in the graph
       INode selectedNode = filteredGraphWrapper.WrappedGraph.Nodes.FirstOrDefault(node => node.Tag == selectedEmployee);
       if (selectedNode != null) {
         graphControl.CurrentItem = selectedNode;
-        ZoomToCurrentItem();
+        await ZoomToCurrentItem();
       }
     }
 
@@ -867,51 +861,6 @@ namespace Demo.yFiles.Graph.OrgChart
 
     #endregion
    }
-
-  /// <summary>
-  /// An <see cref="LayoutStageBase"/> that uses a <see cref="IDataProvider"/>/<see cref="IMapper{K,V}"/>
-  /// to determine a node whose location should not be changed during the layout.
-  /// </summary>
-  internal sealed class FixNodeLocationStage : LayoutStageBase
-  {
-
-    public const string FixNodeDpKey = "FixNodeLocationStage.CenterNode";
-
-    public FixNodeLocationStage(ILayoutAlgorithm layout) : base(layout) { }
-
-    public override void ApplyLayout(LayoutGraph graph) {
-      // determine the single node to keep at the center.
-      var provider = graph.GetDataProvider(FixNodeDpKey);
-      Node centerNode = null;
-      if (provider != null) {
-        centerNode = graph.Nodes.FirstOrDefault(provider.GetBool);
-      }
-      if (CoreLayout != null) {
-        if (centerNode != null) {
-          // remember old center
-          var center = graph.GetCenter(centerNode);
-          // run layout
-          CoreLayout.ApplyLayout(graph);
-          // obtain new center
-          var newCenter = graph.GetCenter(centerNode);
-          // and adjust the layout
-          LayoutGraphUtilities.MoveSubgraph(graph, graph.GetNodeCursor(), center.X - newCenter.X, center.Y - newCenter.Y);
-        } else {
-          CoreLayout.ApplyLayout(graph);
-        }
-      }
-    }
-
-    internal class Data : LayoutData
-    {
-      public INode CenterNode { get; set; }
-
-      protected override void Apply(LayoutGraphAdapter layoutGraphAdapter, ILayoutAlgorithm layout, CopiedLayoutGraph layoutGraph) {
-        layoutGraphAdapter.AddDataProvider(FixNodeDpKey, Mappers.FromDelegate<INode,bool>(key => CenterNode == key));
-      }
-    }
-
-  }
 
   /// <summary>
   /// LayoutStage that duplicates bends that share a common bus.

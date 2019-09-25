@@ -76,12 +76,7 @@ namespace Demo.yFiles.Graph.EdgeToEdge
       RegisterToolStripCommands();
       RegisterMenuItemCommands();
 
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     #region Command registration
@@ -142,7 +137,7 @@ namespace Demo.yFiles.Graph.EdgeToEdge
     /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
-
+      // initialize the graph
       InitializeGraph();
 
       // initialize the snapcontext
@@ -183,13 +178,12 @@ namespace Demo.yFiles.Graph.EdgeToEdge
     protected virtual GraphEditorInputMode CreateEditorMode() {
       var mode = new GraphEditorInputMode
       {
-        AllowGroupingOperations = true,
         SnapContext = snapContext,
         OrthogonalEdgeEditingContext = new OrthogonalEdgeEditingContext { Enabled = false },
       };
 
       // randomize edge color
-      mode.CreateEdgeInputMode.EdgeCreated += (sender, args) => SetRandomEdgeColor(args.Item);
+      mode.CreateEdgeInputMode.EdgeCreationStarted += (sender, args) => SetRandomEdgeColor(args.Item);
       return mode;
     }
 
@@ -214,6 +208,7 @@ namespace Demo.yFiles.Graph.EdgeToEdge
 
       #region Enable undoability
 
+      // Get the default graph instance and enable undoability support.
       Graph.SetUndoEngineEnabled(true);
 
       #endregion
@@ -221,7 +216,7 @@ namespace Demo.yFiles.Graph.EdgeToEdge
       #region Configure Graph defaults
 
       // set the default node style
-      Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange, DrawShadow = true };
+      Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
 
       // assign default edge style
       Graph.EdgeDefaults.Style = new PolylineEdgeStyle();
@@ -280,7 +275,7 @@ namespace Demo.yFiles.Graph.EdgeToEdge
     private void exportImageButton_Click(object sender, EventArgs e) {
       ExportImage();
     }
-
+    
     private void newButton_Click(object sender, EventArgs e) {
       ClearGraph();
     }
@@ -310,43 +305,6 @@ namespace Demo.yFiles.Graph.EdgeToEdge
       }
     }
 
-    #region customized implementations
-
-    /// <summary>
-    /// A port candidate provider that aggregates different <see cref="IPortLocationModel">PortLocationModels</see>
-    /// to provide a number of port candidates along each segment of the edge.
-    /// </summary>
-    public class EdgeSegmentPortCandidateProvider : PortCandidateProviderBase
-    {
-      private readonly IEdge edge;
-
-      public EdgeSegmentPortCandidateProvider(IPortOwner portOwner) {
-        edge = portOwner as IEdge;
-      }
-
-      protected override IEnumerable<IPortCandidate> GetPortCandidates(IInputModeContext context) {
-        List<IPortCandidate> candidates = new List<IPortCandidate>();
-        // add a port candidate at each bend
-        for (int i = edge.Bends.Count - 1; i >= 0; i--) {
-          candidates.Add(new DefaultPortCandidate(edge, BendAnchoredPortLocationModel.Instance.CreateFromSource(i)));
-        }
-        // add port candidates along the path of each segment
-        for (int i = edge.Bends.Count; i >= 0; i--) {
-          candidates.Add(new DefaultPortCandidate(edge,
-            SegmentRatioPortLocationModel.Instance.CreateFromSource(0.25, i)));
-          candidates.Add(
-            new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance.CreateFromSource(0.5, i)));
-          candidates.Add(new DefaultPortCandidate(edge,
-            SegmentRatioPortLocationModel.Instance.CreateFromSource(0.75, i)));
-          // add a dynamic candidate that can be used if shift is pressed to assign the exact location.
-          candidates.Add(new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance));
-        }
-        return candidates;
-      }
-    }
-
-    #endregion
-
     #region Main
 
     /// <summary>
@@ -360,6 +318,39 @@ namespace Demo.yFiles.Graph.EdgeToEdge
     }
 
     #endregion
-
   }
+
+  #region customized implementations
+
+  /// <summary>
+  /// A port candidate provider that aggregates different <see cref="IPortLocationModel">PortLocationModels</see>
+  /// to provide a number of port candidates along each segment of the edge.
+  /// </summary>
+  public class EdgeSegmentPortCandidateProvider : PortCandidateProviderBase
+  {
+    private readonly IEdge edge;
+
+    public EdgeSegmentPortCandidateProvider(IEdge edge) {
+      this.edge = edge;
+    }
+
+    protected override IEnumerable<IPortCandidate> GetPortCandidates(IInputModeContext context) {
+      List<IPortCandidate> candidates = new List<IPortCandidate>();
+      // add a port candidate at each bend
+      for (int i = edge.Bends.Count - 1; i >= 0; i--) {
+        candidates.Add(new DefaultPortCandidate(edge, BendAnchoredPortLocationModel.Instance.CreateFromSource(i)));
+      }
+      // add port candidates along the path of each segment
+      for (int i = edge.Bends.Count; i >= 0; i--) {
+        candidates.Add(new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance.CreateFromSource(0.25, i)));
+        candidates.Add(new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance.CreateFromSource(0.5, i)));
+        candidates.Add(new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance.CreateFromSource(0.75, i)));
+        // add a dynamic candidate that can be used if shift is pressed to assign the exact location.
+        candidates.Add(new DefaultPortCandidate(edge, SegmentRatioPortLocationModel.Instance));
+      }
+      return candidates;
+    }
+  }
+
+  #endregion
 }

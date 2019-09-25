@@ -305,9 +305,10 @@ namespace Demo.yFiles.Graph.Viewer
       this.nodeLabelTextBlock.BackColor = System.Drawing.SystemColors.Window;
       this.nodeLabelTextBlock.Dock = System.Windows.Forms.DockStyle.Top;
       this.nodeLabelTextBlock.Location = new System.Drawing.Point(0, 47);
+      this.nodeLabelTextBlock.Multiline = true;
       this.nodeLabelTextBlock.Name = "nodeLabelTextBlock";
       this.nodeLabelTextBlock.ReadOnly = true;
-      this.nodeLabelTextBlock.Size = new System.Drawing.Size(244, 20);
+      this.nodeLabelTextBlock.Size = new System.Drawing.Size(244, 100);
       this.nodeLabelTextBlock.TabIndex = 1;
       // 
       // label1

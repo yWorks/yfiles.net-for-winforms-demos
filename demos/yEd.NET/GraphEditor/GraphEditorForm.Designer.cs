@@ -77,6 +77,7 @@ namespace Demo.yFiles.GraphEditor
 			this.labelPropertiesTabPage = new System.Windows.Forms.TabPage();
 			this.labelPropertiesPanel = new System.Windows.Forms.Panel();
 			this.portPropertiesTabPage = new System.Windows.Forms.TabPage();
+			this.portPropertiesPanel = new System.Windows.Forms.Panel();
 			this.graphControl = new yWorks.Controls.GraphControl();
 			this.palettePanel = new System.Windows.Forms.Panel();
 			this.panel9 = new System.Windows.Forms.Panel();
@@ -377,9 +378,16 @@ namespace Demo.yFiles.GraphEditor
 			// 
 			// portPropertiesTabPage
 			// 
+			this.portPropertiesTabPage.Controls.Add(this.portPropertiesPanel);
 			resources.ApplyResources(this.portPropertiesTabPage, "portPropertiesTabPage");
 			this.portPropertiesTabPage.Name = "portPropertiesTabPage";
 			this.portPropertiesTabPage.UseVisualStyleBackColor = true;
+			// 
+			// portPropertiesPanel
+			// 
+			this.portPropertiesPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			resources.ApplyResources(this.portPropertiesPanel, "portPropertiesPanel");
+			this.portPropertiesPanel.Name = "portPropertiesPanel";
 			// 
 			// graphControl
 			// 
@@ -1543,6 +1551,8 @@ namespace Demo.yFiles.GraphEditor
     private System.Windows.Forms.Panel edgePropertiesPanel;
     private System.Windows.Forms.TabPage labelPropertiesTabPage;
     private System.Windows.Forms.Panel labelPropertiesPanel;
+    private System.Windows.Forms.TabPage portPropertiesTabPage;
+    private System.Windows.Forms.Panel portPropertiesPanel;
     private System.Windows.Forms.ContextMenuStrip edgeStyleContextMenu;
     private System.Windows.Forms.ToolStripMenuItem applyEdgeStyleMenuItem;
     private System.Windows.Forms.ListBox edgeStyleListBox;
@@ -1587,7 +1597,6 @@ namespace Demo.yFiles.GraphEditor
     private ListBox modernNodesStyleListBox;
     private Label label2;
     private ToolStripMenuItem polylineEdgeRouterToolStripMenuItem;
-    private TabPage portPropertiesTabPage;
     private Panel panel9;
     private ListBox portStyleListBox;
     private ContextMenuStrip portStyleContextMenu;

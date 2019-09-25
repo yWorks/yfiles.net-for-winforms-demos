@@ -237,6 +237,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.resetZoomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.resetZoomButton.Name = "resetZoomButton";
       this.resetZoomButton.Size = new System.Drawing.Size(23, 24);
+      this.resetZoomButton.Text = "Original Size";
       // 
       // cutButton
       // 
@@ -245,7 +246,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.cutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.cutButton.Name = "cutButton";
       this.cutButton.Size = new System.Drawing.Size(23, 24);
-      this.cutButton.Text = "To Back";
+      this.cutButton.Text = "Cut";
       // 
       // splitContainer1
       // 
@@ -283,7 +284,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.copyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.copyButton.Name = "copyButton";
       this.copyButton.Size = new System.Drawing.Size(23, 24);
-      this.copyButton.Text = "To Back";
+      this.copyButton.Text = "Copy";
       // 
       // pasteButton
       // 
@@ -292,7 +293,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.pasteButton.Name = "pasteButton";
       this.pasteButton.Size = new System.Drawing.Size(23, 24);
-      this.pasteButton.Text = "To Back";
+      this.pasteButton.Text = "Paste";
       // 
       // deleteButton
       // 
@@ -301,7 +302,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.deleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.deleteButton.Name = "deleteButton";
       this.deleteButton.Size = new System.Drawing.Size(23, 24);
-      this.deleteButton.Text = "To Back";
+      this.deleteButton.Text = "Delete";
       // 
       // toolStripSeparator3
       // 
@@ -315,7 +316,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.undoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.undoButton.Name = "undoButton";
       this.undoButton.Size = new System.Drawing.Size(23, 24);
-      this.undoButton.Text = "toolStripButton1";
+      this.undoButton.Text = "Undo";
       // 
       // redoButton
       // 
@@ -324,7 +325,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.redoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.redoButton.Name = "redoButton";
       this.redoButton.Size = new System.Drawing.Size(23, 24);
-      this.redoButton.Text = "toolStripButton1";
+      this.redoButton.Text = "Redo";
       // 
       // toolStripSeparator4
       // 
@@ -367,7 +368,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.groupButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.groupButton.Name = "groupButton";
       this.groupButton.Size = new System.Drawing.Size(23, 24);
-      this.groupButton.Text = "toolStripButton1";
+      this.groupButton.Text = "Group Selection";
       // 
       // ungroupButton
       // 
@@ -376,7 +377,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.ungroupButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.ungroupButton.Name = "ungroupButton";
       this.ungroupButton.Size = new System.Drawing.Size(23, 24);
-      this.ungroupButton.Text = "toolStripButton1";
+      this.ungroupButton.Text = "Ungroup Selection";
       // 
       // enterGroupButton
       // 
@@ -385,7 +386,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.enterGroupButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.enterGroupButton.Name = "enterGroupButton";
       this.enterGroupButton.Size = new System.Drawing.Size(23, 24);
-      this.enterGroupButton.Text = "toolStripButton1";
+      this.enterGroupButton.Text = "Enter Group";
       // 
       // exitGroupButton
       // 
@@ -394,7 +395,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       this.exitGroupButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.exitGroupButton.Name = "exitGroupButton";
       this.exitGroupButton.Size = new System.Drawing.Size(23, 24);
-      this.exitGroupButton.Text = "toolStripButton1";
+      this.exitGroupButton.Text = "Exit Group";
       // 
       // toolStripSeparator6
       // 

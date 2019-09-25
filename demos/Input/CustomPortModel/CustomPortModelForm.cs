@@ -45,12 +45,7 @@ namespace Demo.yFiles.Graph.CustomPortModel
   {
     public CustomPortModelForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       openToolStripMenuItem.SetCommand(Commands.Open, graphControl);
       saveToolStripMenuItem.SetCommand(Commands.SaveAs, graphControl);
       cutToolStripMenuItem.SetCommand(Commands.Cut, graphControl);

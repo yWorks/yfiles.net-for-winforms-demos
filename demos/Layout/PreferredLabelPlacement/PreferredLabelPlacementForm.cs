@@ -34,6 +34,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
@@ -116,12 +117,7 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
     public PreferredLabelPlacementForm() {
       InitializeComponent();
       // load description
-      try {
-        description.LoadFile(new MemoryStream(yFiles.Layout.PreferredLabelPlacement.PreferredLabelPlacement.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(yFiles.Layout.PreferredLabelPlacement.PreferredLabelPlacement.description), RichTextBoxStreamType.RichText);
 
       // set commands to buttons and menu items
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
@@ -225,7 +221,7 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
     /// Does the label placement using the generic labeling algorithm. Before this, the model of the labels is
     /// set according to the option handlers settings.
     /// </summary>
-    private void DoLayout(bool fitViewToContent) {
+    private async Task DoLayout(bool fitViewToContent) {
       // fix node layout stage is used to keep the bounding box of the graph in the view port
       var layoutExecutor = new LayoutExecutor(graphControl, new FixNodeLayoutStage(layoutAlgorithm)) {
           Duration = TimeSpan.FromMilliseconds(500),
@@ -236,7 +232,7 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
                   new LabelingData {EdgeLabelPreferredPlacement = {Mapper = descriptorMapper}})
 
       };
-      layoutExecutor.Start();
+      await layoutExecutor.Start();
     }
 
     private void InitializeAlgorithms() {
@@ -337,13 +333,13 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
       return handler;
     }
 
-    private void OptionHandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
+    private async void OptionHandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
       if (updatingOptionHandler) {
         return;
       }
 
       UpdateLabelValues(GetAffectedLabels());
-      DoLayout(false);
+      await DoLayout(false);
     }
 
     private IEnumerable<ILabel> GetAffectedLabels() {
@@ -504,8 +500,8 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
 
     #region UI handlers
 
-    private void OnDoLayoutButtonClicked(object sender, EventArgs e) {
-      DoLayout(true);
+    private async void OnDoLayoutButtonClicked(object sender, EventArgs e) {
+     await DoLayout(true);
     }
 
     private void InitializeLayoutComboBox() {

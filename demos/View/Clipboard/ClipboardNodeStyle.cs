@@ -127,7 +127,7 @@ namespace Demo.yFiles.Graph.Clipboard
 
 
         if (businessObject != null) {
-          // Draw a line to vizualize the business object's value
+          // Draw a line to visualize the business object's value
           graphics.DrawLine(Pens.Black, (float) (layout.X + 10), (float) (layout.Y + (layout.Height*3/4)),
               (float) (layout.X + 10 + (layout.Width - 20)*businessObject.Value),
               (float) (layout.Y + (layout.Height*3/4)));
@@ -208,7 +208,7 @@ namespace Demo.yFiles.Graph.Clipboard
           double maxVal = node.Layout.X + node.Layout.Width -10;
           double currentVal = newLocation.X;
           double ratio = ((currentVal-minVal) / (maxVal-minVal));
-          ClipboardBusinessObject clipboardBusinessObject = node.Tag as ClipboardBusinessObject;
+          var clipboardBusinessObject = node.Tag as ClipboardBusinessObject;
           if (clipboardBusinessObject != null) {
             clipboardBusinessObject.Value = ratio;
           }
@@ -216,14 +216,22 @@ namespace Demo.yFiles.Graph.Clipboard
 
         public void CancelDrag(IInputModeContext inputModeContext, PointD originalLocation) {
           // restore original value
-          ClipboardBusinessObject clipboardBusinessObject = node.Tag as ClipboardBusinessObject;
+          var clipboardBusinessObject = node.Tag as ClipboardBusinessObject;
           if (clipboardBusinessObject != null) {
             clipboardBusinessObject.Value = originalValue;
           }
         }
 
         public void DragFinished(IInputModeContext inputModeContext, PointD originalLocation, PointD newLocation) {
-          // Do nothing
+          // the value is already set.
+          // we create an Undo unit, though, to make the edit undoable
+          var clipboardBusinessObject = node.Tag as ClipboardBusinessObject;
+          if (clipboardBusinessObject != null && clipboardBusinessObject.Value != originalValue) {
+            var undoEngine = inputModeContext.GetGraph().GetUndoEngine();
+            if (undoEngine != null) {
+              undoEngine.AddUnit(new BusinessValueUndoUnit(clipboardBusinessObject, originalValue));
+            }
+          }
         }
 
         public HandleTypes Type {
@@ -248,6 +256,41 @@ namespace Demo.yFiles.Graph.Clipboard
         double IPoint.Y {
           // Y position doesn't depend on business object
           get { return node.Layout.Y + node.Layout.Height*0.75d; }
+        }
+      }
+
+      /// <summary>
+      /// Custom <see cref="IUndoUnit"/> to make value changes undoable.
+      /// </summary>
+      private class BusinessValueUndoUnit : UndoUnitBase
+      {
+        private readonly ClipboardBusinessObject obj;
+        private readonly double oldValue;
+        private double newValue;
+
+        /// <summary>
+        /// Creates an instance for the given business object which restores the given <paramref name="oldValue"/> upon undo.
+        /// </summary>
+        /// <param name="obj">The business object to handle.</param>
+        /// <param name="oldValue">The original value which will be restored upon undo.</param>
+        public BusinessValueUndoUnit(ClipboardBusinessObject obj, double oldValue) : base("Change Value") {
+          this.obj = obj;
+          this.oldValue = oldValue;
+        }
+
+        /// <summary>
+        /// Undo: remember the current value for redo and restore the old value.
+        /// </summary>
+        public override void Undo() {
+          this.newValue = obj.Value;
+          obj.Value = oldValue;
+        }
+
+        /// <summary>
+        /// Redo: restore the value the business object had before undo.
+        /// </summary>
+        public override void Redo() {
+          obj.Value = newValue;
         }
       }
     }

@@ -88,7 +88,7 @@ namespace Demo.yFiles.Graph.Input.EdgeReconnection
     /// <summary>
     ///   An <see cref="IEdgeReconnectionPortCandidateProvider"/> that prevents relocation of the ports.
     /// </summary>
-    private class RedEdgeReconnectionPortCandidateProvider : IEdgeReconnectionPortCandidateProvider {
+    public class RedEdgeReconnectionPortCandidateProvider : IEdgeReconnectionPortCandidateProvider {
       private readonly IEdge edge;
 
       public RedEdgeReconnectionPortCandidateProvider(IEdge edge) {
@@ -119,7 +119,7 @@ namespace Demo.yFiles.Graph.Input.EdgeReconnection
     public class GreenEdgeReconnectionPortCandidateProvider : IEdgeReconnectionPortCandidateProvider {
 
       /// <summary>
-      ///   Returns for each green node a candidate with a dynamic <see cref="FreeNodePortLocationModel"/>.
+      ///   Returns for each green node a candidate with a dynamic <see cref="FreeNodePortLocationModel"/>. 
       ///   When the Shift key is pressed, a port can be placed
       ///   anywhere inside that node.
       /// </summary>
@@ -283,12 +283,7 @@ namespace Demo.yFiles.Graph.Input.EdgeReconnection
 
     public EdgeReconnectionForm() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       IGraph graph = graphControl.Graph;
 
@@ -303,6 +298,8 @@ namespace Demo.yFiles.Graph.Input.EdgeReconnection
       graphEditorInputMode.AllowCreateNode = false;
       // disable deleting items
       graphEditorInputMode.DeletableItems = GraphItemTypes.None;
+      // disable the clipboard
+      graphEditorInputMode.AllowClipboardOperations = false;
       // and enable the undo feature.
       graph.SetUndoEngineEnabled(true);
 
@@ -358,6 +355,7 @@ namespace Demo.yFiles.Graph.Input.EdgeReconnection
           portCandidate.CreatePort(graphControl.InputModeContext);
         }
       }
+      graph.GetUndoEngine().Clear();
     }
 
     /// <summary>

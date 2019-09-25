@@ -71,10 +71,10 @@ namespace Tutorial.CustomStyles
       StartAnimation();
     }
 
-    private void StartAnimation() {
+    private async void StartAnimation() {
       // animates the nodes in random fashion
       Random r = new Random(DateTime.Now.TimeOfDay.Milliseconds);
-      animator.Animate(Animations.CreateGraphAnimation(graphControl.Graph, Mappers.FromDelegate<INode, IRectangle>(node => new RectD(r.NextDouble() * 800, r.NextDouble() * 800, node.Layout.Width, node.Layout.Height)), null, null, null, TimeSpan.FromSeconds(5)));
+      await animator.Animate(Animations.CreateGraphAnimation(graphControl.Graph, Mappers.FromDelegate<INode, IRectangle>(node => new RectD(r.NextDouble() * 800, r.NextDouble() * 800, node.Layout.Width, node.Layout.Height)), null, null, null, TimeSpan.FromSeconds(5)));
     }
 
     #endregion
@@ -84,12 +84,7 @@ namespace Tutorial.CustomStyles
     public StyleTutorialForm() {
       InitializeComponent();
       graphControl.FileOperationsEnabled = true;
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
       // initialize the graph
       InitializeGraph();

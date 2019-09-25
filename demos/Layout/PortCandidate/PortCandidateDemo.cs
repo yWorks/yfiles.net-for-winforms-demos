@@ -32,6 +32,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Layout.PortCandidateDemo.Properties;
@@ -60,7 +61,7 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
     /// <summary>
     /// Perform the layout operation
     /// </summary>
-    private async void ApplyLayout() {
+    private async Task ApplyLayout() {
       // layout starting, disable button
       runButton.Enabled = false;
 
@@ -135,12 +136,7 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
     /// </summary>
     public PortCandidateDemo() {
       InitializeComponent();
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       RegisterMenuCommands();
       RegisterToolStripCommands();
       PopulateNodesList();
@@ -291,7 +287,7 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
     /// Initializes the graph instance setting default styles
     /// and creating a small sample graph.
     /// </summary>
-    private void InitializeGraph() {
+    private async Task InitializeGraph() {
       IGraph graph = graphControl.Graph;
       // set the style as the default for all new nodes
       graph.NodeDefaults.Style = defaultStyle;
@@ -319,7 +315,7 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
 
       ReadSampleGraph();
 
-      ApplyLayout();
+      await ApplyLayout();
     }
 
     /// <summary>
@@ -366,7 +362,7 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
     /// Reads the sample graph.
     /// </summary>
     private void ReadSampleGraph() {
-      graphControl.ImportFromGraphML("Resources\\sample-flat.graphml");
+      graphControl.ImportFromGraphML("Resources\\defaults.graphml");
     }
 
     #endregion

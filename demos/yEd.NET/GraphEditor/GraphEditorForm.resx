@@ -339,6 +339,30 @@
   <data name="&gt;&gt;labelPropertiesTabPage.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="portPropertiesPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+      <value>Fill</value>
+  </data>
+  <data name="portPropertiesPanel.Location" type="System.Drawing.Point, System.Drawing">
+      <value>3, 3</value>
+  </data>
+  <data name="portPropertiesPanel.Size" type="System.Drawing.Size, System.Drawing">
+      <value>288, 556</value>
+  </data>
+  <data name="portPropertiesPanel.TabIndex" type="System.Int32, mscorlib">
+      <value>6</value>
+  </data>
+  <data name="&gt;&gt;portPropertiesPanel.Name" xml:space="preserve">
+    <value>portPropertiesPanel</value>
+  </data>
+  <data name="&gt;&gt;portPropertiesPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;portPropertiesPanel.Parent" xml:space="preserve">
+    <value>portPropertiesTabPage</value>
+  </data>
+  <data name="&gt;&gt;portPropertiesPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="portPropertiesTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>

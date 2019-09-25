@@ -27,7 +27,7 @@
     <key id="d13" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
     <data key="d13">
         <y:SharedData>
-            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="1" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <bpmn:AlternatingLeafStripeStyle x:Key="2">
                 <bpmn:AlternatingLeafStripeStyle.EvenLeafDescriptor>
                     <bpmn:StripeDescriptor BackgroundBrush="#FFC4D7ED" InsetBrush="#FFE0E0E0" />
@@ -44,7 +44,7 @@
                 <yforms:ShapeNodeStyle Brush="#00FFFFFF" />
             </yforms:NodeStyleStripeStyleAdapter>
             <y:InteriorLabelModel x:Key="5" />
-            <yforms:DefaultLabelStyle x:Key="6" StringFormat="{y:GraphMLReference 3}" />
+            <yforms:DefaultLabelStyle x:Key="6" StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
             <bpmn:BpmnEdgeStyle x:Key="7" />
             <bpmn:BpmnEdgeStyle x:Key="8" />
             <bpmn:BpmnEdgeStyle x:Key="9" Type="DefaultFlow" />
@@ -60,7 +60,7 @@
                 <y:StripeDefaults.Labels>
                     <y:LabelDefaults AutoAdjustPreferredSize="True" ShareLayoutParameterInstance="True" LayoutParameter="{x:Static y:StretchStripeLabelModel.North}" ShareStyleInstance="True">
                         <y:LabelDefaults.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}"  Font="Microsoft Sans Serif, 10px"/>
                         </y:LabelDefaults.Style>
                     </y:LabelDefaults>
                 </y:StripeDefaults.Labels>
@@ -144,7 +144,7 @@ At-Large]]></y:Label.Text>
                     <y:Label LayoutParameter="{x:Static bpmn:PoolHeaderLabelModel.West}" >
                         <y:Label.Text><![CDATA[Lower-level Business Process for the High-Level Example]]></y:Label.Text>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 3}" AutoFlip="False"  Font="Microsoft Sans Serif, 10px"/>
                         </y:Label.Style>
                     </y:Label>
                 </x:List>

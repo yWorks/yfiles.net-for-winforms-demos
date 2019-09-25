@@ -103,12 +103,7 @@ namespace Demo.yFiles.Graph.TableEditor
     /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       // initialize the graph
       InitializeGraph();
 
@@ -132,7 +127,9 @@ namespace Demo.yFiles.Graph.TableEditor
                                                          Enabled = true,
                                                          //We identify the group nodes during a drag by either a custom tag or if they have a table associated.
                                                          IsGroupNodePredicate =
-                                                           draggedNode => draggedNode.Lookup<ITable>() != null || (string) draggedNode.Tag == "GroupNode"
+                                                           draggedNode =>
+                                                           draggedNode.Lookup<ITable>() != null ||
+                                                           (string) draggedNode.Tag == "GroupNode"
                                                        },
                                  //But disable node creation on click
                                  AllowCreateNode = false
@@ -167,7 +164,6 @@ namespace Demo.yFiles.Graph.TableEditor
       graphEditorInputMode.PopulateItemContextMenu += graphEditorInputMode_PopulateItemContextMenu;
       graphEditorInputMode.PopulateItemContextMenu += graphEditorInputMode_PopulateNodeContextMenu;
       graphEditorInputMode.MouseHoverInputMode.QueryToolTip += MouseHoverInputMode_QueryToolTip;
-
 
       // we don't provide candidates for the pool nodes, so tell the input mode not to create edges, if
       // there aren't any candidates. That way, we can start marquee selection inside pool nodes
@@ -274,6 +270,8 @@ namespace Demo.yFiles.Graph.TableEditor
         node => node.Lookup<ITable>() != null, node => new PoolNodeMarqueeTestable(node.Layout));
     }
 
+    // A special marquee testable which considers the node as selected
+    // if it lies _entirely_ inside the marquee box
     private class PoolNodeMarqueeTestable : IMarqueeTestable {
       private readonly IRectangle rectangle;
 
@@ -282,7 +280,7 @@ namespace Demo.yFiles.Graph.TableEditor
       }
 
       public bool IsInBox(IInputModeContext context, RectD rectangle) {
-        return rectangle.Contains(rectangle.GetTopLeft()) && rectangle.Contains(rectangle.GetBottomRight());
+        return rectangle.Contains(this.rectangle.GetTopLeft()) && rectangle.Contains(this.rectangle.GetBottomRight());
       }
     }
 
@@ -337,7 +335,7 @@ namespace Demo.yFiles.Graph.TableEditor
     /// can only grow.</item>
     /// </list>
     /// </remarks>
-    private void LayoutButton_Click(object sender, EventArgs e) {
+    private async void LayoutButton_Click(object sender, EventArgs e) {
         var hl = new HierarchicLayout
                     {
                       ComponentLayoutEnabled = false,
@@ -360,7 +358,7 @@ namespace Demo.yFiles.Graph.TableEditor
                                  //Table cells may only grow by an automatic layout.
                                  TableLayoutConfigurator = {Compaction = false}
                                };
-        layoutExecutor.Start();
+        await layoutExecutor.Start();
     }
 
     /// <summary>

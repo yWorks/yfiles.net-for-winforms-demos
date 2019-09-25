@@ -67,9 +67,9 @@ using System.Windows.Markup;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("5.2.0.0")]
-[assembly: AssemblyVersion("5.2.0.0")]
-[assembly: AssemblyFileVersion("5.2.0.0")]
+// [assembly: AssemblyVersion("5.2")]
+[assembly: AssemblyVersion("5.2")]
+[assembly: AssemblyFileVersion("5.2")]
 
 [assembly: XmlnsDefinition("Demo.yFiles.Graph.TableNodeStyle", "Demo.yFiles.Graph.TableNodeStyle")]
 [assembly: XmlnsDefinition("Demo.yFiles.Graph.TableNodeStyle", "Demo.yFiles.Graph.TableNodeStyle.Style")]

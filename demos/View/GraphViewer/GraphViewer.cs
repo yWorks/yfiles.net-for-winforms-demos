@@ -33,6 +33,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Viewer.Properties;
 using yWorks.Controls;
@@ -63,12 +64,7 @@ namespace Demo.yFiles.Graph.Viewer
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
       fitContentButton.SetCommand(Commands.FitContent, graphControl);
 
-      try {
-        descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        descriptionTextBox.Text = "The description is not available with this version of .NET Core.";
-      }
+      descriptionTextBox.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     protected override void OnLoad(EventArgs e) {
@@ -258,7 +254,7 @@ namespace Demo.yFiles.Graph.Viewer
       if (currentItem is INode) {
         var node = (INode)currentItem;
         nodeDescriptionTextBlock.Text = DescriptionMapper[node] ?? string.Empty;
-        nodeLabelTextBlock.Text = node.Labels.Count > 0 ? node.Labels[0].Text : string.Empty;
+        nodeLabelTextBlock.Text = node.Labels.Count > 0 ? Regex.Replace(node.Labels[0].Text, "\r?\n", "\r\n") : string.Empty;
         var url = UrlMapper[node];
         if (url != null) {
           nodeUrlButton.Text = url;

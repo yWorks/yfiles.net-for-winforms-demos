@@ -117,8 +117,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 
       var x = (float)insets.Left;
       var y = (float)insets.Top;
-      var width = (float)(node.Layout.Width - insets.HorizontalInsets - ButtonSize);
-      //var height = (float)(font.GetHeight(graphics) + insets.VerticalInsets);
+      var width = (float)(node.Layout.Width - insets.HorizontalInsets);
       var height = ButtonSize * 2;
 
       // add background
@@ -126,13 +125,12 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 
       // paint label
       if (data.Constraints) {
-        var rectangle = new RectangleVisual(x, y, width, height) {Brush = GetBackgroundBrush(data)};
-        group.Add(rectangle);
+        group.Add(new RectangleVisual(x, y, width, height) {Brush = GetBackgroundBrush(data)});
         group.Add(new TextVisual {
           Text = data.ToString(),
           Font = font,
           Brush = GetForegroundBrush(data),
-          Location = new PointD(x + insets.Left, y + insets.Top)
+          Location = new PointD(x + ButtonSize + 1, y + insets.Top)
         });
       } else {
         group.Add(VoidVisualCreator.Instance.CreateVisual(context));
@@ -157,11 +155,8 @@ namespace Demo.yFiles.Layout.SequenceConstraints
       }
 
       if (data.Constraints) {
-        double w = width + ButtonSize;
-        var rectangle = new RectangleVisual(x, y, w, height) {Pen = Pens.Black};
+        var rectangle = new RectangleVisual(x, y, width, height) {Pen = Pens.Black};
         group.Add(rectangle);
-        var line = new LineVisual(x + width, y, x + width, y + height) {Pen = Pens.Black};
-        group.Add(line);
       } else {
         group.Add(VoidVisualCreator.Instance.CreateVisual(context));
         group.Add(VoidVisualCreator.Instance.CreateVisual(context));
@@ -186,8 +181,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 
       var x = (float)insets.Left;
       var y = (float)insets.Top;
-      var width = (float)(node.Layout.Width - insets.HorizontalInsets - ButtonSize);
-      //var height = (float)(font.GetHeight(graphics) + insets.VerticalInsets);
+      var width = (float)(node.Layout.Width - insets.HorizontalInsets);
       var height = ButtonSize * 2;
 
       // update background
@@ -200,13 +194,12 @@ namespace Demo.yFiles.Layout.SequenceConstraints
           group.Children[1] = rectangle;
           string s = data.ToString();
           Brush brush = GetForegroundBrush(data);
-          IPoint location = new PointD(x + insets.Left, y + insets.Top);
-          group.Children[2] = new TextVisual {Text = s, Font = font, Brush = brush, Location = location};
+          group.Children[2] = new TextVisual {Text = s, Font = font, Brush = brush, Location = new PointD(x + ButtonSize + 1, y + insets.Top)};
         } else {
           ((ShapeVisual) group.Children[1]).Brush = GetBackgroundBrush(data);
-          var textPaintable = (TextVisual) group.Children[2];
-          textPaintable.Brush = GetForegroundBrush(data);
-          textPaintable.Text = data.ToString();
+          var textVisual = (TextVisual) group.Children[2];
+          textVisual.Brush = GetForegroundBrush(data);
+          textVisual.Text = data.ToString();
         }
       } else {
         if (group.Children[1] != null) {
@@ -237,11 +230,8 @@ namespace Demo.yFiles.Layout.SequenceConstraints
 
       if (data.Constraints) {
         if (group.Children[childIndex] == null) {
-          double w = width + ButtonSize;
-          var rectangle = new RectangleVisual(x, y, w, height) {Pen = Pens.Black};
+          var rectangle = new RectangleVisual(x, y, width, height) {Pen = Pens.Black};
           group.Children[childIndex] = rectangle;
-          var line = new LineVisual(x + width, y, x + width, y + height) {Pen = Pens.Black};
-          group.Children[childIndex + 1] = line;
         }
       } else {
         if (group.Children[childIndex] != null) {
@@ -375,7 +365,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
       // increase button
       var b1 = new Button
       {
-        Command = SequenceConstraintsForm.IncreaseLayerCommand,
+        Command = SequenceConstraintsForm.IncreaseSequenceCommand,
         CommandParameter = Button.UseNodeParameter,
         CommandTarget = Button.UseCanvasControlTarget,
         // set a label as the button visualization
@@ -390,13 +380,13 @@ namespace Demo.yFiles.Layout.SequenceConstraints
       // decrease button
       var b2 = new Button
       {
-        Command = SequenceConstraintsForm.DecreaseLayerCommand,
+        Command = SequenceConstraintsForm.DecreaseSequenceCommand,
         CommandParameter = Button.UseNodeParameter,
         CommandTarget = Button.UseCanvasControlTarget,
         // set a label as the button visualization
         Visualization = CreateButtonLabel(ButtonLabelStyle.ButtonIcon.Decrease, ButtonSize,
-          new PointD(1, 0),
-          new PointD(-insets.Right - ButtonSize, insets.Top + ButtonSize), null)
+          new PointD(0, 0),
+          new PointD(insets.Left, insets.Top), null)
       };
       // set ButtonLabelStyle.Button so the style knows it's owner
       ((ButtonLabelStyle)b2.Visualization.Style).Button = b2;
@@ -440,7 +430,7 @@ namespace Demo.yFiles.Layout.SequenceConstraints
                       Icon = icon,
                       BorderPen = borderPen
                     },
-          PreferredSize = new SizeD(buttonSize, buttonSize)
+          PreferredSize = new SizeD(buttonSize, icon == ButtonLabelStyle.ButtonIcon.Increase || icon == ButtonLabelStyle.ButtonIcon.Decrease ? buttonSize * 2 : buttonSize)
         };
     }
   }
@@ -565,20 +555,20 @@ namespace Demo.yFiles.Layout.SequenceConstraints
       GeneralPath path;
       ShapeVisual pathPaintable;
       switch (Icon) {
-        case ButtonIcon.Increase: // paint "up"-arrow
+        case ButtonIcon.Increase: // paint "right"-arrow
           path = new GeneralPath();
-          path.MoveTo(layout.TopLeft + new PointD(layout.Width*0.3, layout.Height*0.7));
-          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.7, layout.Height*0.7));
-          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.5, layout.Height*0.3));
+          path.MoveTo(layout.TopLeft + new PointD(layout.Width*0.3, layout.Height*0.3));
+          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.3, layout.Height*0.7));
+          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.7, layout.Height*0.5));
           path.Close();
           pathPaintable = new GeneralPathVisual(path) {Brush = foregroundBrush};
           group.Add(pathPaintable);
           break;
-        case ButtonIcon.Decrease: // paint "down"-arrow
+        case ButtonIcon.Decrease: // paint "left"-arrow
           path = new GeneralPath();
-          path.MoveTo(layout.TopLeft + new PointD(layout.Width*0.3, layout.Height*0.3));
-          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.7, layout.Height*0.3));
-          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.5, layout.Height*0.7));
+          path.MoveTo(layout.TopLeft + new PointD(layout.Width*0.7, layout.Height*0.3));
+          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.7, layout.Height*0.7));
+          path.LineTo(layout.TopLeft + new PointD(layout.Width*0.3, layout.Height*0.5));
           path.Close();
           pathPaintable = new GeneralPathVisual(path) {Brush = foregroundBrush};
           group.Add(pathPaintable);

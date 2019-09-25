@@ -166,7 +166,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
     }
 
     ///<inheritdoc/>
-    protected override void RunModule() {
+    protected override Task RunModule() {
       try {
         PerformPreLayout();
         LaunchLayout();
@@ -174,20 +174,20 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
       finally {
         PerformPostLayout();
       }
-      
+      return Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>
-    public override void Start(ILookup newContext) {
+    public override async Task Start(ILookup newContext) {
       LayoutGraph layoutGraph = newContext.Lookup<LayoutGraph>();
       if (layoutGraph == null) {
         IGraph graph = newContext.Lookup<IGraph>();
         if (graph != null) {
-          StartWithIGraph(graph, newContext);
+          await StartWithIGraph(graph, newContext);
         }
       } else {
         try {
-          base.Start(newContext);
+          await base.Start(newContext);
         } catch (InvalidGraphStructureException wex) {
           MessageBox.Show("Exception " + wex.Message + " when launching layout algorithm!",
             "InvalidGraphStructureException", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -313,7 +313,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
     /// <param name="graph">The graph to execute on.</param>
     /// <param name="newContext">The context to use. This method will query a <c>ISelectionModel&lt;IModelItem></c></param>
     /// for the selected nodes and edges and the <c>GraphControl</c> to morph the layout.
-    protected virtual void StartWithIGraph(IGraph graph, ILookup newContext) {
+    protected virtual async Task StartWithIGraph(IGraph graph, ILookup newContext) {
       this.graph = graph;
       if (ShouldConfigureTableLayout()) {
         PrepareTableLayout();
@@ -335,7 +335,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
           // now create the dialog that controls the abort handler
           abortDialog = new AbortDialog { AbortHandler = abortHandler };
           // start the layout in another thread.
-          var layoutThread = new Thread(() => RunModuleAsync(wrappedLookup, graph, compoundEdit));
+          var layoutThread = new Thread(async () => await RunModuleAsync(wrappedLookup, graph, compoundEdit));
           
           // now if we are not doing a quick layout - and if it takes more than a few seconds, we open the dialog to 
           // enable the user to stop or cancel the execution 
@@ -360,7 +360,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
           showDialogTimer.Start();
           layoutThread.Start();
         } else {
-          RunModuleAsync(wrappedLookup, graph, compoundEdit);
+          await RunModuleAsync(wrappedLookup, graph, compoundEdit);
         }
       } catch (Exception e) {
         FreeReentrant();
@@ -383,14 +383,14 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
     /// <param name="graph">The graph to apply the layout to.</param>
     /// <param name="compoundEdit">The undo edit which wraps the layout. It has been created in <see cref="StartWithIGraph"/>
     /// and will be closed after a successful layout or canceled otherwise.</param>
-    private void RunModuleAsync(ILookup moduleContext, IGraph graph, ICompoundEdit compoundEdit)
+    private async Task RunModuleAsync(ILookup moduleContext, IGraph graph, ICompoundEdit compoundEdit)
     {
       GraphControl view = moduleContext.Lookup<GraphControl>();
       try {
-        RunModule();
+        await RunModule();
         Dispose();
         if (!view.InvokeRequired) {
-          LayoutDone(graph, moduleContext, compoundEdit);
+          await LayoutDone(graph, moduleContext, compoundEdit);
         } else {
           view.Invoke(new LayoutDoneHandler(LayoutDone), graph, moduleContext, compoundEdit);
         }
@@ -422,7 +422,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
       }
     }
 
-    private delegate void LayoutDoneHandler(IGraph graph, ILookup moduleContext, ICompoundEdit compoundEdit);
+    private delegate Task LayoutDoneHandler(IGraph graph, ILookup moduleContext, ICompoundEdit compoundEdit);
 
     /// <summary>
     /// Called after the layout has been calculated.
@@ -433,7 +433,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
     /// <param name="graph">The graph to apply the layout to.</param>
     /// <param name="moduleContext">The module context.</param>
     /// <param name="compoundEdit">The undo edit which wraps the layout. It was created in <see cref="StartWithIGraph"/> and will be closed here.</param>
-    protected virtual void LayoutDone(IGraph graph, ILookup moduleContext, ICompoundEdit compoundEdit) {
+    protected virtual async Task LayoutDone(IGraph graph, ILookup moduleContext, ICompoundEdit compoundEdit) {
       if (abortDialog != null) {
         if (abortDialog.Visible) {
           abortDialog.Close();
@@ -443,17 +443,16 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
       GraphControl view = moduleContext.Lookup<GraphControl>();
       if (LayoutMorphingEnabled && view != null) {
         var morphingAnimation =
-          graph.CreateLayoutAnimation(layoutGraph, TimeSpan.FromSeconds(1));
+            graph.CreateLayoutAnimation(layoutGraph, TimeSpan.FromSeconds(1));
 
-        Rectangle2D box = LayoutGraphUtilities.GetBoundingBox(layoutGraph, layoutGraph.GetNodeCursor(), layoutGraph.GetEdgeCursor());
+        Rectangle2D box =
+            LayoutGraphUtilities.GetBoundingBox(layoutGraph, layoutGraph.GetNodeCursor(), layoutGraph.GetEdgeCursor());
         RectD targetBounds = box.ToRectD();
         ViewportAnimation vpAnim =
-          new ViewportAnimation(view,
-            targetBounds, TimeSpan.FromSeconds(1))
-          {
-            MaximumTargetZoom = 1.0d,
-            TargetViewMargins = view.FitContentViewMargins
-          };
+            new ViewportAnimation(view,
+                targetBounds, TimeSpan.FromSeconds(1)) {
+                MaximumTargetZoom = 1.0d, TargetViewMargins = view.FitContentViewMargins
+            };
 
         var animations = new List<IAnimation>();
         animations.Add(morphingAnimation);
@@ -464,14 +463,13 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
         TableLayoutConfigurator.CleanUp(graph);
 
         Animator animator = new Animator(view);
-        animator.Animate(animations.CreateParallelAnimation().CreateEasedAnimation()).ContinueWith(delegate {
-            try {
-              compoundEdit.Commit();
-              view.UpdateContentRect();
-            } finally {
-              OnDone(new LayoutEventArgs());
-            }
-          }, TaskScheduler.FromCurrentSynchronizationContext());
+        await animator.Animate(animations.CreateParallelAnimation().CreateEasedAnimation());
+        try {
+          compoundEdit.Commit();
+          view.UpdateContentRect();
+        } finally {
+          OnDone(new LayoutEventArgs());
+        }
       } else {
         layoutGraph.CommitLayoutToOriginalGraph();
         RestoreTableLayout();

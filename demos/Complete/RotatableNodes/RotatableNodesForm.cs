@@ -31,6 +31,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Complete.RotatableNodes.Properties;
@@ -93,12 +94,7 @@ namespace Demo.yFiles.Complete.RotatableNodes
       exitGroupButton.SetCommand(Commands.ExitGroup, graphControl);
 
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
 
     }
 
@@ -304,20 +300,20 @@ namespace Demo.yFiles.Complete.RotatableNodes
 
     #region Layout
 
-    private void LayoutChooserBoxSelectedIndexChanged(object sender, EventArgs e) {
+    private async void LayoutChooserBoxSelectedIndexChanged(object sender, EventArgs e) {
       if (graphControl != null) {
-        ApplyLayout();
+        await ApplyLayout();
       }
     }
 
-    private void OnLayoutClick(object sender, EventArgs e) {
-      ApplyLayout();
+    private async void OnLayoutClick(object sender, EventArgs e) {
+      await ApplyLayout();
     }
 
     /// <summary>
     /// Runs a layout algorithm which is configured to consider node rotations.
     /// </summary>
-    public async void ApplyLayout() {
+    public async Task ApplyLayout() {
       var graph = graphControl.Graph;
 
       // provide the rotated outline and layout for the layout algorithm

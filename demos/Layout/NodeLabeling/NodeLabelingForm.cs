@@ -34,6 +34,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Layout.NodeLabeling.Properties;
@@ -147,15 +148,10 @@ namespace Demo.yFiles.Layout.NodeLabeling
     /// This method initializes the graph and the input mode.
     /// </summary>
     /// <seealso cref="InitializeGraph"/>
-    protected virtual void OnLoad(object src, EventArgs e) {
+    protected virtual async void OnLoad(object src, EventArgs e) {
       try {
         // load description
-        try {
         description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
         // add background
         object userObject = new BackgroundVisualCreator();
         graphControl.BackgroundGroup.AddChild(userObject);
@@ -169,7 +165,7 @@ namespace Demo.yFiles.Layout.NodeLabeling
         SetupOptions();
 
       // do initial label placement
-      DoLabelPlacement();
+      await DoLabelPlacement();
       graphControl.FitGraphBounds();
       } catch (Exception) {
         MessageBox.Show("Error loading form");
@@ -231,7 +227,7 @@ namespace Demo.yFiles.Layout.NodeLabeling
     /// Does the label placement using the generic labeling algorithm. Before this, the model and size of the labels is
     /// set according to the option handlers settings.
     /// </summary>
-    private async void DoLabelPlacement() {
+    private async Task DoLabelPlacement() {
       if (inLayout) {
         return;
       }
@@ -319,8 +315,8 @@ namespace Demo.yFiles.Layout.NodeLabeling
       Handler.I18nFactory = rmf;
     }
 
-    private void HandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
-      DoLabelPlacement();
+    private async void HandlerPropertyChanged(object sender, PropertyChangedEventArgs e) {
+      await DoLabelPlacement();
     }
 
     #endregion
@@ -363,8 +359,8 @@ namespace Demo.yFiles.Layout.NodeLabeling
 
     #endregion
 
-    private void PlaceLabelsButton_OnClick(object sender, EventArgs e) {
-      DoLabelPlacement();
+    private async void PlaceLabelsButton_OnClick(object sender, EventArgs e) {
+      await DoLabelPlacement();
     }
   }
 }

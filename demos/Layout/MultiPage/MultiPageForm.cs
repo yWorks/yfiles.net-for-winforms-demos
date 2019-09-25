@@ -65,7 +65,7 @@ namespace Demo.yFiles.Layout.MultiPage
   /// </remarks>
   public partial class MultiPageForm : Form
   {
-    // list of availabel core layouts
+    // list of available core layouts
     private Dictionary<string, ILayoutAlgorithm> coreLayouts;
     // the current core layout
     private ILayoutAlgorithm coreLayout = new HierarchicLayout();
@@ -83,12 +83,7 @@ namespace Demo.yFiles.Layout.MultiPage
 
       RegisterToolStripCommands();
 
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
     }
 
     /// <summary>
@@ -106,7 +101,7 @@ namespace Demo.yFiles.Layout.MultiPage
       // add the page bounds visual
       pageBoundsVisualCreator = new PageBoundsVisualCreator();
       graphControl.BackgroundGroup.AddChild(pageBoundsVisualCreator);
-      // calculate the muti-page layout
+      // calculate the multi-page layout
       RunMultipageLayout();
     }
 
@@ -258,8 +253,8 @@ namespace Demo.yFiles.Layout.MultiPage
     private void ApplyLayoutResult(MultiPageLayoutResult multiPageLayout, double pageWidth, double pageHeight)
     {
       // typeface format for underlined labels
-      Font normalFont = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f);
-      Font font = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f, FontStyle.Underline);
+      Font normalFont = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f, GraphicsUnit.Pixel);
+      Font font = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f, FontStyle.Underline, GraphicsUnit.Pixel);
 
       // use the MultiPageGraphBuilder to create a list of IGraph instances that represent the single pages
       MultiPageIGraphBuilder builder = new MultiPageIGraphBuilder(multiPageLayout) {

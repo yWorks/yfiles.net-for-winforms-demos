@@ -30,7 +30,7 @@
             <forms:StringFormat x:Key="1" Alignment="Center" LineAlignment="Center" />
             <y:InteriorLabelModel x:Key="2" />
             <bpmn:BpmnEdgeStyle x:Key="3" />
-            <yforms:DefaultLabelStyle x:Key="4" StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+            <yforms:DefaultLabelStyle x:Key="4" StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
         </y:SharedData>
     </data>
     <graph id="G">
@@ -40,7 +40,7 @@
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="55,24">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Working
 group active]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -51,7 +51,7 @@ group active]]></y:Label.Text>
                             </y:ExteriorLabelModelParameter>
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -72,7 +72,7 @@ group active]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="39,24">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Friday at
 18:00h]]></y:Label.Text>
                         <y:Label.LayoutParameter>
@@ -83,7 +83,7 @@ group active]]></y:Label.Text>
                             </y:ExteriorLabelModelParameter>
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -114,14 +114,14 @@ group active]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="69,24">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Check status of
 working group]]></y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 2}" />
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -147,7 +147,7 @@ working group]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="43,35">
+                    <y:Label >
                         <y:Label.Text><![CDATA[Working
 group still
 active?]]></y:Label.Text>
@@ -155,7 +155,7 @@ active?]]></y:Label.Text>
                             <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 2}" />
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -200,7 +200,7 @@ active?]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label PreferredSize="58,35">
+                    <y:Label >
                         <y:Label.Text><![CDATA[[Send]
 Send current
 issue list]]></y:Label.Text>
@@ -208,7 +208,7 @@ issue list]]></y:Label.Text>
                             <y:InteriorLabelModelParameter Position="Center" Model="{y:GraphMLReference 2}" />
                         </y:Label.LayoutParameter>
                         <y:Label.Style>
-                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 6.5pt" />
+                            <yforms:DefaultLabelStyle StringFormat="{y:GraphMLReference 1}" Font="Microsoft Sans Serif, 9px" />
                         </y:Label.Style>
                     </y:Label>
                 </x:List>
@@ -239,7 +239,7 @@ issue list]]></y:Label.Text>
             </data>
             <data key="d3">
                 <x:List>
-                    <y:Label Style="{y:GraphMLReference 4}" PreferredSize="39,12">
+                    <y:Label Style="{y:GraphMLReference 4}" >
                         <y:Label.Text><![CDATA[Issue list]]></y:Label.Text>
                         <y:Label.LayoutParameter>
                             <y:ExteriorLabelModelParameter Position="West">

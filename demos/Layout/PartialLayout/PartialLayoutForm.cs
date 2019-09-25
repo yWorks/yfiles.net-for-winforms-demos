@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.PartialLayout.Properties;
 using Demo.yFiles.Option.Constraint;
@@ -134,12 +135,7 @@ namespace Demo.yFiles.Layout.PartialLayout
 
     private void OnLoaded(object sender, EventArgs e) {
       // load description
-      try {
-        description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
-      } catch (MissingMethodException) {
-        // Workaround for https://github.com/microsoft/msbuild/issues/4581
-        description.Text = "The description is not available with this version of .NET Core.";
-      }
+      description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       scenarioComboBox.Items.Add(HierarchicScenario);
       scenarioComboBox.Items.Add(OrthogonalScenario);
       scenarioComboBox.Items.Add(OrganicScenario);
@@ -327,8 +323,8 @@ namespace Demo.yFiles.Layout.PartialLayout
       }
     }
 
-    private void OnRunButtonClicked(object sender, EventArgs e) {
-      RunLayout();
+    private async void OnRunButtonClicked(object sender, EventArgs e) {
+      await RunLayout();
     }
 
     private void OnRefreshButtonClicked(object sender, EventArgs e) {
@@ -449,7 +445,7 @@ namespace Demo.yFiles.Layout.PartialLayout
     ///<summary>
     /// Runs either the table or the three tiers layout depending on the selected scenario.
     ///</summary>
-    private async void RunLayout() {
+    private async Task RunLayout() {
       DisableButtons();
       var layoutData = new PartialLayoutData {
         AffectedEdges = {Mapper = partialEdgesMapper},
