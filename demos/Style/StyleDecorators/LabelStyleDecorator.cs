@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -73,7 +73,7 @@ namespace Demo.yFiles.Graph.StyleDecorators {
       innerContainer.Add(decorator1);
       innerContainer.Add(decorator2);
       // arrange inner container - this is a ready-to-use utility method to apply the correct tranformation
-      innerContainer.Transform = GetTransform(labelLayout, false);
+      innerContainer.Transform = GetTransform(context, labelLayout, false);
       // add visuals to container
       container.Add(wrappedVisual);
       container.Add(innerContainer);
@@ -98,7 +98,7 @@ namespace Demo.yFiles.Graph.StyleDecorators {
       decorator2.P1 = new PointD(0, labelLayout.Height);
       decorator2.P2 = new PointD(labelLayout.Width, labelLayout.Height);
       // arrange inner container
-      innerContainer.Transform = GetTransform(labelLayout, false);
+      innerContainer.Transform = GetTransform(context, labelLayout, false);
 
       return container;
     }

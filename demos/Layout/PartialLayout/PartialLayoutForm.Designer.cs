@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -154,7 +154,7 @@ namespace Demo.yFiles.Layout.PartialLayout
       // 
       this.splitContainer2.Panel2.Controls.Add(this.propertiesPanel);
       this.splitContainer2.Size = new System.Drawing.Size(684, 583);
-      this.splitContainer2.SplitterDistance = 373;
+      this.splitContainer2.SplitterDistance = 300;
       this.splitContainer2.TabIndex = 0;
       // 
       // graphControl
@@ -211,11 +211,11 @@ namespace Demo.yFiles.Layout.PartialLayout
       // 
       // optionPanel
       // 
-      this.optionPanel.AutoSize = true;
+      this.optionPanel.AutoSize = false;
       this.optionPanel.Dock = System.Windows.Forms.DockStyle.Top;
       this.optionPanel.Location = new System.Drawing.Point(0, 63);
       this.optionPanel.Name = "optionPanel";
-      this.optionPanel.Size = new System.Drawing.Size(307, 0);
+      this.optionPanel.Size = new System.Drawing.Size(307, 200);
       this.optionPanel.TabIndex = 11;
       // 
       // scenarioPanel

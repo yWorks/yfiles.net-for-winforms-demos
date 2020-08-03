@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -318,7 +318,7 @@ namespace Demo.yFiles.Input.DragAndDrop
       g.Clear(Color.White);
 
       ContextConfigurator cc = new ContextConfigurator(canvasControl.ContentRect);
-      var renderContext = cc.Setup(canvasControl, g);
+      var renderContext = cc.CreateRenderContext(canvasControl, g);
       canvasControl.RenderContent(renderContext, g);
       var listGraphics = e.Graphics;
       var oldClip = listGraphics.Clip;

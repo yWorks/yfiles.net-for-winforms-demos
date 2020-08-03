@@ -15,7 +15,7 @@
       <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="ShowOverviewState" Type="System.Windows.Forms.CheckState" Scope="User">
-      <Value Profile="(Default)">Checked</Value>
+      <Value Profile="(Default)">Unchecked</Value>
     </Setting>
     <Setting Name="ShowStructureViewState" Type="System.Windows.Forms.CheckState" Scope="User">
       <Value Profile="(Default)">Checked</Value>

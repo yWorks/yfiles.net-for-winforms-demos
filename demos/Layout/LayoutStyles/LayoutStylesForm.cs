@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -154,6 +154,8 @@ namespace Demo.yFiles.Layout.LayoutStyles
         new SampleData("Organic with Sub-structures", lcd["Organic"]),
         new SampleData("Hierarchic with Sub-components", lcd["Hierarchic"]),
         new SampleData("Orthogonal with Sub-structures", lcd["Orthogonal"]),
+        new SampleData("Hierarchic with Buses", lcd["Hierarchic"]),
+        new SampleData("Polyline Router with Buses", lcd["Polyline Router"]),
       };
       SampleComboBox.ComboBox.DataSource = samples;
       SampleComboBox.SelectedIndex = 0;
@@ -192,10 +194,16 @@ namespace Demo.yFiles.Layout.LayoutStyles
         ((OrganicLayoutConfig) config).EnableSubstructures();
       }
       if (sampleGraphKey == "Hierarchic with Sub-components" && data.Name == "Hierarchic") {
-        ((HierarchicLayoutConfig) config).EnableSubstructures();
+        ((HierarchicLayoutConfig) config).EnableSubComponents();
       }
       if (sampleGraphKey == "Orthogonal with Sub-structures" && data.Name == "Orthogonal") {
         ((OrthogonalLayoutConfig) config).EnableSubstructures();
+      }
+      if (sampleGraphKey == "Hierarchic with Buses" && data.Name == "Hierarchic") {
+        ((HierarchicLayoutConfig) config).EnableBuses();
+      }
+      if (sampleGraphKey == "Polyline Router with Buses" && data.Name == "Polyline Router") {
+        ((PolylineEdgeRouterConfig) config).BusRoutingItem = PolylineEdgeRouterConfig.EnumBusRouting.ByColor;
       }
     }
 
@@ -502,10 +510,9 @@ namespace Demo.yFiles.Layout.LayoutStyles
       foreach (var edge in Graph.Edges) {
         var oldStyle = edge.Style;
         var thickness = random.NextDouble() * 4 + 1;
-        var style = new PolylineEdgeStyle
-        {
-          Pen =  new Pen(Brushes.Black, (float) thickness)
-        };
+        var style = (PolylineEdgeStyle) oldStyle.Clone();
+        style.Pen = (Pen)style.Pen.Clone();
+        style.Pen.Width = (float)thickness;
         var polyStyle = oldStyle as PolylineEdgeStyle;
         if (polyStyle != null) {
           style.TargetArrow = polyStyle.TargetArrow;
@@ -524,11 +531,10 @@ namespace Demo.yFiles.Layout.LayoutStyles
         if (polyStyle == null) {
           continue;
         }
-        var newStyle = new PolylineEdgeStyle
-        {
-          Pen = new Pen(Brushes.Black, 1.0f),
-          TargetArrow = polyStyle.TargetArrow
-        };
+        var newStyle = (PolylineEdgeStyle) polyStyle.Clone();
+        newStyle.Pen = (Pen) newStyle.Pen.Clone();
+        newStyle.Pen.Width = 1;
+
         Graph.SetStyle(edge, newStyle);
       }
     }

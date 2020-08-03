@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -134,13 +134,15 @@ namespace Demo.yFiles.Graph.UMLClassStyle
 
       // Enable clipboard
       graphControl.Clipboard = new GraphClipboard {
-                                   ToClipboardCopier =
-                                     new GraphCopier {
+                                   ToClipboardCopier = {
                                          Clone = GraphCopier.CloneTypes.Tags,
                                          ReferentialIdentityTypes = GraphCopier.CloneTypes.All
                                        },
-                                   FromClipboardCopier =
-                                     new GraphCopier {
+                                   FromClipboardCopier = {
+                                         Clone = GraphCopier.CloneTypes.Tags,
+                                         ReferentialIdentityTypes = GraphCopier.CloneTypes.All
+                                       },
+                                   DuplicateCopier = {
                                          Clone = GraphCopier.CloneTypes.Tags,
                                          ReferentialIdentityTypes = GraphCopier.CloneTypes.All
                                        }

@@ -10,8 +10,7 @@
     <RootNamespace>Demo.yFiles.Graph.Input.ReshapeHandleProvider</RootNamespace>
     <AssemblyName>ReshapeHandleProviderDemo</AssemblyName>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -66,6 +65,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PortReshapeHandle.cs" />
+    <Compile Include="PortReshapeHandlerProvider.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -82,11 +83,11 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ReshapeHandleProviderForm.resx">
       <DependentUpon>ReshapeHandleProviderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\description.rtf" />
@@ -147,6 +148,14 @@
     <None Include="Resources\mono16\window-minimize-16.png" />
     <None Include="Resources\mono16\window-restore-16.png" />
     <None Include="Resources\mono16\zoom-original3-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defaultGraph.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

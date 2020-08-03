@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -53,6 +53,7 @@ using yWorks.Layout;
 using yWorks.Layout.Bpmn;
 using ContentAlignment = System.Drawing.ContentAlignment;
 using EdgeType = Demo.yFiles.Graph.Bpmn.EdgeType;
+using SolidBrush = System.Drawing.SolidBrush;
 
 namespace Demo.yFiles.Graph.Bpmn.Editor
 {
@@ -252,6 +253,13 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       // add double click event handler
       geim.ItemLeftDoubleClicked += OnLeftDoubleClick;
 
+      // add a tool tip to each item containing its tag value (if there is one)
+      geim.QueryItemToolTip += (sender, args) => {
+        if (args.Item.Tag != null) {
+          args.ToolTip = args.Item.Tag.ToString();
+        }
+      };
+
       // register the command binding for the 'New' command
       geim.KeyboardInputMode.AddCommandBinding(Commands.New, OnNewExecuted);
 
@@ -330,6 +338,17 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       };
     }
 
+    private static Label CreateControlLabel(string text) {
+      return new Label {
+          Text = text,
+          TextAlign = ContentAlignment.MiddleLeft,
+          Font = new Font(FontFamily.GenericSansSerif, 10.5f, FontStyle.Bold, GraphicsUnit.Pixel),
+          Padding = new Padding(2),
+          Height = 20,
+          Width = 150
+      };
+    }
+
     private static object GetStyle(IModelItem item) {
       var node = item as INode;
       if (node != null) {
@@ -343,7 +362,39 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       if (port != null) {
         return port.Style;
       }
+      var label = item as ILabel;
+      if (label != null) {
+        return label.Style;
+      }
       return null;
+    }
+
+    private static void ApplyStyleProperty(PropertyInfo p, IModelItem item, object value, GraphControl graphControl) {
+      var node = item as INode;
+      if (node != null) {
+        var newStyle = node.Style.Clone();
+        p.SetValue(newStyle, value, null);
+        graphControl.Graph.SetStyle(node, (INodeStyle) newStyle);
+      }
+      var edge = item as IEdge;
+      if (edge != null) {
+        var newStyle = edge.Style.Clone();
+        p.SetValue(newStyle, value, null);
+        graphControl.Graph.SetStyle(edge, (IEdgeStyle) newStyle);
+      }
+      var port = item as IPort;
+      if (port != null) {
+        var newStyle = port.Style.Clone();
+        p.SetValue(newStyle, value, null);
+        graphControl.Graph.SetStyle(port, (IPortStyle) newStyle);
+      }
+      var label = item as ILabel;
+      if (label != null) {
+        var newStyle = label.Style.Clone();
+        p.SetValue(newStyle, value, null);
+        graphControl.Graph.SetStyle(label, (ILabelStyle) newStyle);
+      }
+      graphControl.Invalidate();
     }
 
     /// <summary>
@@ -571,11 +622,11 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         // For edges a label with a Message Icon may be added
         var modelParameter = new EdgeSegmentLabelModel(0, 0, 0, false, EdgeSides.OnEdge).CreateDefaultParameter();
         AddMenuItem(items, "Add Initiating Message Icon Label", (o, args) => {
-          graphControl.Graph.AddLabel(edge, "", modelParameter, MessageLabelStyle.InitiatingStyle(), new SizeD(20, 14));
+          graphControl.Graph.AddLabel(edge, "", modelParameter, new MessageLabelStyle { IsInitiating = true }, new SizeD(20, 14));
           graphControl.Focus();
         });
         AddMenuItem(items, "Add Response Message Icon Label", (o, args) => {
-          graphControl.Graph.AddLabel(edge, "", modelParameter, MessageLabelStyle.ResponseStyle(), new SizeD(20, 14));
+          graphControl.Graph.AddLabel(edge, "", modelParameter, new MessageLabelStyle { IsInitiating = false }, new SizeD(20, 14));
           graphControl.Focus();
         });
 
@@ -802,18 +853,23 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         return;
       }
 
-      // Get all boolean and enum properties
+      // Get all boolean, brush, and enum properties
       var properties = style.GetType().GetProperties();
-      var filteredProperties = properties.Where(p => p.PropertyType == typeof (bool) || p.PropertyType.IsEnum).OrderBy(p => p.PropertyType.IsEnum).ThenBy(p => p.Name).ToList();
+      var filteredProperties = properties
+                               .Where(p =>
+                                   p.PropertyType == typeof(bool) ||
+                                   p.PropertyType == typeof(Brush) ||
+                                   p.PropertyType.IsEnum)
+                               .OrderBy(p => p.PropertyType.IsEnum)
+                               .ThenBy(p => p.PropertyType == typeof(Brush))
+                               .ThenBy(p => p.Name).ToList();
 
       if (filteredProperties.Count == 0) {
         panel.Controls.Add(CreateHintLabel("(No properties to change)"));
         return;
       }
 
-      for (int i = 0; i < filteredProperties.Count; i++) {
-        var p = filteredProperties[i];
-
+      foreach (var p in filteredProperties) {
         // CheckBox for boolean properties
         if (p.PropertyType == typeof (bool)) {
           var checkBox = new CheckBox {
@@ -825,44 +881,17 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
             Width = 150,
             Checked = (bool) p.GetValue(style, null)
           };
-          EventHandler handler = delegate {
-            var node = item as INode;
-            if (node != null) {
-              var newStyle = node.Style.Clone();
-              p.SetValue(newStyle, checkBox.Checked, null);
-              graphControl.Graph.SetStyle(node, (INodeStyle) newStyle);
-            }
-            var edge = item as IEdge;
-            if (edge != null) {
-              var newStyle = edge.Style.Clone();
-              p.SetValue(newStyle, checkBox.Checked, null);
-              graphControl.Graph.SetStyle(edge, (IEdgeStyle) newStyle);
-            }
-            var port = item as IPort;
-            if (port != null) {
-              var newStyle = port.Style.Clone();
-              p.SetValue(newStyle, checkBox.Checked, null);
-              graphControl.Graph.SetStyle(port, (IPortStyle) newStyle);
-            }
-            graphControl.Invalidate();
-          };
-          checkBox.CheckedChanged += handler;
+          checkBox.CheckedChanged += (o, args) => ApplyStyleProperty(p, item, checkBox.Checked, graphControl);
           panel.Controls.Add(checkBox);
         }
 
         // Label and ComboBox for enum properties
         if (p.PropertyType.IsEnum) {
-          var label = new Label {Text = p.Name, TextAlign = ContentAlignment.MiddleLeft,
-                 Font = new Font(FontFamily.GenericSansSerif, 10.5f, FontStyle.Bold, GraphicsUnit.Pixel),
-                 Padding = new Padding(2),
-                 Height = 20,
-                 Width = 150};
-                 
-
-          panel.Controls.Add(label);
+          panel.Controls.Add(CreateControlLabel(p.Name));
           var comboBox = new ComboBox {
-            Margin = new Padding(5, 0, 0, 0),
-            Width = 180
+              Margin = new Padding(5, 0, 0, 0),
+              Width = 180,
+              DropDownStyle = ComboBoxStyle.DropDownList
           };
           foreach(var enumVal in Enum.GetValues(p.PropertyType)) {
             comboBox.Items.Add(enumVal);
@@ -870,31 +899,48 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
 
           comboBox.SelectedItem = p.GetValue(style, null);
           comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-          comboBox.SelectedValueChanged += delegate {
-            var node = item as INode;
-            if (node != null) {
-              var newStyle = node.Style.Clone();
-              p.SetValue(newStyle, comboBox.SelectedItem, null);
-              graphControl.Graph.SetStyle(node, (INodeStyle) newStyle);
-            }
-            var edge = item as IEdge;
-            if (edge != null) {
-              var newStyle = edge.Style.Clone();
-              p.SetValue(newStyle, comboBox.SelectedItem, null);
-              graphControl.Graph.SetStyle(edge, (IEdgeStyle) newStyle);
-            }
-            var port = item as IPort;
-            if (port != null) {
-              var newStyle = port.Style.Clone();
-              p.SetValue(newStyle, comboBox.SelectedItem, null);
-              graphControl.Graph.SetStyle(port, (IPortStyle) newStyle);
-            }
-            graphControl.Invalidate();
+          comboBox.SelectedValueChanged += (o, args) => ApplyStyleProperty(p, item, comboBox.SelectedItem, graphControl);
+          panel.Controls.Add(comboBox);
+        }
+
+        // Color picker for Brushes
+        if (p.PropertyType == typeof (Brush)) {
+          panel.Controls.Add(CreateControlLabel(p.Name));
+          var comboBox = new ComboBox {
+              Margin = new Padding(5, 0, 0, 0),
+              Width = 180,
+              DropDownStyle = ComboBoxStyle.DropDownList
           };
+          var items = typeof(Brushes).GetProperties().Select(prop => Tuple.Create(prop.Name, prop.GetValue(null)));
+          foreach (var comboBoxItem in items) {
+            comboBox.Items.Add(comboBoxItem);
+          }
+          comboBox.DisplayMember = "Item1";
+          comboBox.SelectedItem = FindItem(comboBox.Items, p.GetValue(style));
+          comboBox.SelectedValueChanged += (o, args) => ApplyStyleProperty(p, item, ((Tuple<string, object>)comboBox.SelectedItem).Item2, graphControl);
           panel.Controls.Add(comboBox);
         }
       }
       panel.ResumeLayout();
+    }
+
+    /// <summary>
+    /// Finds the matching brush in the items, even when the references aren't the same.
+    /// </summary>
+    /// <param name="items"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    private static object FindItem(ComboBox.ObjectCollection items, object value) {
+      var val = value as SolidBrush;
+      if (val != null) {
+        foreach (Tuple<string, object> item in items) {
+          var brush = (SolidBrush) item.Item2;
+          if (brush.Color == val.Color) {
+            return item;
+          }
+        }
+      }
+      return null;
     }
 
     /// <summary>

@@ -9,7 +9,7 @@
     <AssemblyName>IncrementalHierarchicLayoutDemo</AssemblyName>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Demo.yFiles.Layout.IncrementalHierarchicLayout</RootNamespace>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">

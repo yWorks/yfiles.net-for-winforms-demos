@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -27,6 +27,7 @@
  ** 
  ***************************************************************************/
 
+using System.Windows.Forms;
 using yWorks.Geometry;
 
 namespace Demo.yFiles.Layout.MultiPage
@@ -325,7 +326,7 @@ namespace Demo.yFiles.Layout.MultiPage
       this.innerSplitContainer.Panel2.Controls.Add(this.propertiesPanel);
       this.innerSplitContainer.Panel2.Controls.Add(this.label5);
       this.innerSplitContainer.Size = new System.Drawing.Size(590, 583);
-      this.innerSplitContainer.SplitterDistance = 387;
+      this.innerSplitContainer.SplitterDistance = 350;
       this.innerSplitContainer.TabIndex = 0;
       // 
       // graphControlSplitContainer
@@ -459,7 +460,8 @@ namespace Demo.yFiles.Layout.MultiPage
       this.layoutButton.Click += new System.EventHandler(this.RunLayout_Click);
       // 
       // coreLayoutComboBox
-      // 
+      //
+      this.coreLayoutComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
       this.coreLayoutComboBox.FormattingEnabled = true;
       this.coreLayoutComboBox.Location = new System.Drawing.Point(74, 57);
       this.coreLayoutComboBox.Name = "coreLayoutComboBox";

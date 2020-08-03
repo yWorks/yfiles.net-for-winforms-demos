@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -462,18 +462,16 @@ namespace Demo.yFiles.Graph.Bpmn.Util
 
   internal class CollapseButtonIcon : IconBase, IClickHandler
   {
-    private static readonly IIcon collapsedIcon;
-    private static readonly IIcon expandedIcon;
 
-    static CollapseButtonIcon() {
-      collapsedIcon = IconFactory.CreateStaticSubState(SubState.Collapsed);
-      expandedIcon = IconFactory.CreateStaticSubState(SubState.Expanded);
-    }
+    private readonly IIcon collapsedIcon;
+    private readonly IIcon expandedIcon;
 
     private readonly INode node;
 
-    public CollapseButtonIcon(INode node) {
+    public CollapseButtonIcon(INode node, Brush iconBrush) {
       this.node = node;
+      collapsedIcon = IconFactory.CreateStaticSubState(SubState.Collapsed, iconBrush);
+      expandedIcon = IconFactory.CreateStaticSubState(SubState.Expanded, iconBrush);
     }
 
     public override IVisual CreateVisual(IRenderContext context) {

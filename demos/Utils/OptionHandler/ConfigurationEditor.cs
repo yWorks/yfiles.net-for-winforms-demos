@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -83,14 +83,22 @@ namespace Demo.yFiles.Toolkit.OptionHandler
 
       rootPanel.Controls.Clear();
 
-      foreach (var childGroup in optionGroup.ChildOptions) {
-        if (childGroup is OptionGroup) {
-          var groupControl = AddTopLevelOptionGroup((OptionGroup) childGroup);
-          if (childGroup.Name == "DescriptionGroup") {
-            groupControl.Panel2Collapsed = false;
+      int Y = 0;
+      Control control;
+      foreach (var option in optionGroup.ChildOptions) {
+        if (option is OptionGroup) {
+          var container = AddTopLevelOptionGroup((OptionGroup) option);
+          if (option.Name == "DescriptionGroup") {
+            container.Panel2Collapsed = false;
           }
-          rootPanel.Controls.Add(groupControl);
+          control = container;
+        } else {
+          control = CreateControl(option);
+          rootPanel.Controls.Add(control);
+          control.Location = new Point(topLevelGroupPaddingLeft, Y);
         }
+        rootPanel.Controls.Add(control);
+        Y += control.Height;
       }
 
       RecomputeSizes(null, null);
@@ -231,6 +239,7 @@ namespace Demo.yFiles.Toolkit.OptionHandler
 
         case ComponentTypes.FormattedText:
           var block = new RichTextBox();
+          block.WordWrap = true;
           block.Width = panel.Width;
           block.Rtf = option.Value as string;
           block.Height = block.GetPositionFromCharIndex(block.Text.Length - 1).Y;
@@ -347,7 +356,6 @@ namespace Demo.yFiles.Toolkit.OptionHandler
         }
       }
 
-
       splitContainer.Panel2.BackColor = Color.White;
       splitContainer.Panel1MinSize = 30;
       splitContainer.Panel2MinSize = 1;
@@ -366,14 +374,23 @@ namespace Demo.yFiles.Toolkit.OptionHandler
           text.Width = rootPanel.Width - (topLevelGroupPaddingLeft + topLevelGroupPaddingRight);
           text.BorderStyle = BorderStyle.None;
           text.ScrollBars = RichTextBoxScrollBars.None;
-          var lastChar = text.GetPositionFromCharIndex(text.Text.Length - 1);
-          text.Height = lastChar.Y;
-          splitContainer.Height = topLevelGroupPaddingBottom + topLevelGroupPaddingTop + lastChar.Y;
+          var content = text.Rtf;
+          text.Text = String.Empty;
+          ContentsResizedEventHandler text_OnContentsResized = null;
+          text_OnContentsResized = delegate(object o, ContentsResizedEventArgs args) {
+            text.Height = args.NewRectangle.Height;
+            splitContainer.Height = topLevelGroupPaddingBottom + topLevelGroupPaddingTop + args.NewRectangle.Height;
+            text.ContentsResized -= text_OnContentsResized;
+          };
+          text.ContentsResized += text_OnContentsResized;
+          text.Rtf = content;
+          
           toggleHeaderCollapse(splitContainer);
         }
       }
       return splitContainer;
     }
+
 
     private void toggleHeaderCollapse(SplitContainer splitContainer) {
       splitContainer.Panel2Collapsed = splitContainer.Panel2Collapsed ? false : true;
@@ -456,8 +473,17 @@ namespace Demo.yFiles.Toolkit.OptionHandler
 
       //change splitPanel Sizes
       foreach (Control control in rootPanel.Controls) {
-        SplitContainer split = (SplitContainer) control;
-        split.Width = rootPanel.Width - (topLevelGroupPaddingLeft + topLevelGroupPaddingRight + System.Windows.Forms.SystemInformation.VerticalScrollBarWidth + 100);
+        SplitContainer split;
+        if (control is SplitContainer) {
+          split = (SplitContainer) control;
+        } else if (control is Panel) {
+          Panel panel = (Panel) control;
+          panel.Width = rootPanel.Width - (topLevelGroupPaddingLeft + topLevelGroupPaddingRight);
+          RecomputeComponentSize(panel);
+          continue;
+        } else {
+          continue;
+        }
 
         // change children of main level
         foreach (Control optionControl in split.Panel2.Controls) {
@@ -477,9 +503,15 @@ namespace Demo.yFiles.Toolkit.OptionHandler
             text.Width = split.Width - (topLevelGroupPaddingLeft + topLevelGroupPaddingRight);
             text.BorderStyle = BorderStyle.None;
             text.ScrollBars = RichTextBoxScrollBars.None;
-
-            var lastChar = text.GetPositionFromCharIndex(text.Text.Length - 1);
-            text.Height = lastChar.Y;
+            var content = text.Rtf;
+            text.Text = String.Empty;
+            ContentsResizedEventHandler text_OnContentsResized = null;
+            text_OnContentsResized = delegate (object o, ContentsResizedEventArgs e) {
+              text.Height = e.NewRectangle.Height;
+              text.ContentsResized -= text_OnContentsResized;
+            };
+            text.ContentsResized += text_OnContentsResized;
+            text.Rtf = content;
 
           } else if (optionControl is Panel) {
             Panel panel = (Panel) optionControl;

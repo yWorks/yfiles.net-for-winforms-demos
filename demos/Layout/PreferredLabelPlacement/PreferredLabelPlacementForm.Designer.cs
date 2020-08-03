@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -132,7 +132,7 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
       // 
       this.innerSplitContainer.Panel2.Controls.Add(this.propertiesPanel);
       this.innerSplitContainer.Size = new System.Drawing.Size(705, 501);
-      this.innerSplitContainer.SplitterDistance = 405;
+      this.innerSplitContainer.SplitterDistance = 330;
       this.innerSplitContainer.TabIndex = 0;
       // 
       // panel1

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -325,7 +325,7 @@ namespace Demo.yFiles.ImageExport
     [CanBeNull]
     private Image ImageExport() {
       GraphControl control = graphControl;
-      // check if the reclangular region or the whole viewport should be exported
+      // check if the rectangular region or the whole viewport should be exported
       bool useRect = (bool) handler.GetValue(OUTPUT, EXPORT_RECTANGLE);
       RectD bounds = useRect ? exportRect.ToRectD() : control.Viewport;
 
@@ -335,8 +335,12 @@ namespace Demo.yFiles.ImageExport
       // check whether decorations (selection, handles, ...) should be hidden
       bool hide = (bool) handler.GetValue(OUTPUT, HIDE_DECORATIONS);
       if (hide) {
-        // if so, create a new graphcontrol whith the same graph
-        control = new GraphControl {Graph = graphControl.Graph};
+        // if so, create a new graph control with the same graph
+        control = new GraphControl {
+            Graph = graphControl.Graph,
+            BackColor = graphControl.BackColor,
+            Projection = graphControl.Projection
+        };
       }
       IImageExporter exporter;
       ContextConfigurator config = GetConfig(bounds, !useRect);
@@ -345,7 +349,9 @@ namespace Demo.yFiles.ImageExport
         var transparentBackground = (bool)Handler.GetValue(EMF, TRANSPARENT);
         // create the exporter
         EmfImageExporter emfImageExporter = new EmfImageExporter(config);
-        emfImageExporter.FillBackground = !transparentBackground;
+        if (!transparentBackground) {
+          emfImageExporter.Background = new SolidBrush(graphControl.BackColor);
+        }
         exporter = emfImageExporter;
         var memoryStream = new MemoryStream();
         exporter.Export(control, memoryStream);
@@ -362,7 +368,7 @@ namespace Demo.yFiles.ImageExport
         var transparentBackground = (bool)Handler.GetValue(PNG, TRANSPARENT);
         if ((!format.Equals("image/png") || !transparentBackground)) {
           // if not, set the background color
-          pixelImageExport.BackColor = control.BackColor;
+          pixelImageExport.Background = new SolidBrush(control.BackColor);
         }
         exporter = pixelImageExport;
         var memoryStream = new MemoryStream();
@@ -403,7 +409,9 @@ namespace Demo.yFiles.ImageExport
         var transparentBackground = (bool)Handler.GetValue(EMF, TRANSPARENT);
         // create the exporter
         EmfImageExporter emfImageExporter = new EmfImageExporter(config);
-        emfImageExporter.FillBackground = !transparentBackground;
+        if (!transparentBackground) {
+          emfImageExporter.Background = new SolidBrush(graphControl.BackColor);
+        }
         exporter = emfImageExporter;
         saveFileDialog.Reset();
         saveFileDialog.Filter = "EMF files (*.emf)|*.emf";
@@ -422,7 +430,7 @@ namespace Demo.yFiles.ImageExport
         var transparentBackground = (bool)Handler.GetValue(PNG, TRANSPARENT);
         if ((!format.Equals("image/png") || !transparentBackground)) {
           // if not, set the background color
-          pixelImageExport.BackColor = control.BackColor;
+          pixelImageExport.Background = new SolidBrush(control.BackColor);
         }
         exporter = pixelImageExport;
 
@@ -446,7 +454,7 @@ namespace Demo.yFiles.ImageExport
     /// Gets the export configuration
     /// </summary>
     private ContextConfigurator GetConfig(RectD worldBounds, bool useViewport) {
-      ContextConfigurator config = new ContextConfigurator(worldBounds);
+      ContextConfigurator config = new ContextConfigurator(worldBounds) { Projection = graphControl.Projection };
       SetScale(config, useViewport);
       // get the margins
       int leftMargin = (int) Handler.GetValue(MARGINS, LEFT_MARGIN);

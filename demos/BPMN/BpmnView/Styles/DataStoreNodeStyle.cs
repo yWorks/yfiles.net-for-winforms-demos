@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -27,6 +27,8 @@
  ** 
  ***************************************************************************/
 
+using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using Demo.yFiles.Graph.Bpmn.Util;
 using yWorks.Geometry;
@@ -41,12 +43,49 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
   [Obfuscation(StripAfterObfuscation = false, Exclude = true, ApplyToMembers = false)]
   public class DataStoreNodeStyle : BpmnNodeStyle {
 
+    private Brush background = BpmnConstants.DataStoreDefaultBackground;
+
+    /// <summary>
+    /// Gets or sets the background color of the data store.
+    /// </summary>
+    [Obfuscation(StripAfterObfuscation = false, Exclude = true)]
+    [DefaultValue(typeof(BpmnConstants), "DataStoreDefaultBackground")]
+    public Brush Background {
+      get { return background; }
+      set {
+        if (background != value) {
+          ModCount++;
+          background = value;
+        }
+      }
+    }
+
+    private Brush outline = BpmnConstants.DataStoreDefaultOutline;
+
+    /// <summary>
+    /// Gets or sets the outline color of the data store.
+    /// </summary>
+    [Obfuscation(StripAfterObfuscation = false, Exclude = true)]
+    [DefaultValue(typeof(BpmnConstants), "DataStoreDefaultOutline")]
+    public Brush Outline {
+      get { return outline; }
+      set {
+        if (outline != value) {
+          ModCount++;
+          outline = value;
+        }
+      }
+    }
+
     /// <summary>
     /// Creates a new instance.
     /// </summary>
     public DataStoreNodeStyle() {
-      Icon = IconFactory.CreateDataStore();
       MinimumSize = new SizeD(30, 20);
+    }
+
+    internal override void UpdateIcon(INode node) {
+      Icon = IconFactory.CreateDataStore(Background, Outline);
     }
 
     /// <inheritdoc/>

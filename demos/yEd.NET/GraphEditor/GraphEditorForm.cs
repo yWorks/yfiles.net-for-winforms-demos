@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -39,6 +39,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
@@ -1408,10 +1409,18 @@ namespace Demo.yFiles.GraphEditor
       ResourceManager defaultResources =
         new ResourceManager("Demo.yFiles.GraphEditor.I18N.DefaultOptionI18N",
                             Assembly.GetExecutingAssembly());
+
       ResourceManager brushResources =
         new ResourceManager("Demo.yFiles.GraphEditor.I18N.BrushPropertiesI18N",
                             Assembly.GetExecutingAssembly());
 
+      ResourceManager nodeResources =
+          new ResourceManager("Demo.yFiles.GraphEditor.I18N.NodePropertiesI18N",
+              Assembly.GetExecutingAssembly());
+
+      ResourceManager nodeStyleResources =
+          new ResourceManager("Demo.yFiles.GraphEditor.I18N.NodeStylePropertiesI18N",
+              Assembly.GetExecutingAssembly());
 
       var dictionary = new Dictionary<Type, object>();
       dictionary[typeof(IGraph)] = Graph;
@@ -1419,26 +1428,24 @@ namespace Demo.yFiles.GraphEditor
 
       this.resourceManagerI18NFactory.AddResourceManager("SELECTION_PROPERTIES", defaultResources);
       {
+
         //create handlers and selection providers
         nodePropertyHandler = new OptionHandler("NODE_PROPERTIES");
 
-        ResourceManager rm =
-          new ResourceManager("Demo.yFiles.GraphEditor.I18N.NodePropertiesI18N",
-                              Assembly.GetExecutingAssembly());
+
         //bind the resource manager to the option handler, using the given contexts
         //this allows to use the same resource bundle for different option handler structures
-        this.resourceManagerI18NFactory.AddResourceManager(nodePropertyHandler.Name, rm);
-        this.resourceManagerI18NFactory.AddResourceManager(nodePropertyHandler.Name,
-          new ResourceManager("Demo.yFiles.GraphEditor.I18N.NodeStylePropertiesI18N",
-                              Assembly.GetExecutingAssembly()));
+        this.resourceManagerI18NFactory.AddResourceManager(nodePropertyHandler.Name, nodeResources);
+
+        this.resourceManagerI18NFactory.AddResourceManager(nodePropertyHandler.Name, nodeStyleResources);
 
         //the i18nfactory will also try to strip of the leading "SELECTION_PROPERTIES" prefix
-        this.resourceManagerI18NFactory.AddResourceManager("SELECTION_PROPERTIES", rm);
+        this.resourceManagerI18NFactory.AddResourceManager("SELECTION_PROPERTIES", nodeResources);
 
         //Add general resource managers
         this.resourceManagerI18NFactory.AddResourceManager(nodePropertyHandler.Name, brushResources);
 
-        //nodePropertyHandler.I18nFactory = this.resourceManagerI18NFactory;
+        nodePropertyHandler.I18nFactory = this.resourceManagerI18NFactory;
 
         //create a selection provider that manages the translation from model item properties to option handler
         //presentation and vice versa, including managing conflicting values in a selection etc.
@@ -1472,6 +1479,8 @@ namespace Demo.yFiles.GraphEditor
 
         //Add general resource managers
         this.resourceManagerI18NFactory.AddResourceManager(edgePropertyHandler.Name, brushResources);
+
+        edgePropertyHandler.I18nFactory = this.resourceManagerI18NFactory;
 
         //edgePropertyHandler.I18nFactory = this.resourceManagerI18NFactory;
         edgeSelectionProvider = new DefaultSelectionProvider<IEdge>(GraphControl.Selection.SelectedEdges,
@@ -2216,7 +2225,7 @@ namespace Demo.yFiles.GraphEditor
       MemoryStream str = new MemoryStream();
       GraphMLIOHandler defaultIOH = new GraphMLIOHandler();
       IGraph g = Graph;
-      FilteredGraphWrapper fgw = new FilteredGraphWrapper(g, delegate { return false; }, delegate { return false; });
+      FilteredGraphWrapper fgw = new FilteredGraphWrapper(g, node => false, edge => false);
       ILookupDecorator decorator = g.Lookup(typeof(ILookupDecorator)) as ILookupDecorator;
       IList<IContextLookupChainLink> links = new List<IContextLookupChainLink>();
       if (decorator != null && decorator.CanDecorate(typeof(IGraph))) {
@@ -2805,11 +2814,12 @@ namespace Demo.yFiles.GraphEditor
         var window = form;
         window.Closed += delegate(object o, EventArgs args) {
           this.overview = null;
+          this.showOverviewToolStripMenuItem.Checked = false;
         };
         window.Show();
         this.overview = window;
       } else {
-        this.overview.Focus();
+        this.overview.Close();
       }
     }
 

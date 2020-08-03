@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -75,12 +75,26 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
       Icon.SetBounds(new RectD(PointD.Origin, bounds.ToSizeD()));
       var visual = Icon.CreateVisual(context);
 
-      var container = new BpmnContainer {ModCount = ModCount, Bounds = bounds};
+      var container = new BpmnContainer {ModCount = ModCount, Bounds = bounds, Expanded = IsExpanded(context, node)};
       if (visual != null) {
         container.Add(visual);
       }
       container.Transform = new Matrix(1, 0, 0, 1, (float) bounds.X, (float) bounds.Y);
       return container;
+    }
+
+    private bool IsExpanded(IRenderContext context, INode node) {
+      CanvasControl canvas = context != null ? context.CanvasControl : null;
+      if (canvas != null) {
+        IGraph graph = canvas.Lookup(typeof(IGraph)) as IGraph;
+        if (graph != null) {
+          IFoldingView foldedGraph = graph.Lookup<IFoldingView>();
+          if (foldedGraph != null && foldedGraph.Graph.Contains(node)) {
+            return foldedGraph.IsExpanded(node);
+          }
+        }
+      }
+      return true;
     }
 
     /// <inheritdoc/>
@@ -91,7 +105,7 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
       }
 
       var container = oldVisual as BpmnContainer;
-      if (container == null || container.ModCount != ModCount) {
+      if (container == null || container.ModCount != ModCount || container.Expanded != IsExpanded(context, node)) {
         return CreateVisual(context, node);
       }
 
@@ -160,6 +174,7 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
     {
       public int ModCount { get; set; }
       public RectD Bounds { get; set; }
+      public bool Expanded { get; set; }
 
     }
   }

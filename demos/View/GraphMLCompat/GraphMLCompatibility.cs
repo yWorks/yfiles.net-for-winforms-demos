@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -36,6 +36,7 @@ using Demo.yFiles.IO.GraphML.Compat.Xaml;
 using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.LabelModels;
+using yWorks.Graph.PortLocationModels;
 using yWorks.Graph.Styles;
 using yWorks.GraphML;
 using yWorks.Markup.Common;
@@ -71,12 +72,14 @@ namespace Demo.yFiles.IO.GraphML.Compat
       handler.AddXamlNamespaceMapping(YfilesCommonNS20, typeof(Common.LabelExtension));
       handler.AddXamlNamespaceMapping(FormsNS10, typeof(SolidBrushExtension));
 
-      // Provides a mapping between XML element names in specific yFiles.NET 4.4 namespaces
+      // Provides a mapping between XML element names in specific yFiles.NET 2.5 namespaces
       // to either their equivalent in the current library version, or to specially-written
       // MarkupExtensions that surface the old API and map it to the correct instances in the new API.
       var mappings = new Dictionary<XName, Type> {
         // General graph stuff
         { XName.Get("Bend", YfilesCommonNS20), typeof(BendExtension) },
+        { XName.Get("NodeViewState", YfilesCommonNS20), typeof(FolderNodeStateExtension) },
+        { XName.Get("EdgeViewState", YfilesCommonNS20), typeof(FoldingEdgeStateExtension) },
         { XName.Get("GraphSettings", YfilesCommonNS20), typeof(GraphSettings) },
         { XName.Get("NodeDefaults", YfilesCommonNS20), typeof(NodeDefaults) },
         { XName.Get("EdgeDefaults", YfilesCommonNS20), typeof(EdgeDefaults) },
@@ -153,7 +156,16 @@ namespace Demo.yFiles.IO.GraphML.Compat
         { XName.Get("SmartEdgeLabelModel", YfilesNetXamlNS10), typeof(SmartEdgeLabelModel) },
         { XName.Get("SmartEdgeLabelModelParameter", YfilesNetXamlNS10), typeof(SmartEdgeLabelModelParameterExtension) },
         
+        { XName.Get("BendAnchoredPortLocationModel", YfilesNetXamlNS10), typeof(BendAnchoredPortLocationModel) },
+        { XName.Get("BendAnchoredParameter", YfilesNetXamlNS10), typeof(BendAnchoredParameterExtension) },
+        { XName.Get("GenericPortLocationModel", YfilesNetXamlNS10), typeof(Xaml.GenericPortLocationModelExtension) },
+        { XName.Get("GenericPortLocationParameter", YfilesNetXamlNS10), typeof(GenericPortLocationParameterExtension) },
+        { XName.Get("SegmentRatioPortLocationModel", YfilesNetXamlNS10), typeof(SegmentRatioPortLocationModel) },
+        { XName.Get("SegmentRatioParameterParameter", YfilesNetXamlNS10), typeof(SegmentRatioParameterExtension) },
+
+        { XName.Get("StripeLabelModel", YfilesNetXamlNS10), typeof(StripeLabelModel) },
         { XName.Get("StripeLabelModelParameter", YfilesNetXamlNS10), typeof(StripeLabelModelParameterExtension) },
+        { XName.Get("StretchStripeLabelModel", YfilesNetXamlNS10), typeof(StretchStripeLabelModel) },
         { XName.Get("StretchStripeLabelModelParameter", YfilesNetXamlNS10), typeof(StretchStripeLabelModelParameterExtension) }
 //        ,
 //

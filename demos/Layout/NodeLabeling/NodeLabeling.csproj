@@ -9,7 +9,8 @@
     <AssemblyName>NodeLabelingDemo</AssemblyName>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Demo.yFiles.Layout.NodeLabeling</RootNamespace>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>NodeLabelingDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
@@ -61,10 +62,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="yWorks.yFilesNET.Adapter">
       <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Adapter.dll</HintPath>
     </Reference>
@@ -76,19 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Utils\Option\Option.csproj">
-      <Project>{C5CF497F-BFD2-40E3-B2B9-7DAAD32BBB64}</Project>
-      <Name>Option</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="BackgroundVisualCreator.cs" />
     <Compile Include="CityLabelStyle.cs" />
-    <Compile Include="NodeLabeling.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NodeLabeling.resx</DependentUpon>
-    </Compile>
     <Compile Include="NodeLabelingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,10 +88,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="NodeLabeling.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>NodeLabeling.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="NodeLabelingForm.resx">
       <DependentUpon>NodeLabelingForm.cs</DependentUpon>
     </EmbeddedResource>

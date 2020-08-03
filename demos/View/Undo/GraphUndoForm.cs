@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -114,17 +114,14 @@ namespace Demo.yFiles.Graph.Undo
       graphControl.Clipboard.FromClipboardCopier.Clone = graphControl.Clipboard.FromClipboardCopier.Clone & ~GraphCopier.CloneTypes.NodeStyle;
       graphControl.Clipboard.ToClipboardCopier.Clone = graphControl.Clipboard.ToClipboardCopier.Clone & ~GraphCopier.CloneTypes.NodeStyle;
 
-      // register a custom graphml IO handler to write symbolic style names
-      GraphMLIOHandler handler = new GraphMLIOHandler();
-
       // write symbolic style name in graphml to make the nodes use the default style when imported, not the specific style instance
       // otherwise, 'change color' wouldn't work on imported nodes
-      handler.QueryReferenceId += delegate(object sender, QueryReferenceIdEventArgs args) { if (args.Value == defaultStyle) {
+      graphControl.GraphMLIOHandler.QueryReferenceId += delegate(object sender, QueryReferenceIdEventArgs args) { if (args.Value == defaultStyle) {
         args.ReferenceId = "defaultStyle";
       } };
 
       // if node style is string "defaultStyle" in graphml, assign defaultStyle
-      handler.ResolveReference += delegate(object sender, ResolveReferenceEventArgs args) { if (args.ReferenceId == "defaultStyle") {
+      graphControl.GraphMLIOHandler.ResolveReference += delegate(object sender, ResolveReferenceEventArgs args) { if (args.ReferenceId == "defaultStyle") {
         args.Value = defaultStyle;
       } };
 
@@ -264,34 +261,6 @@ namespace Demo.yFiles.Graph.Undo
       }
     }
 
-    /// <summary>
-    /// Undo unit that saves the current state of a BevelNodeStyle
-    /// </summary>
-    /// <remarks>This allows to undo single property changes on an instance level. Note that only
-    /// the Color state is saved here for simplicity.</remarks>
-    private class MyUndoStyleModifyUnit : UndoUnitBase
-    {
-      private readonly UndoNodeStyle style;
-      private readonly Color oldColor;
-      private Color newColor;
-
-      public MyUndoStyleModifyUnit(UndoNodeStyle style, Color oldColor)
-        :
-        base("Change Color", "Change Color") {
-        this.style = style;
-        this.oldColor = oldColor;
-      }
-
-      public override void Undo() {
-        //save current style for later redo
-        newColor = style.BackgroundColor;
-        style.BackgroundColor = oldColor;
-      }
-
-      public override void Redo() {
-        style.BackgroundColor = newColor;
-      }
-    }
 
     #region Main
 
@@ -314,20 +283,22 @@ namespace Demo.yFiles.Graph.Undo
     /// </summary>
     /// <remarks>The modification is remembered in the undo engine</remarks>
     private void ModifyColorButton_Click(object sender, EventArgs e) {
-      // Build new undo unit to remember old color in the undo engine
-      MyUndoStyleModifyUnit unit = new MyUndoStyleModifyUnit(defaultStyle, defaultStyle.BackgroundColor);
-      // Retrieve undo engine
-      UndoEngine engine = graphControl.Graph.GetUndoEngine();
-      // Add unit to engine
-      engine.AddUnit(unit);
+      var oldColor = defaultStyle.BackgroundColor;
 
       // Generate random color
-      Color c = Color.FromArgb(rnd.Next(100, 255), rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+      Color newColor = Color.FromArgb(rnd.Next(100, 255), rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
       // Set the style's color to new value
-      defaultStyle.BackgroundColor = c;
+      defaultStyle.BackgroundColor = newColor;
+
+      // Add new undo unit to remember old color in the undo engine
+      // As only the tag value change has to be undone, the AddUndoUnit extension method on IGraph is used  
+      graphControl.Graph.AddUndoUnit("Change Color", "Change Color",
+          () => defaultStyle.BackgroundColor = oldColor,
+          () => defaultStyle.BackgroundColor = newColor);
       // redraw nodes
       graphControl.Refresh();
     }
+
   }
 
   /// <summary>

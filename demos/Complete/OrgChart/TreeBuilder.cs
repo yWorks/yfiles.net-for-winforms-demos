@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -43,7 +43,7 @@ namespace Demo.yFiles.Graph.OrgChart
   /// <remarks>
   /// This class is fairly focused on that one single data file. For a more generic approach that works with
   /// different kinds of data, consider using
-  /// <see cref="GraphBuilder{TNode,TEdge,TGroup}"/> or <see cref="TreeBuilder{TNode,TGroup}"/>.
+  /// <see cref="SimpleGraphBuilder{TNode,TEdge,TGroup}"/> or <see cref="TreeBuilder{TNode,TGroup}"/>.
   /// </remarks>
   internal static class TreeBuilder
   {

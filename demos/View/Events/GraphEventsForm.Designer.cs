@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -1056,10 +1056,10 @@ namespace Demo.yFiles.Graph.Events
       // 
       // groupEvents
       // 
-      this.groupEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.groupEvents.AutoSize = true;
       this.groupEvents.Checked = true;
       this.groupEvents.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.groupEvents.Dock = System.Windows.Forms.DockStyle.Right;
       this.groupEvents.Location = new System.Drawing.Point(130, 12);
       this.groupEvents.Name = "groupEvents";
       this.groupEvents.Size = new System.Drawing.Size(132, 17);
@@ -1069,7 +1069,7 @@ namespace Demo.yFiles.Graph.Events
       // 
       // clearLogButton
       // 
-      this.clearLogButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.clearLogButton.Dock = System.Windows.Forms.DockStyle.Right;
       this.clearLogButton.Location = new System.Drawing.Point(268, 9);
       this.clearLogButton.Name = "clearLogButton";
       this.clearLogButton.Size = new System.Drawing.Size(75, 23);

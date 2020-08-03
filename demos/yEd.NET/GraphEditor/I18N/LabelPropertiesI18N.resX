@@ -117,25 +117,214 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Text" xml:space="preserve">
+  <data name="LABEL_PROPERTIES.TEXT" xml:space="preserve">
     <value>Text</value>
-  </data>
-  <data name="Label" xml:space="preserve">
-    <value>Label</value>
-  </data>
-  <data name="Style" xml:space="preserve">
-    <value>Style</value>
-  </data>
-  <data name="PreferredSize" xml:space="preserve">
-    <value>Preferred Size</value>
-  </data>
-  <data name="Label.EdgeLabelModel" xml:space="preserve">
-    <value>Label Model</value>
-  </data>
-  <data name="Label.NodeLabelModel" xml:space="preserve">
-    <value>Label Model</value>
   </data>
   <data name="LABEL_PROPERTIES" xml:space="preserve">
     <value>Label</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.AUTOFLIP" xml:space="preserve">
+    <value>Autoflip</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.BACKGROUND_COLOR" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE.VALUE.HATCH" xml:space="preserve">
+    <value>Hatch</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE.VALUE.SOLID" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE" xml:space="preserve">
+    <value>Fill Type</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FOREGROUND_COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.HATCH_STYLE" xml:space="preserve">
+    <value>Hatch Style</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.BACKGROUND_COLOR" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE.VALUE.HATCH" xml:space="preserve">
+    <value>Hatch</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE.VALUE.SOLID" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE" xml:space="preserve">
+    <value>Fill Type</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FOREGROUND_COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.HATCH_STYLE" xml:space="preserve">
+    <value>Hatch Style</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.LINE_DASHSTYLE" xml:space="preserve">
+    <value>Dash Style</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.LINE_WIDTH" xml:space="preserve">
+    <value>Line Width</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN" xml:space="preserve">
+    <value>Border</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.BACKGROUND_COLOR" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE.VALUE.HATCH" xml:space="preserve">
+    <value>Hatch</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE.VALUE.SOLID" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE" xml:space="preserve">
+    <value>Fill Type</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FOREGROUND_COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.HATCH_STYLE" xml:space="preserve">
+    <value>Hatch Style</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH" xml:space="preserve">
+    <value>Brush</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE.VALUE.NOTHING" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE.VALUE.NOTHING" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE.VALUE.NOTHING" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="LABEL_PROPERTIES.PREFERRED_SIZE" xml:space="preserve">
+    <value>Preferred Size</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT" xml:space="preserve">
+    <value>String Format</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.ALIGNMENT" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.DIRECTION" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.DIRECTION.VALUE.(null)" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.DIRECTION.VALUE.DirectionRightToLeft" xml:space="preserve">
+    <value>DirectionRightToLeft</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.DIRECTION.VALUE.DirectionVertical" xml:space="preserve">
+    <value>DirectionVertical</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.LINE_ALIGNMENT" xml:space="preserve">
+    <value>Line Alignment</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.STRING_FORMAT.TRIMMING" xml:space="preserve">
+    <value>Trimming</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE.VALUE.LINEAR_GRADIENT" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.FILL_TYPE.VALUE.TEXTURE" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE.VALUE.LINEAR_GRADIENT" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.FILL_TYPE.VALUE.TEXTURE" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE.VALUE.LINEAR_GRADIENT" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.FILL_TYPE.VALUE.TEXTURE" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL" xml:space="preserve">
+    <value>Label Model</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.(null)" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.ABSOLUTE" xml:space="preserve">
+    <value>Absolute</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.DEFAULT" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.FREE" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.NINE_POS" xml:space="preserve">
+    <value>9 Pos</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.ROTATING" xml:space="preserve">
+    <value>Rotating</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.SIDE_SLIDER" xml:space="preserve">
+    <value>Side Slider</value>
+  </data>
+  <data name="LABEL_PROPERTIES.EDGE_LABEL_MODEL.VALUE.SLIDER" xml:space="preserve">
+    <value>Slider</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL" xml:space="preserve">
+    <value>Label Model</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.(null)" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.ABSOLUTE" xml:space="preserve">
+    <value>Absolute</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.DEFAULT" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.EXTERIOR" xml:space="preserve">
+    <value>Exterior</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.FREE" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.INTERIOR" xml:space="preserve">
+    <value>Interior</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.INTERIOR_STRETCHED" xml:space="preserve">
+    <value>Interior (Stretched)</value>
+  </data>
+  <data name="LABEL_PROPERTIES.NODE_LABEL_MODEL.VALUE.SANDWICH" xml:space="preserve">
+    <value>Sandwich</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_BRUSH.ROTATION" xml:space="preserve">
+    <value>Rotation Angle</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.BACKGROUND_PEN.ROTATION" xml:space="preserve">
+    <value>Rotation Angle</value>
+  </data>
+  <data name="LABEL_PROPERTIES.STYLE.FONT_BRUSH.ROTATION" xml:space="preserve">
+    <value>Rotation Angle</value>
   </data>
 </root>

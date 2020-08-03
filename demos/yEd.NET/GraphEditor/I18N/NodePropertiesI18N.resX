@@ -112,30 +112,144 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Label" xml:space="preserve">
-    <value>Label</value>
+  <data name="NODE_PROPERTIES" xml:space="preserve">
+    <value>Node Properties</value>
   </data>
-  <data name="Layout" xml:space="preserve">
+  <data name="NODE_PROPERTIES.LAYOUT" xml:space="preserve">
     <value>Layout</value>
   </data>
-  <data name="Layout.Height" xml:space="preserve">
+  <data name="NODE_PROPERTIES.LAYOUT.HEIGHT" xml:space="preserve">
     <value>Height</value>
   </data>
-  <data name="Layout.Width" xml:space="preserve">
+  <data name="NODE_PROPERTIES.LAYOUT.WIDTH" xml:space="preserve">
     <value>Width</value>
   </data>
-  <data name="Layout.X" xml:space="preserve">
+  <data name="NODE_PROPERTIES.LAYOUT.X" xml:space="preserve">
     <value>X</value>
   </data>
-  <data name="Layout.Y" xml:space="preserve">
+  <data name="NODE_PROPERTIES.LAYOUT.Y" xml:space="preserve">
     <value>Y</value>
   </data>
-  <data name="Style" xml:space="preserve">
-    <value>Style</value>
+  <data name="NODE_PROPERTIES.STYLE.BEVEL_INSET" xml:space="preserve">
+    <value>Inset</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BEVEL_RADIUS" xml:space="preserve">
+    <value>Radius</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER" xml:space="preserve">
+    <value>Border</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.BACKGROUND_COLOR" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE" xml:space="preserve">
+    <value>Fill Type</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE.VALUE.HATCH" xml:space="preserve">
+    <value>Hatch</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE.VALUE.LINEAR_GRADIENT" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE.VALUE.NOTHING" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE.VALUE.SOLID" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FILL_TYPE.VALUE.TEXTURE" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.FOREGROUND_COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.HATCH_STYLE" xml:space="preserve">
+    <value>Hatch Style</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.LINE_DASHSTYLE" xml:space="preserve">
+    <value>Dash Style</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.LINE_WIDTH" xml:space="preserve">
+    <value>Line Width</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.BORDER.ROTATION" xml:space="preserve">
+    <value>Rotation Angle</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.DROP_SHADOW" xml:space="preserve">
+    <value>Drop Shadow</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.IMAGE.VALUE.(null)" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.LABEL_INSETS_COLOR" xml:space="preserve">
+    <value>Label Inset Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL" xml:space="preserve">
+    <value>Node Fill</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.BACKGROUND_COLOR" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE" xml:space="preserve">
+    <value>Fill Type</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE.VALUE.HATCH" xml:space="preserve">
+    <value>Hatch</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE.VALUE.LINEAR_GRADIENT" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE.VALUE.NOTHING" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE.VALUE.SOLID" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FILL_TYPE.VALUE.TEXTURE" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.FOREGROUND_COLOR" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.HATCH_STYLE" xml:space="preserve">
+    <value>Hatch Style</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.IMAGE" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.NODE_FILL.ROTATION" xml:space="preserve">
+    <value>Rotation Angle</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.PANEL_INSETS" xml:space="preserve">
+    <value>Label Insets</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.PANEL_INSETS.BOTTOM" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.PANEL_INSETS.LEFT" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.PANEL_INSETS.RIGHT" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.PANEL_INSETS.TOP" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="NODE_PROPERTIES.STYLE.SHAPE" xml:space="preserve">
+    <value>Shape</value>
   </data>
 </root>

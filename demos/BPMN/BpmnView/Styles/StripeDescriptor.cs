@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -89,7 +89,7 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
       if (ReferenceEquals(p1, p2)) {
         return true;
       }
-      if (ReferenceEquals(null, p1) ||ReferenceEquals(null, p2)) {
+      if (ReferenceEquals(null, p1) || ReferenceEquals(null, p2)) {
         return false;
       }
       return p1.InsetBrush == p2.InsetBrush && p1.BorderBrush == p2.BorderBrush && p1.BackgroundBrush == p2.BackgroundBrush && p1.BorderThickness == p2.BorderThickness;

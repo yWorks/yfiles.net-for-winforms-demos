@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -93,7 +93,7 @@ namespace Demo.yFiles.Graph.SelectionStyling
         });
       }
       // convert to convenient coordinate space
-      group.Transform = GetTransform(layout, true);
+      group.Transform = GetTransform(context, layout, true);
 
       return group;
     }
@@ -151,7 +151,7 @@ namespace Demo.yFiles.Graph.SelectionStyling
       textVisual.Brush = Brushes.Black;
       textVisual.Location = new PointD((buttonWidth + 2*inset)*0.5, 0);
       // update the overall transform
-      group.Transform = GetTransform(layout, true);
+      group.Transform = GetTransform(context, layout, true);
       return group;
     }
 

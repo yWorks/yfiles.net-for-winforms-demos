@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -76,7 +76,7 @@ namespace Tutorial.CustomStyles
       var group = new VisualGroup();
 
       // convert to convenient coordinate space
-      group.Transform = GetTransform(layout, true);
+      group.Transform = GetTransform(context, layout, true);
 
       // Draw the label background as a rounded rectangle
       GeneralPath gp = new GeneralPath(10);

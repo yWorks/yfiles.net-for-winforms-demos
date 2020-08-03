@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -54,7 +54,7 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
         Font = new Font(new FontFamily("Arial"), 20, FontStyle.Bold)
       };
       var headerLabel = new SimpleLabel(null, "Page Header", FreeLabelModel.Instance.CreateAnchored(
-          new DynamicViewPoint(graphControl, 5, 35), 0))
+          new DynamicViewPoint(graphControl, 5, 35)))
       {
         Style = new ZoomInvariantLabelStyle(innerLabelStyle)
       };
@@ -103,8 +103,7 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
         var oldVisual = labelCanvasObject.Visible;
 
         // We know that this label helper is only used once this demo is properly set up.
-        var graphControl = ((GraphControl) context.CanvasControl);
-        var graphEditorInputMode = (GraphEditorInputMode) graphControl.InputMode;
+        var graphEditorInputMode = (GraphEditorInputMode) context.CanvasControl.InputMode;
         var textEditorInputMode = ((LabelEditingForm.DemoTextEditorInputMode) graphEditorInputMode.TextEditorInputMode);
 
         mode.TextBox.BackColor = Color.White;
@@ -114,7 +113,7 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
 
         // Make sure that the text box location matches the one of the zoom invariant page header label
         textEditorInputMode.ShowInViewCoordinates = true;
-        mode.Location = new DynamicViewPoint(graphControl, 5, 35);
+        mode.Location = new DynamicViewPoint((GraphControl) context.CanvasControl, 5, 35);
         mode.Anchor = new PointD(0, 1);
 
         // Hide this label during editing if the corresponding setting is enabled.

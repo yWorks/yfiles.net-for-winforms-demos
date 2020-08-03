@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -359,6 +359,7 @@ namespace Demo.yFiles.Layout.LogicGate
       // 
       // edgeCreationPolicyComboBox
       // 
+      this.edgeCreationPolicyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.edgeCreationPolicyComboBox.Items.AddRange(new object[] {
             yWorks.Controls.Input.EdgeDirectionPolicy.StartAtSource,
             yWorks.Controls.Input.EdgeDirectionPolicy.StartAtTarget,
@@ -366,7 +367,6 @@ namespace Demo.yFiles.Layout.LogicGate
             yWorks.Controls.Input.EdgeDirectionPolicy.DetermineFromPortCandidates});
       this.edgeCreationPolicyComboBox.Name = "edgeCreationPolicyComboBox";
       this.edgeCreationPolicyComboBox.Size = new System.Drawing.Size(150, 23);
-      this.edgeCreationPolicyComboBox.Text = "StartAtSource";
       this.edgeCreationPolicyComboBox.SelectedIndexChanged += new System.EventHandler(this.EdgeCreationPolicyComboBox_OnSelectionChanged);
       // 
       // LogicGateForm

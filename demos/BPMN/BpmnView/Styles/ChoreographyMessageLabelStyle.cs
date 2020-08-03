@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.2.
- ** Copyright (c) 2000-2019 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.3.
+ ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,6 +28,7 @@
  ***************************************************************************/
 
 using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using Demo.yFiles.Graph.Bpmn.Util;
 using yWorks.Controls;
@@ -49,48 +50,12 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
   /// </remarks>
   [Obfuscation(StripAfterObfuscation = false, Exclude = true, ApplyToMembers = false)]
   public class ChoreographyMessageLabelStyle : ILabelStyle {
-
-    #region Initialize static fields
-
     private static readonly ChoreographyMessageLabelStyleRenderer renderer = new ChoreographyMessageLabelStyleRenderer();
-    private static readonly BpmnEdgeStyle connectorStyle;
-    private static readonly DefaultLabelStyle textStyle;
-    private static readonly ILabelModelParameter defaultTextPlacement;
-    private static readonly BpmnNodeStyle initiatingMessageStyle;
-    private static readonly BpmnNodeStyle responseMessageStyle;
+    private static readonly BpmnEdgeStyle connectorStyle = new BpmnEdgeStyle { Type = EdgeType.Association };
+    private static readonly DefaultLabelStyle textStyle = new DefaultLabelStyle();
+    internal static readonly ILabelModelParameter defaultTextPlacement = new ExteriorLabelModel {Insets = new InsetsD(5)}.CreateParameter(ExteriorLabelModel.Position.West);
+    private readonly BpmnNodeStyle messageStyle = new BpmnNodeStyle { MinimumSize = BpmnConstants.MessageSize };
     private readonly ConnectedIconLabelStyle delegateStyle;
-
-    internal static ILabelModelParameter DefaultTextPlacement {
-      get { return defaultTextPlacement; }
-    }
-
-    internal static BpmnNodeStyle InitiatingMessageStyle {
-      get { return initiatingMessageStyle; }
-    }
-
-    internal static BpmnNodeStyle ResponseMessageStyle {
-      get { return responseMessageStyle; }
-    }
-
-    static ChoreographyMessageLabelStyle() {
-      defaultTextPlacement = new ExteriorLabelModel {Insets = new InsetsD(5)}.CreateParameter(ExteriorLabelModel.Position.West);
-      initiatingMessageStyle = new BpmnNodeStyle
-      {
-        Icon = IconFactory.CreateMessage(BpmnConstants.Pens.Message, BpmnConstants.Brushes.ChoreographyInitializingParticipant), 
-        MinimumSize = BpmnConstants.Sizes.Message
-      };
-      responseMessageStyle = new BpmnNodeStyle
-      {
-        Icon = IconFactory.CreateMessage(BpmnConstants.Pens.Message, BpmnConstants.Brushes.ChoreographyReceivingParticipant), 
-        MinimumSize = BpmnConstants.Sizes.Message
-      };
-      connectorStyle = new BpmnEdgeStyle {Type = EdgeType.Association};
-      textStyle = new DefaultLabelStyle();
-    }
-
-    #endregion
-
-    #region Properties
 
     /// <summary>
     /// Gets or sets where the text is placed relative to the message icon.
@@ -102,20 +67,14 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
     [DefaultValue(typeof(BpmnDefaultValueConverterHolder), "Demo.yFiles.Graph.Bpmn.Styles.ChoreographyMessageLabelStyle.DefaultTextPlacement")]
     public ILabelModelParameter TextPlacement {
       get {
-        return DelegateStyle != null ? DelegateStyle.TextPlacement : null;
+        return delegateStyle != null ? delegateStyle.TextPlacement : null;
       }
       set {
-        if (DelegateStyle != null) {
-          DelegateStyle.TextPlacement = value;
+        if (delegateStyle != null) {
+          delegateStyle.TextPlacement = value;
         }
       }
     }
-
-    internal ConnectedIconLabelStyle DelegateStyle {
-      get { return delegateStyle; }
-    }
-
-    #endregion
 
     /// <summary>
     /// Creates a new instance.
@@ -124,15 +83,15 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
 
       delegateStyle = new ConnectedIconLabelStyle
       {
-        IconSize = BpmnConstants.Sizes.Message,
-        IconStyle = InitiatingMessageStyle,
+        IconSize = BpmnConstants.MessageSize,
+        IconStyle = messageStyle,
         TextStyle = textStyle,
         ConnectorStyle = connectorStyle,
         LabelConnectorLocation = FreeNodePortLocationModel.NodeBottomAnchored,
         NodeConnectorLocation = FreeNodePortLocationModel.NodeTopAnchored
       };
 
-      TextPlacement = DefaultTextPlacement;
+      TextPlacement = defaultTextPlacement;
     }
 
     /// <inheritdoc/>
@@ -145,8 +104,6 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
     [Obfuscation(StripAfterObfuscation = false, Exclude = true)]
     public ILabelStyleRenderer Renderer { get { return renderer;  } }
 
-    #region Renderer Class
-
     /// <summary>
     /// An <see cref="ILabelStyleRenderer"/> implementation used by <see cref="ChoreographyMessageLabelStyle"/>.
     /// </summary>
@@ -155,7 +112,8 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
       private ILabel item;
       private ILabelStyle style;
       private bool north;
-      private bool responseMessage;
+      private Brush messageColor;
+      private Pen messageOutline;
 
       private ILabelStyle GetCurrentStyle(ILabel item, ILabelStyle style) {
         var labelStyle = style as ChoreographyMessageLabelStyle;
@@ -165,19 +123,24 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
         }
 
         north = true;
-        responseMessage = false;
+        messageColor = BpmnConstants.DefaultInitiatingMessageColor;
+        messageOutline = null;
         var node = item.Owner as INode;
         if (node != null) {
           north = item.GetLayout().GetCenter().Y < node.Layout.GetCenter().Y;
 
-          ChoreographyNodeStyle nodeStyle = node.Style as ChoreographyNodeStyle;
+          var nodeStyle = node.Style as ChoreographyNodeStyle;
           if (nodeStyle != null) {
-            responseMessage = nodeStyle.InitiatingAtTop ^ north;
+            var responseMessage = nodeStyle.InitiatingAtTop ^ north;
+            messageColor = responseMessage ? nodeStyle.ResponseColor : nodeStyle.InitiatingColor;
+            messageOutline = nodeStyle.messagePen;
           }
         }
-          
-        var delegateStyle = labelStyle.DelegateStyle;
-        delegateStyle.IconStyle = responseMessage ? ResponseMessageStyle : InitiatingMessageStyle;
+        messageOutline = messageOutline ?? new Pen(BpmnConstants.DefaultMessageOutline, 1);
+
+        var delegateStyle = labelStyle.delegateStyle;
+        delegateStyle.IconStyle = labelStyle.messageStyle;
+        labelStyle.messageStyle.Icon = IconFactory.CreateMessage(messageOutline, messageColor);
         delegateStyle.LabelConnectorLocation = north ? FreeNodePortLocationModel.NodeBottomAnchored : FreeNodePortLocationModel.NodeTopAnchored;
         delegateStyle.NodeConnectorLocation = north ? FreeNodePortLocationModel.NodeTopAnchored : FreeNodePortLocationModel.NodeBottomAnchored;
         return delegateStyle;
@@ -228,10 +191,16 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
 
       /// <inheritdoc/>
       public IVisual CreateVisual(IRenderContext context) {
-        var container = new RenderGroup{North = north, ResponseMessage = responseMessage, TextPlacement = ((ChoreographyMessageLabelStyle) style).TextPlacement };
+        var container = new RenderGroup{North = north, ResponseMessage =  IsResponseMessage(), TextPlacement = ((ChoreographyMessageLabelStyle) style).TextPlacement };
         var delegateStyle = GetCurrentStyle(item, style);
         container.Add(delegateStyle.Renderer.GetVisualCreator(item, delegateStyle).CreateVisual(context));
         return container;
+      }
+
+      private bool IsResponseMessage() {
+        var nodeStyle = ((INode) item.Owner).Style as ChoreographyNodeStyle;
+        var responseMessage = nodeStyle != null && nodeStyle.InitiatingAtTop ^ north;
+        return responseMessage;
       }
 
       /// <inheritdoc/>
@@ -240,12 +209,12 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
         if (container == null || container.Children.Count != 1) {
           return CreateVisual(context);
         }
-        ILabelStyle delegateStyle = GetCurrentStyle(item, style);
-        if (((ChoreographyMessageLabelStyle) style).TextPlacement != container.TextPlacement || north != container.North || responseMessage != container.ResponseMessage) {
+        if (((ChoreographyMessageLabelStyle) style).TextPlacement != container.TextPlacement || north != container.North || IsResponseMessage() != container.ResponseMessage) {
           return CreateVisual(context);
         }
-        IVisual oldDelegateVisual = container.Children[0];
-        IVisual newDelegateVisual = delegateStyle.Renderer.GetVisualCreator(item, delegateStyle).UpdateVisual(context, oldDelegateVisual);
+        var delegateStyle = GetCurrentStyle(item, style);
+        var oldDelegateVisual = container.Children[0];
+        var newDelegateVisual = delegateStyle.Renderer.GetVisualCreator(item, delegateStyle).UpdateVisual(context, oldDelegateVisual);
         if (oldDelegateVisual != newDelegateVisual) {
           container.Children[0] = newDelegateVisual;
         }
@@ -262,8 +231,5 @@ namespace Demo.yFiles.Graph.Bpmn.Styles {
 
       }
     }
-
-    #endregion
-
   }
 }
