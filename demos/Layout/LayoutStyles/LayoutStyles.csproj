@@ -9,26 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Demo.yFiles.Layout.LayoutStyles</RootNamespace>
     <AssemblyName>LayoutStyles</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <FileUpgradeFlags></FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation></UpgradeBackupLocation>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -83,13 +68,13 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
     <Reference Include="yWorks.yFilesNET.Adapter">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Adapter.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Algorithms">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Algorithms.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Viewer">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Viewer.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +93,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LayoutConfigurations\LayoutConfigurations.csproj">
       <Project>{d67fdf4c-0162-4f19-9091-160d5068594a}</Project>
-      <Name>Demo.yFiles.Layout.Configurations</Name>
+      <Name>LayoutConfigurations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utils\OptionHandler\OptionHandler.csproj">
       <Project>{8cf93f4c-00a0-4ccd-9fc5-fcde57522435}</Project>
@@ -135,6 +120,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\circular.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\classictree.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\components.graphml">
@@ -169,10 +157,10 @@
     <None Include="Resources\orthogonalwithsubstructures.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\polylinerouter.graphml">
+    <None Include="Resources\edgerouter.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\polylinerouterwithbuses.graphml">
+    <None Include="Resources\edgerouterwithbuses.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\radial.graphml">
@@ -186,6 +174,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\tree.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\labeling.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\classictree.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -268,11 +262,14 @@
     <Resource Include="Resources\yFiles.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!--The following target ensures that the project will build even when the ZIP file has been-->
+  <!--The following targets ensure that the project will build even when the ZIP file has been-->
   <!--extracted with Explorer or another tool that retains the origin zone marker for the files.-->
   <!--If that does not work, an error message will be shown in Visual Studio's Error List.-->
-  <!--See http://kb.yworks.com/article/736 for details.-->
-  <Target Name="BeforeBuild">
-    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at http://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  <!--See https://kb.yworks.com/article/736 and https://kb.yworks.com/article/807 for details.-->
+  <Target Name="UnblockYFilesAssemblies" BeforeTargets="BeforeBuild">
+    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  </Target>
+  <Target Name="UnblockResources" BeforeTargets="BeforeResGen">
+    <Exec Command="if exist &quot;%(EmbeddedResource.Identity)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(EmbeddedResource.Identity)'&quot;) || (2&gt;nul type nul &gt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=War&amp;&gt;&amp;2 echo ning: The file %(EmbeddedResource.Identity) originates from the Internet Zone and may prevent compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/807.)))" IgnoreExitCode="True" />
   </Target>
 </Project>

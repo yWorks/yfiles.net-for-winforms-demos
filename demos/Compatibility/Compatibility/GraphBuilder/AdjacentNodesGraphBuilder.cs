@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -43,7 +43,7 @@ namespace yWorks.DataBinding.Compatibility
   /// <remarks>
   /// <para>
   /// This class can be used when the data specifies a collection of
-  /// nodes in which each node knows its direct neighbors, and—optionally—a collection of groups. The
+  /// nodes in which each node knows its direct neighbors, andâ€”optionallyâ€”a collection of groups. The
   /// properties <see cref="NodesSource"/> and <see cref="GroupsSource"/> define
   /// the source collections from which nodes and groups will be created.
   /// </para>
@@ -861,7 +861,7 @@ namespace yWorks.DataBinding.Compatibility
     /// <param name="labelData">The optional label data of the edge if an <see cref="EdgeLabelProvider"/> is specified.</param>
     /// <y.expert/>
     protected virtual void UpdateEdge([NotNull] IGraph graph, [NotNull] IEdge edge, [CanBeNull] object labelData) {
-      this.graphBuilderHelper.UpdateEdge(graph, edge, labelData, default);
+      this.graphBuilderHelper.UpdateEdge(graph, edge, labelData, default(TNode));
     }
 
     private void UpdateEdgeAndCreateMirrorEdge(IGraph graph, IEdge edge, object labelData, TNode edgeObject) {

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -249,7 +249,7 @@ namespace Tutorial.GettingStarted
           var node = e.Item as INode;
           if (node != null) {
             // add a context menu entry
-            e.Menu.Items.Add("Set to now", null, (o, args) => SetToNow(node));
+            e.Menu.Items.Add("Set ["+ node.ToString()+"] to now", null, (o, args) => SetToNow(node));
           }
         }; 
       }

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -2802,7 +2802,7 @@ namespace Demo.yFiles.GraphEditor
         overviewControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; 
         form.Size = new Size(300,300);
         overviewControl.Location = new System.Drawing.Point(0,0);
-        overviewControl.Size = form.Size;
+        overviewControl.Size = form.ClientSize;
         form.Text = "Overview";
         form.SuspendLayout();
         form.Controls.Add(overviewControl);

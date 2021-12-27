@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -129,14 +129,26 @@ namespace Demo.yFiles.Layout.Configurations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
-        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The circular layout style emphasizes group and tree structures within a network. It creates node partitions by analyzing the connectivity structure of the network, and arranges the partitions as separate circles. The circles themselves are arranged in a radial  [rest of string was truncated]&quot;;.
+        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The circular layout style emphasizes group and tree structures within a network. It creates node partitions by analyzing the connectivity structure of the network, and arranges the partitions as separate circles. The circles themselves are arranged  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Circular {
             get {
                 return ResourceManager.GetString("Circular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fcharset2 Symbol;}}
+        ///{\colortbl ;\red0\green0\blue0;}
+        ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
+        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 This layout is designed to arrange directed and undirected trees that have a unique root node. All children are placed below their parent in relation to the main layout direction. The edges of the graph are routed as straight-line [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Classic_Tree {
+            get {
+                return ResourceManager.GetString("Classic_Tree", resourceCulture);
             }
         }
         
@@ -154,10 +166,10 @@ namespace Demo.yFiles.Layout.Configurations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
-        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The hierarchical layout style highlights the main direction or flow of a directed graph. The layout algorithm places the nodes of a graph in hierarchically arranged layers such that the (majority of) its edges follows the overall orientation, for example, top-t [rest of string was truncated]&quot;;.
+        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The hierarchical layout style highlights the main direction or flow of a directed graph. The layout algorithm places the nodes of a graph in hierarchically arranged layers such that the (majority of) its edges follows the overall orientation, for ex [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Hierarchic {
             get {
@@ -180,10 +192,10 @@ namespace Demo.yFiles.Layout.Configurations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
-        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The organic layout style is based on the force-directed layout paradigm. This algorithm simulates physical forces and rearranges the positions of the nodes in such a way that the sum of the forces emitted by the nodes and the edges reaches a (local) minimum.\pa [rest of string was truncated]&quot;;.
+        ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The organic layout style is based on the force-directed layout paradigm. This algorithm simulates physical forces and rearranges the positions of the nodes in such a way that the sum of the forces emitted by the nodes and the edges reaches a (local) [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Organic {
             get {
@@ -206,11 +218,12 @@ namespace Demo.yFiles.Layout.Configurations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
         ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The orthogonal layout style is a multi-purpose layout style for undirected graphs. It is well suited for medium-sized sparse graphs, and produces compact drawings with no overlaps, few crossings, and few bends.\par
-        ///It is especially fitted for application domai [rest of string was truncated]&quot;;.
+        ///
+        ///\pard\sb150\ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Orthogonal {
             get {
@@ -302,11 +315,12 @@ namespace Demo.yFiles.Layout.Configurations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
         ///\pard\sb150\sa150\cf1\f0\fs18\lang1033 The various flavors of the tree layout styles are great for highlighting child-parent relationships in graphs that form one or more trees, or trees with only few additional edges.\par
-        ///The need to visualize directed or undirected trees arises in many applicatio [rest of string was truncated]&quot;;.
+        ///
+        ///\pard\sb150\sa150 The need to visualize dir [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Tree {
             get {

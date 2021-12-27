@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -451,7 +451,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
         ViewportAnimation vpAnim =
             new ViewportAnimation(view,
                 targetBounds, TimeSpan.FromSeconds(1)) {
-                MaximumTargetZoom = 1.0d, TargetViewMargins = view.FitContentViewMargins
+                MaximumTargetZoom = 1.0d, TargetViewMargins = view.ContentMargins
             };
 
         var animations = new List<IAnimation>();

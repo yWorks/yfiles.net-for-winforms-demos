@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -295,11 +295,9 @@ namespace Demo.yFiles.Layout.LogicGate
       // set the default style for all new node labels
       graph.NodeDefaults.Labels.Style = new DefaultLabelStyle();
 
-      // set the default style for all new edge labels
+      // set the default style for all new edges
       graph.EdgeDefaults.Style = new PolylineEdgeStyle {
-        SourceArrow = new Arrow { Type = ArrowType.None },
-        TargetArrow = new Arrow { Type = ArrowType.None },
-        Pen = new Pen(Brushes.Black, 3) { EndCap = LineCap.Square, StartCap = LineCap.Square }
+        Pen = new Pen(Brushes.Black, 3) { EndCap = LineCap.Square, StartCap = LineCap.Square, LineJoin = LineJoin.Round }
       };
 
       // disable edge cropping
@@ -435,7 +433,7 @@ namespace Demo.yFiles.Layout.LogicGate
 
       MapperDelegate<IEdge, PortConstraint> sourceDelegate = edge => ((PortDescriptor) edge.SourcePort.Tag).X == 0 ? west : east;
       MapperDelegate<IEdge, PortConstraint> targetDelegate = edge => ((PortDescriptor) edge.TargetPort.Tag).X == 0 ? west : east;
-      oerData = new PolylineEdgeRouterData {
+      oerData = new EdgeRouterData {
         SourcePortConstraints = { Delegate = sourceDelegate},
         TargetPortConstraints = { Delegate = targetDelegate }
       };
@@ -456,7 +454,7 @@ namespace Demo.yFiles.Layout.LogicGate
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
     private async void OnRunIHLButtonClicked(object sender, EventArgs e) {
-      await ApplyLayout(hl, hlData, false);
+      await ApplyLayout(hl, hlData, true);
     }
 
     /// <summary>

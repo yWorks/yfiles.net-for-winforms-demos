@@ -1,0 +1,73 @@
+
+# yFiles.NET Programming Samples Overview
+The [yFiles.NET](https://www.yworks.com/products/yfiles.net) programming samples are extensive Visual Studio projects with **full C# source code** that present the functionality of the yFiles.NET diagramming library. All programming samples can be found in subdirectories of the current directory. Most samples are self-contained, i.e., they consist of a single Visual Studio project. 
+
+
+## Working with the samples
+All demos can be accessed by opening the solution file (yFiles Demos.sln) in this folder. 
+
+
+
+
+### Required SDKs
+The demos and tutorials in this folder are targeted to .NET Framework 4.8. You can change the framework in the project’s properties or the csproj file itself. The minimum required framework version is .NET Framework 4.5 (the former .NET 4.5). 
+
+In contrast to the Visual Studio installer, JetBrains Rider does not install various .NET SDK versions. To run the demos seamlessly in Rider, an installation of .NET Framework 4.8 is needed. If this is not desired, the target in the demo projects needs to be adjusted to the available version. 
+
+
+### Troubleshooting
+
+#### To run this application, you must install .NET / Target framework not installed
+The demos target a .NET framework which is not installed on your development machine. 
+
+Either install an SDK which supports the required .NET framework or update the target framework to a version which is already installed on your machine. 
+
+
+#### Untrusted Solution yFiles Demos in JetBrains Rider
+In JetBrains Rider, each solution you open is untrusted by default. Therefore, you see this dialog which lets you choose to trust the solution or not. You can find more details [in the JetBrains Rider help](https://www.jetbrains.com/help/rider/Creating_and_Opening_Projects_and_Solutions.html#trusted-and-untrusted-solutions) 
+
+The yFiles.NET demo project files contain a custom build target that automatically unblocks the yFiles.NET assemblies. This either uses PowerShell or cmd to unblock the files, but poses no known security risk. 
+
+Click the **Trust and Open** button to open the solution. 
+
+
+### Running a Single Sample
+To open a specific programming sample, the corresponding Visual Studio project file (usually named `[demoname].csproj`) can be found in the demo's directory, which also uses the `[demoname]` naming scheme. <br /> Note that samples that demonstrate related aspects are grouped together in solution folders. 
+
+<a id="samples"></a> 
+### Programming Samples Categories
+
+| Category | Folder | Description 
+|:---|:---|:---
+|[BPMN Demos](BPMN) |**BPMN** | Source code samples that demonstrate how to implement BPMN layout and editing features. 
+|[Compatibility Classes](Compatibility) |**Compatibility** | Support project to facilitate migration from yFiles.NET 4.4 to yFiles.NET 5.0. 
+|[Complete Demos](Complete) |**Complete** | Source code samples that demonstrate the interaction between the viewer component and the layout algorithms. 
+|[Data Binding Demos](DataBinding) |**DataBinding** | Source code samples that demonstrate binding graph elements to business data. 
+|[InputMode Demos](Input) |**Input** | Source code samples that demonstrate how to configure specific aspects of the InputMode functionality. 
+|[Layout Demos](Layout) |**Layout** | Source code samples demonstrate the basic usage of the yFiles.NET layout algorithms. 
+|[Layout Only Demos](LayoutOnly) |**LayoutOnly** | Source code samples that demonstrate the basic usage of the yFiles.NET layout algorithms **without** the viewer component. 
+|[Style Demos](Style) |**Style** | Source code samples that demonstrate how to customize the visual representation of yFiles.NET graph elements. 
+|[Utility Projects for Demos](Utils) |**Utils** | Utility projects for common functionality in demos. 
+|[Graph Viewer Demos](View) |**View** | Source code samples demonstrate basic concepts related to the `GraphControl` component and the underlying graph model. 
+|[yEd.NET Graph Editor Demo](yEd.NET) |**yEd.NET** | Complex demo application that showcases most features that are present in yFiles.NET. yEd.NET will help you to interactively explore many capabilities of both the yFiles.NET Layout and the yFiles.NET Viewer functionality. 
+
+
+
+
+#### See also
+[Product Page](https://www.yworks.com/products/yfiles.net)  
+[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[Help and Support](https://www.yworks.com/products/yfiles/support)
+
+
+#### Contact
+yWorks GmbH  
+Vor dem Kreuzberg 28  
+72070 Tuebingen  
+Germany  
+Phone: +49 7071 979050
+Email: contact@yworks.com
+
+COPYRIGHT &#x00A9; 2021 yWorks   
+
+

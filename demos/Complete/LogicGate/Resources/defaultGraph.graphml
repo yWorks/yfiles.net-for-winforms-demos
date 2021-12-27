@@ -7,7 +7,6 @@
   <key id="d3" attr.name="NodeStyle" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeStyle" />
   <key id="d4" attr.name="EdgeLabels" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeLabels" />
   <key id="d5" attr.name="EdgeGeometry" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeGeometry" />
-  <key id="d6" attr.name="EdgeStyle" for="edge" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeStyle" />
   <key id="d7" attr.name="PortLabels" for="port" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLabels" />
   <key id="d8" attr.name="PortLocationParameter" for="port" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLocationParameter">
     <default>
@@ -81,11 +80,6 @@
       <y:PortAnchoredLabelModelParameter x:Key="42" LocationOffset="-5,-3" LabelRatio="1,1" />
       <y:PortAnchoredLabelModelParameter x:Key="43" LocationOffset="-5,3" LabelRatio="1,0" />
       <yforms:Arrow x:Key="44" Type="None" />
-      <yforms:PolylineEdgeStyle x:Key="45" TargetArrow="{y:GraphMLReference 44}" SourceArrow="{y:GraphMLReference 44}">
-        <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="#FF000000" Width="3" StartCap="Square" EndCap="Square" />
-        </yforms:PolylineEdgeStyle.Pen>
-      </yforms:PolylineEdgeStyle>
     </y:SharedData>
   </data>
   <graph id="G">
@@ -1050,11 +1044,7 @@ Converter]]></y:Label.Text>
         </data>
       </port>
     </node>
-    <edge id="e0" source="n9" target="n10" sourceport="p1" targetport="p1">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
+    <edge id="e0" source="n9" target="n10" sourceport="p1" targetport="p1"/>
     <edge id="e1" source="n8" target="n10" sourceport="p2" targetport="p0">
       <data key="d5">
         <x:List>
@@ -1062,24 +1052,14 @@ Converter]]></y:Label.Text>
           <y:Bend Location="657,-45" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
-    <edge id="e2" source="n6" target="n8" sourceport="p5" targetport="p1">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
+    <edge id="e2" source="n6" target="n8" sourceport="p5" targetport="p1"/>
     <edge id="e3" source="n8" target="n6" sourceport="p2" targetport="p6">
       <data key="d5">
         <x:List>
           <y:Bend Location="625,-130" />
           <y:Bend Location="625,-80" />
         </x:List>
-      </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
       </data>
     </edge>
     <edge id="e4" source="n9" target="n6" sourceport="p1" targetport="p7">
@@ -1089,9 +1069,6 @@ Converter]]></y:Label.Text>
           <y:Bend Location="647,-60" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
     <edge id="e5" source="n6" target="n9" sourceport="p2" targetport="p0">
       <data key="d5">
@@ -1100,25 +1077,10 @@ Converter]]></y:Label.Text>
           <y:Bend Location="417,-25" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
-    <edge id="e6" source="n7" target="n6" sourceport="p4" targetport="p0">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
-    <edge id="e7" source="n7" target="n6" sourceport="p5" targetport="p1">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
-    <edge id="e8" source="n4" target="n7" sourceport="p1" targetport="p0">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
+    <edge id="e6" source="n7" target="n6" sourceport="p4" targetport="p0"/>
+    <edge id="e7" source="n7" target="n6" sourceport="p5" targetport="p1"/>
+    <edge id="e8" source="n4" target="n7" sourceport="p1" targetport="p0"/>
     <edge id="e9" source="n2" target="n7" sourceport="p2" targetport="p2">
       <data key="d5">
         <x:List>
@@ -1126,24 +1088,14 @@ Converter]]></y:Label.Text>
           <y:Bend Location="266,-80" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
-    <edge id="e10" source="n1" target="n2" sourceport="p2" targetport="p1">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
+    <edge id="e10" source="n1" target="n2" sourceport="p2" targetport="p1"/>
     <edge id="e11" source="n3" target="n2" sourceport="p1" targetport="p0">
       <data key="d5">
         <x:List>
           <y:Bend Location="92,-108" />
           <y:Bend Location="92,-66" />
         </x:List>
-      </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
       </data>
     </edge>
     <edge id="e12" source="n3" target="n5" sourceport="p1" targetport="p1">
@@ -1153,9 +1105,6 @@ Converter]]></y:Label.Text>
           <y:Bend Location="92,-130" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
     <edge id="e13" source="n0" target="n5" sourceport="p2" targetport="p0">
       <data key="d5">
@@ -1164,19 +1113,8 @@ Converter]]></y:Label.Text>
           <y:Bend Location="60,-150" />
         </x:List>
       </data>
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
     </edge>
-    <edge id="e14" source="n5" target="n4" sourceport="p2" targetport="p0">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
-    <edge id="e15" source="n7" target="n6" sourceport="p6" targetport="p3">
-      <data key="d6">
-        <y:GraphMLReference ResourceKey="45" />
-      </data>
-    </edge>
+    <edge id="e14" source="n5" target="n4" sourceport="p2" targetport="p0"/>
+    <edge id="e15" source="n7" target="n6" sourceport="p6" targetport="p3"/>
   </graph>
 </graphml>

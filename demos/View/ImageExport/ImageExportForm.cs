@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -210,7 +210,7 @@ namespace Demo.yFiles.ImageExport
       handler = new OptionHandler(IMAGE_EXPORT);
       handler.PropertyChanged += handler_PropertyChanged;
       OptionGroup currentGroup = handler.AddGroup(OUTPUT);
-      OptionItem formatItem = currentGroup.AddList(FORMAT, Formats.Keys, FORMAT_JPG);
+      OptionItem formatItem = currentGroup.AddList(FORMAT, Formats.Keys, FORMAT_PNG);
       currentGroup.AddBool(HIDE_DECORATIONS, true);
       currentGroup.AddBool(EXPORT_RECTANGLE, true);
       currentGroup = handler.AddGroup(BOUNDS);
@@ -225,9 +225,9 @@ namespace Demo.yFiles.ImageExport
 
       currentGroup = handler.AddGroup(GRAPHICS);
 
-      currentGroup.AddGeneric(SMOOTHING, SimpleSmoothingMode.HighSpeed).SetAttribute(
+      currentGroup.AddGeneric(SMOOTHING, SimpleSmoothingMode.HighQuality).SetAttribute(
         OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, false);
-      currentGroup.AddGeneric(TEXTRENDERING, TextRenderingHint.SystemDefault).SetAttribute(
+      currentGroup.AddGeneric(TEXTRENDERING, TextRenderingHint.AntiAlias).SetAttribute(
         OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, false);
       currentGroup.AddGeneric(INTERPOLATION, InterpolationMode.Invalid).SetAttribute(
         OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, false);
@@ -251,7 +251,7 @@ namespace Demo.yFiles.ImageExport
 
 
       currentGroup = handler.AddGroup(PNG);
-      BoolOptionItem transparentPNGItem = currentGroup.AddBool(TRANSPARENT, false);
+      BoolOptionItem transparentPNGItem = currentGroup.AddBool(TRANSPARENT, true);
 
       currentGroup = handler.AddGroup(EMF);
       BoolOptionItem transparentEMFItem = currentGroup.AddBool(TRANSPARENT, false);

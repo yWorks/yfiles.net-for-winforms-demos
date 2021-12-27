@@ -1,0 +1,166 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{76840FF1-6B1C-4FF0-8199-4A79510C7521}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Neo4JIntegration</RootNamespace>
+    <AssemblyName>Neo4JIntegration</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="yWorks.yFilesNET.Adapter">
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Algorithms">
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="yWorks.yFilesNET.Viewer">
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectionDialog.Designer.cs">
+      <DependentUpon>ConnectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingIndicator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingIndicator.Designer.cs">
+      <DependentUpon>LoadingIndicator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Neo4JNodeStyle.cs" />
+    <Compile Include="PathViewerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathViewerDialog.Designer.cs">
+      <DependentUpon>PathViewerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Neo4JIntegrationDemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Neo4JIntegrationDemoForm.Designer.cs">
+      <DependentUpon>Neo4JIntegrationDemoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShortestPathDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShortestPathDialog.Designer.cs">
+      <DependentUpon>ShortestPathDialog.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ConnectionDialog.resx">
+      <DependentUpon>ConnectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadingIndicator.resx">
+      <DependentUpon>LoadingIndicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathViewerDialog.resx">
+      <DependentUpon>PathViewerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Neo4JIntegrationDemoForm.resx">
+      <DependentUpon>Neo4JIntegrationDemoForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShortestPathDialog.resx">
+      <DependentUpon>ShortestPathDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\description.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yfiles.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mono16\fit-16.png" />
+    <None Include="Resources\mono16\minus-16.png" />
+    <None Include="Resources\mono16\play2-16.png" />
+    <None Include="Resources\mono16\plus-16.png" />
+  </ItemGroup>
+  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver">
+      <Version>4.3.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!--The following targets ensure that the project will build even when the ZIP file has been-->
+  <!--extracted with Explorer or another tool that retains the origin zone marker for the files.-->
+  <!--If that does not work, an error message will be shown in Visual Studio's Error List.-->
+  <!--See https://kb.yworks.com/article/736 and https://kb.yworks.com/article/807 for details.-->
+  <Target Name="UnblockYFilesAssemblies" BeforeTargets="BeforeBuild">
+    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  </Target>
+  <Target Name="UnblockResources" BeforeTargets="BeforeResGen">
+    <Exec Command="if exist &quot;%(EmbeddedResource.Identity)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(EmbeddedResource.Identity)'&quot;) || (2&gt;nul type nul &gt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=War&amp;&gt;&amp;2 echo ning: The file %(EmbeddedResource.Identity) originates from the Internet Zone and may prevent compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/807.)))" IgnoreExitCode="True" />
+  </Target>
+</Project>

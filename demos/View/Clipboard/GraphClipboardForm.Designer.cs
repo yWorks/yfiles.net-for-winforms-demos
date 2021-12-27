@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -335,10 +335,10 @@ namespace Demo.yFiles.Graph.Clipboard
       // graphControl
       // 
       this.graphControl.BackColor = System.Drawing.Color.White;
+      this.graphControl.ContentMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
       this.graphControl.ContentRect = new yWorks.Geometry.RectD(0D, 0D, 400D, 400D);
       this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
       this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.graphControl.FitContentViewMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
       this.graphControl.Location = new System.Drawing.Point(3, 3);
       this.graphControl.Name = "graphControl";
       this.graphControl.NavigationCommandsEnabled = false;
@@ -362,10 +362,10 @@ namespace Demo.yFiles.Graph.Clipboard
       // graphControl2
       // 
       this.graphControl2.BackColor = System.Drawing.Color.White;
+      this.graphControl2.ContentMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
       this.graphControl2.ContentRect = new yWorks.Geometry.RectD(0D, 0D, 400D, 400D);
       this.graphControl2.Cursor = System.Windows.Forms.Cursors.Cross;
       this.graphControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.graphControl2.FitContentViewMargins = new yWorks.Geometry.InsetsD(10D, 10D, 10D, 10D);
       this.graphControl2.Location = new System.Drawing.Point(3, 3);
       this.graphControl2.Name = "graphControl2";
       this.graphControl2.NavigationCommandsEnabled = false;

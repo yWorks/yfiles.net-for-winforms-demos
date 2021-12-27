@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -337,6 +337,7 @@ namespace Demo.yFiles.Layout.InteractiveOrganic
                                layout.SetCenter(copiedNode, center.X, center.Y);
                                layout.SetInertia(copiedNode, 1);
                                layout.SetStress(copiedNode, 0);
+                               layout.WakeUp();
                              }
                            };
       graph.NodeRemoved += OnStructureChanged;

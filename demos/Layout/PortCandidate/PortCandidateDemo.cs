@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -259,12 +259,14 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
       fitContentButton.SetCommand(Commands.FitContent, graphControl);
+      openButton.SetCommand(Commands.Open, graphControl);
+      saveButton.SetCommand(Commands.SaveAs, graphControl);
     }
 
     private void RegisterMenuCommands() {
       // File menu
       openFileToolStripMenuItem.SetCommand(Commands.Open, graphControl);
-      saveAsToolStripMenuItem.SetCommand(Commands.Save, graphControl);
+      saveAsToolStripMenuItem.SetCommand(Commands.SaveAs, graphControl);
 
       // View menu
       zoomInToolStripMenuItem.SetCommand(Commands.IncreaseZoom, graphControl);

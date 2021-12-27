@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -91,7 +91,16 @@ namespace Demo.yFiles.Complete.RotatableNodes
       rotation.RotateAt((float)-Angle, new PointF((float)center.X, (float)center.Y));
       var container = new RotatableNodeStyleVisual(Wrapped, Angle, center) {Transform = rotation};
       container.Add(visual);
+      context.RegisterForChildrenIfNecessary(container, DisposeChildren);
       return container;
+    }
+
+    private IVisual DisposeChildren(IRenderContext ctx, IVisual removedVisual, bool dispose) {
+      var container = removedVisual as VisualGroup;
+      if (container != null && container.Children.Count > 0) {
+        ctx.ChildVisualRemoved(container.Children[0]);
+      }
+      return null;
     }
 
     /// <summary>
@@ -117,7 +126,9 @@ namespace Demo.yFiles.Complete.RotatableNodes
 
       if (oldWrappedVisual != newWrappedVisual) {
         container.Children[0] = newWrappedVisual;
+        context.ChildVisualRemoved(oldWrappedVisual);
       }
+      context.RegisterForChildrenIfNecessary(oldVisual, DisposeChildren);
 
       var center = node.Layout.GetCenter();
       if (newWrappedStyle != oldWrappedStyle || container.Angle != Angle || !container.Center.Equals(center)) {

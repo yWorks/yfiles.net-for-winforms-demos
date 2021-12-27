@@ -12,7 +12,7 @@
     <FileUpgradeFlags></FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation></UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -64,13 +64,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="yWorks.yFilesNET.Adapter">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Adapter.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Adapter.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Algorithms">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Algorithms.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Algorithms.dll</HintPath>
     </Reference>
     <Reference Include="yWorks.yFilesNET.Viewer">
-      <HintPath>..\..\..\..\lib\net40\\yWorks.yFilesNET.Viewer.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +194,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <!--The following target ensures that the project will build even when the ZIP file has been-->
+  <!--The following targets ensure that the project will build even when the ZIP file has been-->
   <!--extracted with Explorer or another tool that retains the origin zone marker for the files.-->
   <!--If that does not work, an error message will be shown in Visual Studio's Error List.-->
-  <!--See http://kb.yworks.com/article/736 for details.-->
-  <Target Name="BeforeBuild">
-    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at http://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  <!--See https://kb.yworks.com/article/736 and https://kb.yworks.com/article/807 for details.-->
+  <Target Name="UnblockYFilesAssemblies" BeforeTargets="BeforeBuild">
+    <Exec Command="if exist &quot;%(Reference.HintPath)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(Reference.HintPath)'&quot;) || (2&gt;nul type nul &gt;&quot;%(Reference.HintPath):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=Err&amp;&gt;&amp;2 echo or: The file @(Reference) originates from the Internet Zone and prevents compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/736.)))" IgnoreExitCode="True" />
+  </Target>
+  <Target Name="UnblockResources" BeforeTargets="BeforeResGen">
+    <Exec Command="if exist &quot;%(EmbeddedResource.Identity)&quot; (&gt;nul 2&gt;nul (&gt;nul 2&gt;nul findstr ZoneId&lt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) &amp;&amp; ((&gt;nul 2&gt;nul powershell -noprofile -nologo -command &quot;Unblock-File '%(EmbeddedResource.Identity)'&quot;) || (2&gt;nul type nul &gt;&quot;%(EmbeddedResource.Identity):Zone.Identifier&quot;) || (&lt;nul &gt;&amp;2 set /p _=War&amp;&gt;&amp;2 echo ning: The file %(EmbeddedResource.Identity) originates from the Internet Zone and may prevent compilation. Please unblock it manually in its properties. See the Knowledge Base at https://kb.yworks.com/article/807.)))" IgnoreExitCode="True" />
   </Target>
 </Project>

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -127,8 +127,8 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
       zoomInToolStripMenuItem.SetCommand(Commands.IncreaseZoom, graphControl);
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
       zoomOutToolStripMenuItem.SetCommand(Commands.DecreaseZoom, graphControl);
-      fitToSizeButton.SetCommand(Commands.FitGraphBounds, graphControl.FitContentViewMargins, graphControl);
-      fitToGraphBoundsToolStripMenuItem.SetCommand(Commands.FitGraphBounds, graphControl.FitContentViewMargins, graphControl);
+      fitToSizeButton.SetCommand(Commands.FitGraphBounds, graphControl.ContentMargins, graphControl);
+      fitToGraphBoundsToolStripMenuItem.SetCommand(Commands.FitGraphBounds, graphControl.ContentMargins, graphControl);
 
       undoButton.SetCommand(Commands.Undo, graphControl);
       redoButton.SetCommand(Commands.Redo, graphControl);
@@ -1013,7 +1013,7 @@ namespace Demo.yFiles.Graph.Bpmn.Editor
         {
           CompactMessageFlowLayering = false,
           StartNodesFirst = true
-        }
+        }.Create(graphControl.Graph, graphControl.Selection, bpmnLayout.Scope)
       };
       await layoutExecutor.Start();
     }

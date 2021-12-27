@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -386,12 +386,12 @@ namespace Demo.yFiles.Graph.Viewer
       this.graphOverviewControl.AnimateScrollCommands = false;
       this.graphOverviewControl.AutoDrag = false;
       this.graphOverviewControl.BackColor = System.Drawing.Color.White;
+      this.graphOverviewControl.ContentMargins = new yWorks.Geometry.InsetsD(0D, 0D, 0D, 0D);
       this.graphOverviewControl.Cursor = System.Windows.Forms.Cursors.Cross;
       this.graphOverviewControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.graphOverviewControl.DoubleClickSize = new yWorks.Geometry.SizeD(4D, 4D);
       this.graphOverviewControl.DoubleClickTime = System.TimeSpan.Parse("00:00:00.5000000");
       this.graphOverviewControl.DragSize = new yWorks.Geometry.SizeD(4D, 4D);
-      this.graphOverviewControl.FitContentViewMargins = new yWorks.Geometry.InsetsD(0D, 0D, 0D, 0D);
       this.graphOverviewControl.GraphControl = null;
       this.graphOverviewControl.HorizontalScrollBarPolicy = yWorks.Controls.ScrollBarVisibility.Never;
       this.graphOverviewControl.Location = new System.Drawing.Point(0, 23);

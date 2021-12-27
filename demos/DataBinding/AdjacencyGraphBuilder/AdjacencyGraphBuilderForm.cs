@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -62,6 +62,7 @@ namespace Demo.yFiles.DataBinding.AdjacencyGraphBuilder
     }
 
     private void AdjacencyGraphBuilderWindow_OnLoaded(object sender, EventArgs e) {
+      graphControl.InputMode = new MoveViewportInputMode();
       graphSourceComboBox.SelectedIndex = 0;
     }
     private void RegisterToolStripCommands() {

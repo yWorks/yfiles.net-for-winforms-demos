@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.3.
- ** Copyright (c) 2000-2020 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.4.
+ ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -29,7 +29,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.IO;
 using System.Reflection;
@@ -255,8 +254,8 @@ namespace Demo.yFiles.Printing
       // check whether decorations (selection, handles, ...) should be hidden
       bool hide = (bool)handler.GetValue(OUTPUT, HIDE_DECORATIONS);
       if (hide) {
-        // if so, create a new graphcontrol whith the same graph
-        control = new GraphControl { Graph = graphControl.Graph };
+        // if so, create a new graphcontrol with the same graph
+        control = new GraphControl { Graph = graphControl.Graph, Projection = graphControl.Projection };
       }
 
       // read CanvasPrintDocument options
@@ -269,6 +268,7 @@ namespace Demo.yFiles.Printing
       printDocument.Canvas = control;
       // set print area
       printDocument.PrintRectangle = bounds;
+      printDocument.Projection = graphControl.Projection;
 
       // show new PrintPreviewDialog
       PrintPreviewDialog dialog = new PrintPreviewDialog { Document = printDocument };
