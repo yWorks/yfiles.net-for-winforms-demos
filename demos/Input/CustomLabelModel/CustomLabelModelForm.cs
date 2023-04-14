@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,15 +28,14 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.CustomLabelModel.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.CustomLabelModel
 {
@@ -87,10 +86,10 @@ namespace Demo.yFiles.Graph.CustomLabelModel
     /// on the number of possible placements.
     /// </summary>
     protected void InitializeGraph() {
+      DemoStyles.InitDemoStyles(Graph);
+
       Graph.NodeDefaults.Labels.LayoutParameter = new MyNodeLabelModel().CreateDefaultParameter();
 
-      graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle {Brush = Brushes.Orange};
-      
       Graph.AddLabel(Graph.CreateNode(new RectD(90, 90, 100, 100)), "Click and Drag",
                      new MyNodeLabelModel { CandidateCount = 0, Offset = 20 }.CreateDefaultParameter());
       Graph.AddLabel(Graph.CreateNode(new RectD(250, 90, 100, 100)),

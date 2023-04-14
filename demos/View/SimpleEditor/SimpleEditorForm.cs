@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,16 +28,15 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.SimpleEditor.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.LabelModels;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.SimpleEditor
 {
@@ -137,19 +136,32 @@ namespace Demo.yFiles.Graph.SimpleEditor
     /// <summary>
     /// Initializes the graph and the input mode.
     /// </summary>
-    /// <seealso cref="InitializeGraph"/>
     protected override void OnLoad(EventArgs e) {
       base.OnLoad(e);
 
-      InitializeGraph();
+      // Configure and enable folding
+      var foldingManager = new FoldingManager();
+      var foldingView = foldingManager.CreateFoldingView();
+      foldingView.EnqueueNavigationalUndoUnits = true;
+      var graph = foldingView.Graph;
+      GraphControl.Graph = graph;
+
+      // Setup the default styles for the graph
+      SetDefaultStyles(graph);
 
       // initialize the grid for grid snapping
       InitializeGrid();
 
-      // initialize the input mode
-      graphControl.InputMode = CreateEditorMode();
+      // Specify a configured input mode that enables graph editing
+      GraphControl.InputMode = CreateEditorMode();
+
+      // Create a sample graph
+      CreateSampleGraph(graph);
 
       GraphControl.FitGraphBounds();
+
+      // Enable the undo engine on the master graph
+      foldingManager.MasterGraph.SetUndoEngineEnabled(true);
     }
 
     /// <summary>
@@ -198,53 +210,69 @@ namespace Demo.yFiles.Graph.SimpleEditor
     /// Initializes the graph instance setting default styles
     /// and creating a small sample graph.
     /// </summary>
-    protected virtual void InitializeGraph() {
-      // Enable folding
-      IFoldingView view = new FoldingManager().CreateFoldingView();
-      graphControl.Graph = view.Graph;
-
-      // Get the master graph instance and enable undoability support.
-      view.Manager.MasterGraph.SetUndoEngineEnabled(true);
-
-      #region Configure grouping
-
-      // configure the group node style.
-
-      //PanelNodeStyle is a nice style especially suited for group nodes
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
-      Graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(new PanelNodeStyle {
-        Color = groupNodeColor,
-        Insets = new InsetsD(5, 20, 5, 5),
-        LabelInsetsColor = Color.Bisque
-      });
-
-      // Set a different label style and parameter
-      Graph.GroupNodeDefaults.Labels.Style = new DefaultLabelStyle {
-        StringFormat = { Alignment = StringAlignment.Far }
-      };
-      var labelModel = new InteriorStretchLabelModel() { Insets = new InsetsD(15, 1, 1, 1) };
-      var param = labelModel.CreateParameter(InteriorStretchLabelModel.Position.North);
-      Graph.GroupNodeDefaults.Labels.LayoutParameter = param;
-
-      #endregion
-
-      #region Configure Graph defaults
-
-      // Set the default node style
-      Graph.NodeDefaults.Style = new ShinyPlateNodeStyle {
-        Brush = Brushes.Orange,
-        DrawShadow = true
-      };
+    protected virtual void SetDefaultStyles(IGraph graph) {
+      // Assign the default demo styles
+      DemoStyles.InitDemoStyles(graph, foldingEnabled: true);
 
       // Set the default node label position to centered below the node with the FreeNodeLabelModel that supports label snapping
-      Graph.NodeDefaults.Labels.LayoutParameter = FreeNodeLabelModel.Instance.CreateParameter(
+      graph.NodeDefaults.Labels.LayoutParameter = FreeNodeLabelModel.Instance.CreateParameter(
           new PointD(0.5, 1.0), new PointD(0, 10), new PointD(0.5, 0.0), new PointD(0, 0), 0);
 
       // Set the default edge label position with the SmartEdgeLabelModel that supports label snapping
-      Graph.EdgeDefaults.Labels.LayoutParameter = new SmartEdgeLabelModel().CreateParameterFromSource(0, 0, 0.5);
+      graph.EdgeDefaults.Labels.LayoutParameter = new SmartEdgeLabelModel().CreateParameterFromSource(0, 0, 0.5);
+    }
 
-      #endregion
+    /// <summary>
+    /// Creates the initial graph.
+    /// </summary>
+    /// <param name="graph"></param>
+    private void CreateSampleGraph(IGraph graph) {
+      graph.Clear();
 
+      var n1 = graph.CreateNode(new RectD(126, 0, 30, 30));
+      var n2 = graph.CreateNode(new RectD(126, 72, 30, 30));
+      var n3 = graph.CreateNode(new RectD(75, 147, 30, 30));
+      var n4 = graph.CreateNode(new RectD(177.5, 147, 30, 30));
+      var n5 = graph.CreateNode(new RectD(110, 249, 30, 30));
+      var n6 = graph.CreateNode(new RectD(177.5, 249, 30, 30));
+      var n7 = graph.CreateNode(new RectD(110, 299, 30, 30));
+      var n8 = graph.CreateNode(new RectD(177.5, 299, 30, 30));
+      var n9 = graph.CreateNode(new RectD(110, 359, 30, 30));
+      var n10 = graph.CreateNode(new RectD(47.5, 299, 30, 30));
+      var n11 = graph.CreateNode(new RectD(20, 440, 30, 30));
+      var n12 = graph.CreateNode(new RectD(110, 440, 30, 30));
+      var n13 = graph.CreateNode(new RectD(20, 515, 30, 30));
+      var n14 = graph.CreateNode(new RectD(80, 515, 30, 30));
+      var n15 = graph.CreateNode(new RectD(140, 515, 30, 30));
+      var n16 = graph.CreateNode(new RectD(20, 569, 30, 30));
+
+      var group1 = graph.CreateGroupNode(null, new RectD(25, 45, 202.5, 353));
+      graph.AddLabel(group1, "Group 1");
+      graph.GroupNodes(group1, new[] { n2, n3, n4, n9, n10 });
+
+      var group2 = graph.CreateGroupNode(group1, new RectD(98, 222, 119.5, 116));
+      graph.AddLabel(group2, "Group 2");
+      graph.GroupNodes(group2, new[] { n5, n6, n7, n8 });
+
+      var group3 = graph.CreateGroupNode(null, new RectD(10, 413, 170, 141));
+      graph.AddLabel(group3, "Group 3");
+      graph.GroupNodes(group3, new[] { n11, n12, n13, n14, n15 });
+
+      graph.CreateEdge(n1, n2);
+      graph.CreateEdge(n2, n3);
+      graph.CreateEdge(n2, n4);
+      graph.CreateEdge(n3, n5);
+      graph.CreateEdge(n3, n10);
+      graph.CreateEdge(n5, n7);
+      graph.CreateEdge(n7, n9);
+      graph.CreateEdge(n4, n6);
+      graph.CreateEdge(n6, n8);
+      graph.CreateEdge(n10, n11);
+      graph.CreateEdge(n10, n12);
+      graph.CreateEdge(n11, n13);
+      graph.CreateEdge(n13, n16);
+      graph.CreateEdge(n12, n14);
+      graph.CreateEdge(n12, n15);
     }
 
     /// <summary>

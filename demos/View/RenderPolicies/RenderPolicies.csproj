@@ -103,7 +103,12 @@
     <None Include="Resources\mono16\plus-16.png" />
     <None Include="Resources\mono16\reload-16.png" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mono16\group-16.png" />
   </ItemGroup>

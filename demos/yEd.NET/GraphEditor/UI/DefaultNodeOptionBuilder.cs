@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -341,30 +341,6 @@ namespace Demo.yFiles.GraphEditor.Option
           };
           IPropertyBuildContext<INodeStyle> styleContext =
             context.CreateChildContext(StylePropertyName, styleGetter, styleSetter, styleAssignmentPolicy);
-          styleContext.AddEntry("Shadow",
-                                new DelegateGetter<bool>(
-                                  delegate { return context.CurrentInstance.Style is ShadowNodeStyleDecorator; },
-                                  delegate {
-                                    //show item only for !PanelNodeStyle...
-                                    return !(context.CurrentInstance.Style is PanelNodeStyle);
-                                  }),
-                                new DelegateSetter<bool>(delegate(bool isShadow) {
-                                                           INodeStyle currentStyle = context.CurrentInstance.Style;
-                                                           if (isShadow && !(currentStyle is ShadowNodeStyleDecorator)) {
-                                                             //don't decorate if already decorated...
-                                                             INodeStyle newStyle =
-                                                               new ShadowNodeStyleDecorator(currentStyle);
-                                                             styleContext.SetNewInstance(newStyle);
-                                                           } else {
-                                                             if (!isShadow && currentStyle is ShadowNodeStyleDecorator) {
-                                                               //remove decoration
-                                                               styleContext.SetNewInstance(
-                                                                 ((ShadowNodeStyleDecorator) currentStyle).Wrapped);
-                                                             }
-                                                           }
-                                                         },
-                                                         delegate { return !(context.CurrentInstance.Style is PanelNodeStyle); }
-                                  ));
 
           IPropertyMapBuilder propertyBuilder = GetStylePropertyMapBuilder(context, style);
           if (propertyBuilder != null) {

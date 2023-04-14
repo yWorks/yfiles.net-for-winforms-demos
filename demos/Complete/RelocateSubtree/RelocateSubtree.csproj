@@ -108,7 +108,12 @@
     <Content Include="Resources\yFiles.ico" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--The following targets ensure that the project will build even when the ZIP file has been-->
   <!--extracted with Explorer or another tool that retains the origin zone marker for the files.-->

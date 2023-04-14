@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.HighDpi.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -182,38 +183,9 @@ namespace Demo.yFiles.HighDpi
     /// and creating a small sample graph.
     /// </summary>
     private void InitializeGraph() {
-      graphControl.ImportFromGraphML("Resources/sample.graphml");
-      graphControl.Graph.SetUndoEngineEnabled(true);
-
-      #region Configure grouping
-
-      // configure the group node style.
-
-      //PanelNodeStyle is a nice style especially suited for group nodes
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
-      Graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(new PanelNodeStyle {
-        Color = groupNodeColor,
-        Insets = new InsetsD(5, 20, 5, 5),
-        LabelInsetsColor = Color.Bisque
-      });
-
-      // Set a different label style and parameter
-      Graph.GroupNodeDefaults.Labels.Style = new DefaultLabelStyle {
-        StringFormat = { Alignment = StringAlignment.Far }
-      };
-      var labelModel = new InteriorStretchLabelModel() { Insets = new InsetsD(15, 1, 1, 1) };
-      var param = labelModel.CreateParameter(InteriorStretchLabelModel.Position.North);
-      Graph.GroupNodeDefaults.Labels.LayoutParameter = param;
-
-      #endregion
-
       #region Configure Graph defaults
 
-      // Set the default node style
-      Graph.NodeDefaults.Style = new ShinyPlateNodeStyle {
-        Brush = Brushes.Orange,
-        DrawShadow = true
-      };
+      DemoStyles.InitDemoStyles(Graph);
 
       // Set the default node label position to centered below the node with the FreeNodeLabelModel that supports label snapping
       Graph.NodeDefaults.Labels.LayoutParameter = FreeNodeLabelModel.Instance.CreateParameter(
@@ -224,6 +196,8 @@ namespace Demo.yFiles.HighDpi
 
       #endregion
 
+      graphControl.ImportFromGraphML("Resources/sample.graphml");
+      graphControl.Graph.SetUndoEngineEnabled(true);
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.PortCandidateProvider.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -66,17 +67,17 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
           object nodeTag = node.Tag;
 
           // Check if it is a known tag and choose the respective implementation
-          if (!(nodeTag is Color)) {
+          if (!(nodeTag is Palette)) {
             return null;
-          } else if (Color.Firebrick.Equals(nodeTag)) {
+          } else if (Themes.PaletteRed.Equals(nodeTag)) {
             return new RedPortCandidateProvider(node);
-          } else if (Color.RoyalBlue.Equals(nodeTag)) {
+          } else if (Themes.PaletteLightblue.Equals(nodeTag)) {
             return new BluePortCandidateProvider(node);
-          } else if (Color.Green.Equals(nodeTag)) {
+          } else if (Themes.PaletteGreen.Equals(nodeTag)) {
             return new GreenPortCandidateProvider(node);
-          } else if (Color.Orange.Equals(nodeTag)) {
+          } else if (Themes.PaletteOrange.Equals(nodeTag)) {
             return new OrangePortCandidateProvider(node);
-          } else if (Color.Purple.Equals(nodeTag)) {
+          } else if (Themes.PalettePurple.Equals(nodeTag)) {
             return new PurplePortCandidateProvider(node);
           } else {
             // otherwise revert to default behavior
@@ -98,6 +99,8 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
 
       // Disable automatic cleanup of unconnected ports since some nodes have a predefined set of ports
       graph.NodeDefaults.Ports.AutoCleanUp = false;
+
+      DemoStyles.InitDemoStyles(graph);
 
       // Create a default editor input mode and configure it
       GraphEditorInputMode graphEditorInputMode = new GraphEditorInputMode();
@@ -216,7 +219,7 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
       /// </summary>
       public override IEnumerable<IPortCandidate> GetTargetPortCandidates(IInputModeContext context, IPortCandidate source) {
         // Check if the source node is green
-        if (Color.Green.Equals(source.Owner.Tag)) {
+        if (Themes.PaletteGreen.Equals(source.Owner.Tag)) {
           return PortCandidateProviders.FromNodeCenter(node).GetTargetPortCandidates(context, source);
         } else {
           return new IPortCandidate[0];
@@ -360,18 +363,18 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
     private void CreateSampleGraph() {
       IGraph graph = graphControl.Graph;
 
-      CreateNode(graph, 100, 100, 80, 30, Color.Firebrick, "No Edge");
-      CreateNode(graph, 350, 100, 80, 30, Color.Green, "Green Only");
-      CreateNode(graph, 100, 200, 80, 30, Color.Green, "Green Only");
-      CreateNode(graph, 350, 200, 80, 30, Color.Firebrick, "No Edge");
+      CreateNode(graph, 100, 100, 80, 30, Themes.PaletteRed, "No Edge");
+      CreateNode(graph, 350, 100, 80, 30, Themes.PaletteGreen, "Green Only");
+      CreateNode(graph, 100, 200, 80, 30, Themes.PaletteGreen, "Green Only");
+      CreateNode(graph, 350, 200, 80, 30, Themes.PaletteRed, "No Edge");
 
       // The blue nodes have predefined ports
       var portStyle = new ColorPortStyle();
 
-      var blue1 = CreateNode(graph, 100, 300, 80, 30, Color.RoyalBlue, "One   Port");
+      var blue1 = CreateNode(graph, 100, 300, 80, 30, Themes.PaletteLightblue, "One   Port");
       graph.AddPort(blue1, blue1.Layout.GetCenter(), portStyle).Tag = Color.Black;
 
-      var blue2 = CreateNode(graph, 350, 300, 100, 100, Color.RoyalBlue, "Many Ports");
+      var blue2 = CreateNode(graph, 350, 300, 100, 100, Themes.PaletteLightblue, "Many Ports");
       var portCandidateProvider = PortCandidateProviders.FromShapeGeometry(blue2, 0, 0.25, 0.5, 0.75);
       portCandidateProvider.Style = portStyle;
       portCandidateProvider.Tag = Color.Black;
@@ -383,22 +386,21 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
       }
 
       // The orange node
-      CreateNode(graph, 100, 400, 100, 100, Color.Orange, "Dynamic Ports");
+      CreateNode(graph, 100, 400, 100, 100, Themes.PaletteOrange, "Dynamic Ports");
 
-      INode n = CreateNode(graph, 100, 540, 100, 100, Color.Purple, "Individual\nPort Constraints");
+      INode n = CreateNode(graph, 100, 540, 100, 100, Themes.PalettePurple, "Individual\nPort Constraints");
       AddIndividualPorts(graph, n);
 
-      n = CreateNode(graph, 350, 540, 100, 100, Color.Purple, "Individual\nPort Constraints");
+      n = CreateNode(graph, 350, 540, 100, 100, Themes.PalettePurple, "Individual\nPort Constraints");
       AddIndividualPorts(graph, n);
     }
 
     /// <summary>
     /// Creates a sample node for this demo.
     /// </summary>
-    private static INode CreateNode(IGraph graph, double x, double y, double w, double h, Color color, string labelText) {
-      var whiteTextLabelStyle = new DefaultLabelStyle { TextBrush = Brushes.White };
-      INode node = graph.CreateNode(new RectD(x, y, w, h), new ShinyPlateNodeStyle{Brush = new SolidBrush(color)}, color);
-      graph.SetStyle(graph.AddLabel(node, labelText), whiteTextLabelStyle);
+    private static INode CreateNode(IGraph graph, double x, double y, double w, double h, Palette palette, string labelText) {
+      INode node = graph.CreateNode(new RectD(x, y, w, h), DemoStyles.CreateDemoNodeStyle(palette), palette);
+      graph.SetStyle(graph.AddLabel(node, labelText), DemoStyles.CreateDemoNodeLabelStyle(palette));
       return node;
     }
 
@@ -407,14 +409,14 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
     /// </summary>
     private void AddIndividualPorts(IGraph graph, INode node) {
       var portStyle = new ColorPortStyle();
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.25, 0)), portStyle, Color.Firebrick);
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.75, 0)), portStyle, Color.Green);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.25, 0)), portStyle, Themes.PaletteRed);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.75, 0)), portStyle, Themes.PaletteGreen);
       graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0, 0.25)), portStyle, Color.Black);
       graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0, 0.75)), portStyle, Color.Black);
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(1, 0.25)), portStyle, Color.RoyalBlue);
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(1, 0.75)), portStyle, Color.Orange);
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.25, 1)), portStyle, Color.Purple);
-      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.75, 1)), portStyle, Color.Purple);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(1, 0.25)), portStyle, Themes.PaletteLightblue);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(1, 0.75)), portStyle, Themes.PaletteOrange);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.25, 1)), portStyle, Themes.PalettePurple);
+      graph.AddPort(node, FreeNodePortLocationModel.Instance.CreateParameter(new PointD(0.75, 1)), portStyle, Themes.PalettePurple);
     }
 
     #endregion
@@ -476,9 +478,9 @@ namespace Demo.yFiles.Graph.Input.PortCandidateProvider
       private double renderSizeHalf;
 
       public void Paint(IRenderContext renderContext, Graphics graphics) {
-        var color = port.Tag is Color ? (Color) port.Tag : Color.White;
+        var brush = port.Tag is Palette palette ? palette.Fill : Brushes.White;
         var location = port.GetLocation();
-        graphics.FillEllipse(new SolidBrush(color), (float) (location.X - renderSizeHalf), (float) (location.Y - renderSizeHalf), renderSize, renderSize);
+        graphics.FillEllipse(brush, (float) (location.X - renderSizeHalf), (float) (location.Y - renderSizeHalf), renderSize, renderSize);
         graphics.DrawEllipse(Pens.Gray, (float) (location.X - renderSizeHalf), (float) (location.Y - renderSizeHalf), renderSize, renderSize);
       }
     }

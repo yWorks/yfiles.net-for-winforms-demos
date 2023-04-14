@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -212,6 +212,7 @@ namespace Demo.yFiles.Layout.Configurations
     [EnumValue("With Nodes",OptimizationStrategy.NodeOverlap)]
     [EnumValue("Between Labels",OptimizationStrategy.LabelOverlap)]
     [EnumValue("With Edges",OptimizationStrategy.EdgeOverlap)]
+    [EnumValue("Partition Grid Overlap",OptimizationStrategy.PartitionGridOverlap)]
     [EnumValue("Don't optimize",OptimizationStrategy.None)]
     public OptimizationStrategy OptimizationStrategyItem { get; set; }
 

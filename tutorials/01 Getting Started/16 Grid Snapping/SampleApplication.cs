@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -72,7 +72,7 @@ namespace Tutorial.GettingStarted
       // Sets horizontal and vertical space between grid lines
       gridInfo = new GridInfo { HorizontalSpacing = 50, VerticalSpacing = 50, Origin = new PointD(12.5, 37) };
       // Creates grid visualization and adds it to GraphControl
-      grid = new GridVisualCreator(gridInfo) {GridStyle = GridStyle.Lines, Pen = Pens.Red };
+      grid = new GridVisualCreator(gridInfo) { GridStyle = GridStyle.Dots, Pen = Pens.Gray };
       graphControl.BackgroundGroup.AddChild(grid);
 
       // Sets constraint provider to make nodes and bends snap to grid
@@ -248,13 +248,6 @@ namespace Tutorial.GettingStarted
       // Creates a managed view from the master graph and 
       // replaces the existing graph view with a managed view
       graphControl.Graph = manager.CreateFoldingView().Graph;
-      // Change the default style for group nodes. We use <see cref="CollapsibleNodeStyleDecorator"/> 
-      // to wrap the <see cref="PanelNodeStyle"/> from the last demo, since we want to have nice
-      // +/- buttons for collapse/expand. Note that if you haven't defined
-      // a custom group node style, you don't have to do anything at all, since
-      // <see cref="FoldingManager"/> already
-      // provides such a decorated group node style by default.
-      Graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(Graph.GroupNodeDefaults.Style);
     }
 
 
@@ -280,25 +273,33 @@ namespace Tutorial.GettingStarted
     /// Configures the default style for group nodes.
     /// </summary>
     private void ConfigureGroupNodeStyles() {
-      // PanelNodeStyle is a style especially suited to group nodes
-      // Creates a panel with a light blue background
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
+      // GroupNodeStyle is a style especially suited to group nodes
       var groupNodeDefaults = Graph.GroupNodeDefaults;
-      groupNodeDefaults.Style = new PanelNodeStyle {
-        Color = groupNodeColor,
-        // Specifies insets that provide space for a label at the top
-        // For a solution how to determine these insets automatically, please
-        // see the yEd.NET demo application.
-        Insets = new InsetsD(5, 18, 5, 5),
-        LabelInsetsColor = groupNodeColor,
+      groupNodeDefaults.Style = new GroupNodeStyle
+      {
+        GroupIcon = GroupNodeStyleIconType.ChevronDown,
+        FolderIcon = GroupNodeStyleIconType.ChevronUp,
+        IconSize = 14,
+        IconBackgroundShape = GroupNodeStyleIconBackgroundShape.Circle,
+        IconForegroundBrush = Brushes.White,
+        TabBrush = new SolidBrush(Color.FromArgb(0x24, 0x22, 0x65)),
+        TabPosition = GroupNodeStyleTabPosition.TopTrailing,
+        Pen = new Pen(new SolidBrush(Color.FromArgb(0x24, 0x22, 0x65)), 2),
+        CornerRadius = 8,
+        TabWidth = 70,
+        ContentAreaInsets = new InsetsD(8),
+        HitTransparentContentArea = true
       };
 
       // Sets a label style with right-aligned text
-      groupNodeDefaults.Labels.Style = new DefaultLabelStyle { StringFormat = { Alignment = StringAlignment.Far } };
+      groupNodeDefaults.Labels.Style = new DefaultLabelStyle
+      {
+        StringFormat = { Alignment = StringAlignment.Far },
+        TextBrush = Brushes.White
+      };
 
-      // Places the label at the top inside of the panel.
-      // For PanelNodeStyle, InteriorStretchLabelModel is usually the most appropriate label model
-      groupNodeDefaults.Labels.LayoutParameter = InteriorStretchLabelModel.North;
+      // Places the label inside of the tab.
+      groupNodeDefaults.Labels.LayoutParameter = new GroupNodeLabelModel().CreateDefaultParameter();
     }
 
     /// <summary>
@@ -309,8 +310,8 @@ namespace Tutorial.GettingStarted
       //Creates a group node that encloses the given child nodes
       INode groupNode = Graph.GroupNodes(childNodes);
 
-      // Creates a label for the group node
-      Graph.AddLabel(groupNode, "Group Node");
+        // Creates a label for the group node 
+        Graph.AddLabel(groupNode, "Group 1");
 
       // Adjusts the layout of the group nodes
       Graph.AdjustGroupNodeLayout(groupNode);
@@ -504,30 +505,32 @@ namespace Tutorial.GettingStarted
     /// so typically, you'd set these as early as possible in your application.
     /// </remarks>
     private void SetDefaultStyles() {
-      
-      #region Default Node Style
-      // Sets the default style for nodes
-      // Creates a nice ShinyPlateNodeStyle instance, using an orange Brush.
-      INodeStyle defaultNodeStyle = new ShinyPlateNodeStyle { Brush = new SolidBrush(Color.FromArgb(255, 255, 140, 0)) };
 
+      #region Default Node Style
       // Sets this style as the default for all nodes that don't have another
       // style assigned explicitly
-      Graph.NodeDefaults.Style = defaultNodeStyle;
+      Graph.NodeDefaults.Style = new ShapeNodeStyle
+      {
+        Shape = ShapeNodeShape.RoundRectangle,
+        Brush = new SolidBrush(Color.FromArgb(255, 108, 0)),
+        Pen = new Pen(new SolidBrush(Color.FromArgb(102, 43, 0)), 1.5f)
+      };
 
       #endregion
 
       #region Default Edge Style
       // Sets the default style for edges:
-      // Creates an edge style that will apply a gray pen with thickness 1
-      // to the entire line using PolyLineEdgeStyle,
-      // which draws a polyline determined by the edge's control points (bends)
-      var defaultEdgeStyle = new PolylineEdgeStyle { Pen = Pens.Gray };
-
-      // Sets the source and target arrows on the edge style instance
-      // (Actually: no source arrow)
-      // Note that IEdgeStyle itself does not have these properties
-      // Also note that by default there are no arrows
-      defaultEdgeStyle.TargetArrow = Arrows.Default;
+      // Creates a PolylineEdgeStyle which will be used as default for all edges
+      // that don't have another style assigned explicitly
+      var defaultEdgeStyle = new PolylineEdgeStyle
+      {
+        Pen = new Pen(new SolidBrush(Color.FromArgb(102, 43, 0)), 1.5f),
+        TargetArrow = new Arrow
+        {
+          Type = ArrowType.Triangle,
+          Brush = new SolidBrush(Color.FromArgb(102, 43, 0))
+        }
+      };
 
       // Sets the defined edge style as the default for all edges that don't have
       // another style assigned explicitly:
@@ -537,7 +540,11 @@ namespace Tutorial.GettingStarted
       #region Default Label Styles
       // Sets the default style for labels
       // Creates a label style with the label text color set to dark red
-      ILabelStyle defaultLabelStyle = new DefaultLabelStyle { Font = new Font("Tahoma", 12), TextBrush = Brushes.DarkRed };
+      ILabelStyle defaultLabelStyle = new DefaultLabelStyle
+      {
+        Font = new Font("Tahoma", 8.5f),
+        TextBrush = Brushes.Black
+      };
 
       // Sets the defined style as the default for both edge and node labels:
       Graph.EdgeDefaults.Labels.Style = Graph.NodeDefaults.Labels.Style = defaultLabelStyle;

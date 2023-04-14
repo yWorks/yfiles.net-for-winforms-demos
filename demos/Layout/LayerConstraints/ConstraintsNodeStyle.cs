@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -96,14 +96,11 @@ namespace Demo.yFiles.Layout.LayerConstraints
     /// </summary>
     public ConstraintsNodeStyle() {
       buttons = new List<Button>();
-      DecoratedStyle = new ShapeNodeStyle
-                         {
-                           Brush =
-                             new LinearGradientBrush(new Point(0, 0), new Point(1, 1), Color.White,
-                                                     Color.FromArgb(255, 221, 221, 255)),
-                           Shape = ShapeNodeShape.Rectangle,
-                           Pen = new Pen(Color.Gray, 2)
-                         };
+      DecoratedStyle = new ShapeNodeStyle {
+        Brush = new SolidBrush(Color.FromArgb(0xD2, 0xD9, 0xDD)),
+        Shape = ShapeNodeShape.Rectangle,
+        Pen = new Pen(Color.FromArgb(77, 77, 77), 2)
+      };
       AddDecoratorButtons();
       node = new SimpleNode();
     }
@@ -141,7 +138,6 @@ namespace Demo.yFiles.Layout.LayerConstraints
 
       // paint buttons
       toggleStateStyle.Icon = data.Constraints ? ButtonLabelStyle.ButtonIcon.Toggle : ButtonLabelStyle.ButtonIcon.None;
-      toggleStateStyle.BackgroundColor = data.Constraints ? Color.Green : Color.Gray;
       foreach (var button in buttons) {
         ILabel buttonLabel = button.Visualization;
         var icon = ((ButtonLabelStyle)buttonLabel.Style).Icon;
@@ -217,7 +213,6 @@ namespace Demo.yFiles.Layout.LayerConstraints
 
       // paint buttons
       toggleStateStyle.Icon = data.Constraints ? ButtonLabelStyle.ButtonIcon.Toggle : ButtonLabelStyle.ButtonIcon.None;
-      toggleStateStyle.BackgroundColor = data.Constraints ? Color.Green : Color.Gray;
       int childIndex = 3;
       foreach (var button in buttons) {
         ILabel oldLabel = button.Visualization;
@@ -434,13 +429,10 @@ namespace Demo.yFiles.Layout.LayerConstraints
       return new SimpleLabel(null, "", new FreeNodeLabelModel().CreateParameter(anchor, offset, PointD.Origin, PointD.Origin, 0))
         {
           // style the label
-          Style = new ButtonLabelStyle
-                    {
-                      BackgroundColor = Color.Black,
-                      ForegroundColor = Color.White,
-                      Icon = icon,
-                      BorderPen = borderPen
-                    },
+          Style = new ButtonLabelStyle {
+            Icon = icon,
+            BorderPen = borderPen
+          },
           PreferredSize = new SizeD(buttonSize, buttonSize)
         };
     }
@@ -526,38 +518,14 @@ namespace Demo.yFiles.Layout.LayerConstraints
 
     protected override VisualGroup CreateVisual(IRenderContext context, ILabel label) {
       var group = new VisualGroup();
-      bool enabled = false;
-      if (Button != null) {
-        enabled = Button.CanExecute((INode) label.Owner, context.CanvasControl);
-      }
-
       var labelLayout = label.GetLayout();
       var layout = new RectD(labelLayout.AnchorX, labelLayout.AnchorY - label.PreferredSize.Height,
           label.PreferredSize.Width, label.PreferredSize.Height);
-      Brush backgroundBrush;
-      Brush foregroundBrush;
-      Pen foregroundPen;
-      if (enabled) {
-        // enabled style
-        if (Icon != ButtonIcon.Increase) {
-          backgroundBrush = new LinearGradientBrush(layout.TopLeft, layout.BottomLeft,
-              BackgroundColor,
-              Mix(Color.White, BackgroundColor, 0.5d));
-        } else {
-          backgroundBrush = new LinearGradientBrush(layout.TopLeft, layout.BottomLeft,
-              Mix(Color.White, BackgroundColor, 0.5d),
-              BackgroundColor);
-        }
-        foregroundPen = new Pen(ForegroundColor);
-        foregroundBrush = new SolidBrush(ForegroundColor);
-      } else {
-        // disabled style
-        backgroundBrush = new LinearGradientBrush(layout.TopLeft, layout.BottomLeft,
-            Mix(Color.White, BackgroundColor, 0.7),
-            Mix(Color.White, BackgroundColor, 0.7));
-        foregroundPen = new Pen(Mix(Color.White, ForegroundColor, 0.7));
-        foregroundBrush = new SolidBrush(Mix(Color.White, ForegroundColor, 0.7));
-      }
+
+      Brush backgroundBrush = new SolidBrush(BackgroundColor);
+      Pen foregroundPen = new Pen(ForegroundColor);
+      Brush foregroundBrush = new SolidBrush(ForegroundColor);
+
       var backgroundRect = new RectangleVisual(layout) {
         Brush = backgroundBrush,
         Pen = BorderPen
@@ -599,21 +567,6 @@ namespace Demo.yFiles.Layout.LayerConstraints
       }
       return group;
     }
-
-    ///<summary>
-    /// Mixes two colors using the provided ratio.
-    ///</summary>
-    private static Color Mix(Color color0, Color color1, double ratio) {
-      double iratio = 1 - ratio;
-      double a = color0.A*ratio + color1.A*iratio;
-      double r = color0.R*ratio + color1.R*iratio;
-      double g = color0.G*ratio + color1.G*iratio;
-      double b = color0.B*ratio + color1.B*iratio;
-      return
-          Color.FromArgb((int) Math.Round(a), (int) Math.Round(r),
-              (int) Math.Round(g), (int) Math.Round(b));
-    }
-
 
     protected override SizeD GetPreferredSize(ILabel label) {
       return label.PreferredSize;

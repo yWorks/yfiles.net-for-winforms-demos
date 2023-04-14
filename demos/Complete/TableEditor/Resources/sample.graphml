@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Created by yFiles.NET 5.0-->
 <graphml xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:yforms="http://www.yworks.com/xml/yfiles.net/5.0/forms" xmlns:forms="http://www.yworks.com/xml/yfiles-common/1.0/forms" xmlns:style="Demo.yFiles.Graph.TableEditor" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.net/5.0/ygraphml.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns">
   <key id="d0" for="all" attr.name="UserTags" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/UserTags" />
@@ -52,7 +52,7 @@
       <y:StretchStripeLabelModelParameter x:Key="11" Position="West"/>
       <y:StretchStripeLabelModelParameter x:Key="5" Position="North"/>
       <forms:StringFormat Alignment="Center" LineAlignment="Center" x:Key="7"/>
-      <yforms:SolidBrush x:Key="8" Color="#FFFFA500"/>
+      <yforms:SolidBrush x:Key="8" Color="#FFFF6C00"/>
       <yforms:Pen Brush="#FF000000" Color="#FF000000" x:Key="9" DashStyle="Dash"/>
       <yforms:PolylineEdgeStyle x:Key="10" TargetArrow="Default" SourceArrow="None" />
     </y:SharedData>
@@ -153,7 +153,7 @@
             <y:RectD X="0" Y="-439.58333333333331" Width="80" Height="50" />
           </data>
           <data key="d3">
-            <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+            <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
           </data>
           <port name="p0">
             <data key="d7">
@@ -176,7 +176,7 @@
             <y:RectD X="235" Y="-443.75" Width="80" Height="50" />
           </data>
           <data key="d3">
-            <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+            <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
           </data>
           <port name="p0">
             <data key="d7">
@@ -209,7 +209,7 @@
             <y:RectD X="370" Y="-300" Width="80" Height="50" />
           </data>
           <data key="d3">
-            <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+            <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
           </data>
           <port name="p0">
             <data key="d7">
@@ -232,7 +232,7 @@
             <y:RectD X="520" Y="-460.41666666666669" Width="80" Height="50" />
           </data>
           <data key="d3">
-            <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+            <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
           </data>
           <port name="p0">
             <data key="d7">
@@ -250,7 +250,7 @@
             <y:RectD X="735" Y="-300" Width="80" Height="50" />
           </data>
           <data key="d3">
-            <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+            <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
           </data>
           <port name="p0">
             <data key="d7">
@@ -284,7 +284,7 @@
                 <y:RectD X="125" Y="-184.5" Width="80" Height="50" />
               </data>
               <data key="d3">
-                <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+                <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
               </data>
               <port name="p0">
                 <data key="d7">
@@ -302,7 +302,7 @@
                 <y:RectD X="235" Y="-184.5" Width="80" Height="50" />
               </data>
               <data key="d3">
-                <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+                <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
               </data>
               <port name="p0">
                 <data key="d7">
@@ -325,7 +325,7 @@
                 <y:RectD X="125" Y="-264.5" Width="80" Height="50" />
               </data>
               <data key="d3">
-                <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+                <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
               </data>
               <port name="p0">
                 <data key="d7">
@@ -361,7 +361,7 @@
                 <y:RectD X="620" Y="-184.5" Width="80" Height="50" />
               </data>
               <data key="d3">
-                <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+                <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
               </data>
               <port name="p0">
                 <data key="d7">
@@ -379,7 +379,7 @@
                 <y:RectD X="520" Y="-184.5" Width="80" Height="50" />
               </data>
               <data key="d3">
-                <yforms:ShinyPlateNodeStyle Brush="{y:GraphMLReference 8}" Radius="0" />
+                <yforms:RectangleNodeStyle Brush="{y:GraphMLReference 8}" CornerSize="3.5"/>
               </data>
               <port name="p0">
                 <data key="d7">

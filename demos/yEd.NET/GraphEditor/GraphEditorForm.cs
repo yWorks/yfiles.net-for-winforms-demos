@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -39,7 +39,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
@@ -69,6 +68,7 @@ using yWorks.Utils;
 using PolylineEdgeStyle = Demo.yFiles.GraphEditor.Styles.PolylineEdgeStyle;
 using ArcEdgeStyle = Demo.yFiles.GraphEditor.Styles.ArcEdgeStyle;
 using LayoutEventArgs = yWorks.Layout.LayoutEventArgs;
+using GroupNodeStyle = yWorks.Graph.Styles.GroupNodeStyle;
 
 namespace Demo.yFiles.GraphEditor
 {
@@ -624,7 +624,7 @@ namespace Demo.yFiles.GraphEditor
 
     private static bool IsGroupNodeMethod(INode node) {
       // check the node's tag
-      return Equals("Group Nodes", node.Tag)
+      return Equals("Groups", node.Tag)
         || node.Lookup(typeof(ITable)) != null;
     }
 
@@ -743,10 +743,21 @@ namespace Demo.yFiles.GraphEditor
       Table.InstallStaticUndoSupport(Graph);
 
       var groupNodeDefaults = foldingView.Graph.GroupNodeDefaults;
-      groupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(
-        new PanelNodeStyle { Color = Color.FromArgb(255, 207, 226, 248),LabelInsetsColor = Color.FromArgb(255, 166, 202, 240) });
+      groupNodeDefaults.Style = new GroupNodeStyle() {
+          TabWidth = 30,
+          TabHeight = 20,
+          TabInset = 3,
+          TabPosition = GroupNodeStyleTabPosition.TopTrailing,
+          GroupIcon = GroupNodeStyleIconType.Minus,
+          IconForegroundBrush = new SolidBrush(Color.FromArgb(0x0B, 0x71, 0x89)),
+          IconOffset = 2,
+          HitTransparentContentArea = true,
+          TabBackgroundBrush = new SolidBrush(Color.FromArgb(0x0B, 0x71, 0x89)),
+          ContentAreaBrush = Brushes.White,
+          TabBrush = new SolidBrush(Color.FromArgb(0x9D, 0xC6, 0xD0))
+      };
 
-      masterGraph.NodeDefaults.Style = new BevelNodeStyle {Color = Color.DarkOrange, Inset = 2, Radius = 5};
+      masterGraph.NodeDefaults.Style = new ShapeNodeStyle {Brush = Brushes.DarkOrange, Pen = Pens.Black, Shape = ShapeNodeShape.RoundRectangle};
       masterGraph.NodeDefaults.Size = new SizeD(50, 30);
       // centered in the node, similar to InteriorLabelModel.Center, but with a smart label placement logic
       masterGraph.NodeDefaults.Labels.LayoutParameter =
@@ -759,14 +770,27 @@ namespace Demo.yFiles.GraphEditor
       var defaultLabelStyle = new LabelStyle {FontSize = 10};
       masterGraph.NodeDefaults.Labels.Style = defaultLabelStyle;
       masterGraph.EdgeDefaults.Labels.Style = defaultLabelStyle;
+      masterGraph.EdgeDefaults.Ports.Labels.Style = defaultLabelStyle;
 
       // also for group nodes...
-      groupNodeDefaults.Labels.Style = new LabelStyle() {FontSize = 10, HorizontalTextAlignment = StringAlignment.Far};
+      masterGraph.GroupNodeDefaults.Labels.Style = new LabelStyle() {FontSize = 10, HorizontalTextAlignment = StringAlignment.Far};
       var labelModel = new InteriorStretchLabelModel { Insets = new InsetsD(15, 1, 1, 1) };
-      groupNodeDefaults.Labels.LayoutParameter = labelModel.CreateParameter(InteriorStretchLabelModel.Position.North);
-
+      masterGraph.GroupNodeDefaults.Labels.LayoutParameter = labelModel.CreateParameter(InteriorStretchLabelModel.Position.North);
       // set up the default edge label model
       masterGraph.EdgeDefaults.Labels.LayoutParameter = new SmartEdgeLabelModel().CreateDefaultParameter();
+
+      // disable style sharing
+      masterGraph.NodeDefaults.ShareStyleInstance = false;
+      masterGraph.EdgeDefaults.ShareStyleInstance = false;
+      masterGraph.GroupNodeDefaults.ShareStyleInstance = false;
+      
+      masterGraph.NodeDefaults.Labels.ShareStyleInstance = false;
+      masterGraph.EdgeDefaults.Labels.ShareStyleInstance = false;
+      masterGraph.GroupNodeDefaults.Labels.ShareStyleInstance = false;
+      
+      masterGraph.NodeDefaults.Ports.ShareStyleInstance = false;
+      masterGraph.EdgeDefaults.Ports.ShareStyleInstance = false;
+      masterGraph.GroupNodeDefaults.Ports.ShareStyleInstance = false;
 
       // now change some default behavior for certain aspects 
       var graphDecorator = Graph.GetDecorator();
@@ -853,14 +877,13 @@ namespace Demo.yFiles.GraphEditor
       var graph = new DefaultGraph();
       new GraphMLIOHandler().Read(graph, AssemblyDirectory + "\\Resources\\defaults.graphml");
       var nodeStyles = graph.Nodes.ToList();
-
-      modernNodesStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "Modern Nodes").ToList();
+      
       computersStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "Computers").ToList();
       peopleStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "People").ToList();
       shapeNodeStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "Shape Nodes").ToList();
-      groupNodeStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "Group Nodes").ToList();
-      
-      foreach(var list in new[] { modernNodesStyleListBox, computersStyleListBox, peopleStyleListBox, shapeNodeStyleListBox, groupNodeStyleListBox }) {
+      groupNodeStyleListBox.DataSource = nodeStyles.Where(node => (node.Tag as string) == "Groups").ToList();
+
+      foreach(var list in new[] { computersStyleListBox, peopleStyleListBox, shapeNodeStyleListBox, groupNodeStyleListBox }) {
         list.ItemHeight = 40;
         list.ColumnWidth = 40;
         //Handle list item drawing
@@ -1826,6 +1849,10 @@ namespace Demo.yFiles.GraphEditor
         //Get the renderer from the style, this requires the dummy node instance.
         var renderContext = new RenderContext(g, null) { ViewTransform = g.Transform, WorldTransform = g.Transform };
         node.Style.Renderer.GetVisualCreator(node, node.Style).CreateVisual(renderContext).Paint(renderContext, g);
+
+        foreach (var label in node.Labels) {
+          label.Style.Renderer.GetVisualCreator(label, label.Style).CreateVisual(renderContext).Paint(renderContext, g);
+        }
 
         g.Transform = transform;
         g.SmoothingMode = oldMode;

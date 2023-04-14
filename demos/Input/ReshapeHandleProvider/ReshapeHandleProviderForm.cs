@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,7 +32,6 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.ReshapeHandleProvider.Properties;
-using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
@@ -75,14 +74,14 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProvider
       IGraph graph = graphControl.Graph;
 
       // initialize graph defaults
-      var adaptedStyle = new ShapeNodeStyle { Brush = Brushes.Green, Pen = Pens.Transparent };
+      var adaptedStyle = new ShapeNodeStyle { Brush = new SolidBrush(Color.FromArgb(0x61, 0xA0, 0x44)), Pen = Pens.Transparent };
       graph.NodeDefaults.Ports.Style = new NodeStylePortStyleAdapter(adaptedStyle) {RenderSize = new SizeD(7, 7)};
       // each port needs its own style instance to have its own render size
       graph.NodeDefaults.Ports.ShareStyleInstance = false;
       // disable removing ports when all attached edges have been removed
       graph.NodeDefaults.Ports.AutoCleanUp = false;
 
-      graph.EdgeDefaults.Style = new PolylineEdgeStyle { Pen = new Pen(Brushes.Black, 3) };
+      graph.EdgeDefaults.Style = new PolylineEdgeStyle { Pen = new Pen(new SolidBrush(Color.FromArgb(0x2E, 0x28, 0x2A)), 3) };
       
       // create a default editor input mode
       GraphEditorInputMode geim = new GraphEditorInputMode();

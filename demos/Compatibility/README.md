@@ -5,9 +5,9 @@ Support project to facilitate migration from yFiles.NET 4.4 to yFiles.NET 5.0.
 You will find the following programming samples in this package: 
 
 
-| Name | Description 
-|:---|:---
-|**Compatibility** | Support project to facilitate migration from yFiles.NET 4.4 to yFiles.NET 5.0. 
+| Name | Description |
+|:---|:---|
+|**Compatibility** | Support project to facilitate migration from yFiles.NET 4.4 to yFiles.NET 5.0. |
 
 ## Running the Demos
 
@@ -21,7 +21,7 @@ You will find the following programming samples in this package:
 
 #### See also
 [Product Page](https://www.yworks.com/products/yfiles.net)  
-[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[API Documentation](https://docs.yworks.com/yfilesdotnet)    
 [Help and Support](https://www.yworks.com/products/yfiles/support)
 
 

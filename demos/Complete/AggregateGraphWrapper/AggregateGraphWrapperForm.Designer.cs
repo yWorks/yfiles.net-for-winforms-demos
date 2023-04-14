@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -56,135 +56,159 @@ namespace Demo.yFiles.Graph.AggregateGraphWrapperDemo
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.description = new System.Windows.Forms.RichTextBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.ZoomInButton = new System.Windows.Forms.ToolStripButton();
-            this.ZoomOutButton = new System.Windows.Forms.ToolStripButton();
-            this.FitContentButton = new System.Windows.Forms.ToolStripButton();
-            this.graphControl = new yWorks.Controls.GraphControl();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-            this.splitContainer.Panel1.SuspendLayout();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // splitContainer
-            // 
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add(this.description);
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.Controls.Add(this.toolStrip1);
-            this.splitContainer.Panel2.Controls.Add(this.graphControl);
-            this.splitContainer.Size = new System.Drawing.Size(659, 447);
-            this.splitContainer.SplitterDistance = 252;
-            this.splitContainer.TabIndex = 0;
-            // 
-            // description
-            // 
-            this.description.BackColor = System.Drawing.SystemColors.Window;
-            this.description.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.description.Location = new System.Drawing.Point(0, 0);
-            this.description.Name = "description";
-            this.description.ReadOnly = true;
-            this.description.Size = new System.Drawing.Size(252, 447);
-            this.description.TabIndex = 0;
-            this.description.Text = "";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+      this.toolStrip = new System.Windows.Forms.ToolStrip();
+      this.ZoomInButton = new System.Windows.Forms.ToolStripButton();
+      this.ZoomOutButton = new System.Windows.Forms.ToolStripButton();
+      this.FitContentButton = new System.Windows.Forms.ToolStripButton();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.description = new System.Windows.Forms.RichTextBox();
+      this.graphControl = new yWorks.Controls.GraphControl();
+      this.toolStripContainer.ContentPanel.SuspendLayout();
+      this.toolStripContainer.TopToolStripPanel.SuspendLayout();
+      this.toolStripContainer.SuspendLayout();
+      this.toolStrip.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+      this.splitContainer1.Panel1.SuspendLayout();
+      this.splitContainer1.Panel2.SuspendLayout();
+      this.splitContainer1.SuspendLayout();
+      this.SuspendLayout();
+      // 
+      // toolStripContainer
+      // 
+      // 
+      // toolStripContainer.ContentPanel
+      // 
+      this.toolStripContainer.ContentPanel.Controls.Add(this.graphControl);
+      this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(706, 622);
+      this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
+      this.toolStripContainer.Name = "toolStripContainer";
+      this.toolStripContainer.Size = new System.Drawing.Size(706, 653);
+      this.toolStripContainer.TabIndex = 1;
+      this.toolStripContainer.Text = "toolStripContainer1";
+      // 
+      // toolStripContainer.TopToolStripPanel
+      // 
+      this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
+      // 
+      // toolStrip
+      // 
+      this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
+      this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ZoomInButton,
             this.ZoomOutButton,
             this.FitContentButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(4);
-            this.toolStrip1.Size = new System.Drawing.Size(403, 31);
-            this.toolStrip1.Stretch = true;
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // ZoomInButton
-            // 
-            this.ZoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ZoomInButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.plus_16;
-            this.ZoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ZoomInButton.Name = "ZoomInButton";
-            this.ZoomInButton.Size = new System.Drawing.Size(23, 20);
-            this.ZoomInButton.ToolTipText = "Zoom In";
-            // 
-            // ZoomOutButton
-            // 
-            this.ZoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ZoomOutButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.minus_16;
-            this.ZoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ZoomOutButton.Name = "ZoomOutButton";
-            this.ZoomOutButton.Size = new System.Drawing.Size(23, 20);
-            this.ZoomOutButton.ToolTipText = "Zoom Out";
-            // 
-            // FitContentButton
-            // 
-            this.FitContentButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FitContentButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.fit_16;
-            this.FitContentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FitContentButton.Name = "FitContentButton";
-            this.FitContentButton.Size = new System.Drawing.Size(23, 20);
-            this.FitContentButton.ToolTipText = "Fit Content into View";
-            // 
-            // graphControl
-            // 
-            this.graphControl.BackColor = System.Drawing.Color.White;
-            this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphControl.DoubleClickSize = new yWorks.Geometry.SizeD(4D, 4D);
-            this.graphControl.DoubleClickTime = System.TimeSpan.Parse("00:00:00.5000000");
-            this.graphControl.DragSize = new yWorks.Geometry.SizeD(4D, 4D);
-            this.graphControl.Location = new System.Drawing.Point(0, 0);
-            this.graphControl.Name = "graphControl";
-            this.graphControl.Size = new System.Drawing.Size(403, 447);
-            this.graphControl.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            this.graphControl.TabIndex = 0;
-            // 
-            // GraphBuilderForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 447);
-            this.Controls.Add(this.splitContainer);
-            this.Icon = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.yIcon;
-            this.Name = "AggregateGraphWrapperForm";
-            this.Text = "AggregateGraphWrapper Demo";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.OnLoaded);
-            this.splitContainer.Panel1.ResumeLayout(false);
-            this.splitContainer.Panel2.ResumeLayout(false);
-            this.splitContainer.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-            this.splitContainer.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.ResumeLayout(false);
+      this.toolStrip.Location = new System.Drawing.Point(0, 0);
+      this.toolStrip.Name = "toolStrip";
+      this.toolStrip.Padding = new System.Windows.Forms.Padding(4);
+      this.toolStrip.Size = new System.Drawing.Size(706, 31);
+      this.toolStrip.Stretch = true;
+      this.toolStrip.TabIndex = 0;
+      // 
+      // ZoomInButton
+      // 
+      this.ZoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.ZoomInButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.plus_16;
+      this.ZoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.ZoomInButton.Name = "ZoomInButton";
+      this.ZoomInButton.Size = new System.Drawing.Size(23, 20);
+      this.ZoomInButton.Text = "Zoom In";
+      // 
+      // ZoomOutButton
+      // 
+      this.ZoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.ZoomOutButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.minus_16;
+      this.ZoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.ZoomOutButton.Name = "ZoomOutButton";
+      this.ZoomOutButton.Size = new System.Drawing.Size(23, 20);
+      this.ZoomOutButton.Text = "Zoom Out";
+      // 
+      // FitContentButton
+      // 
+      this.FitContentButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.FitContentButton.Image = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.fit_16;
+      this.FitContentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.FitContentButton.Name = "FitContentButton";
+      this.FitContentButton.Size = new System.Drawing.Size(23, 20);
+      this.FitContentButton.Text = "Fit Content into View";
+      // 
+      // splitContainer1
+      // 
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.description);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.toolStripContainer);
+      this.splitContainer1.Size = new System.Drawing.Size(962, 653);
+      this.splitContainer1.SplitterDistance = 252;
+      this.splitContainer1.TabIndex = 2;
+      // 
+      // description
+      // 
+      this.description.BackColor = System.Drawing.SystemColors.Window;
+      this.description.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.description.Location = new System.Drawing.Point(0, 0);
+      this.description.Name = "description";
+      this.description.ReadOnly = true;
+      this.description.Size = new System.Drawing.Size(252, 653);
+      this.description.TabIndex = 5;
+      this.description.Text = "";
+      // 
+      // graphControl
+      // 
+      this.graphControl.BackColor = System.Drawing.Color.White;
+      this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
+      this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.graphControl.DoubleClickTime = System.TimeSpan.Parse("00:00:00.5000000");
+      this.graphControl.Location = new System.Drawing.Point(0, 0);
+      this.graphControl.Name = "graphControl";
+      this.graphControl.Size = new System.Drawing.Size(706, 622);
+      this.graphControl.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+      this.graphControl.TabIndex = 1;
+      // 
+      // AggregateGraphWrapperForm
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.ClientSize = new System.Drawing.Size(962, 653);
+      this.Controls.Add(this.splitContainer1);
+      this.Icon = global::Demo.yFiles.Graph.AggregateGraphWrapperDemo.Properties.Resources.yIcon;
+      this.Name = "AggregateGraphWrapperForm";
+      this.Text = "Aggregate Graph Wrapper Demo";
+      this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+      this.Load += new System.EventHandler(this.OnLoaded);
+      this.toolStripContainer.ContentPanel.ResumeLayout(false);
+      this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+      this.toolStripContainer.TopToolStripPanel.PerformLayout();
+      this.toolStripContainer.ResumeLayout(false);
+      this.toolStripContainer.PerformLayout();
+      this.toolStrip.ResumeLayout(false);
+      this.toolStrip.PerformLayout();
+      this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+      this.splitContainer1.ResumeLayout(false);
+      this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.SplitContainer splitContainer;
-    private System.Windows.Forms.RichTextBox description;
-    private yWorks.Controls.GraphControl graphControl;
-    private System.Windows.Forms.ToolStrip toolStrip1;
+    private System.Windows.Forms.ToolStripContainer toolStripContainer;
+    private System.Windows.Forms.ToolStrip toolStrip;
     private System.Windows.Forms.ToolStripButton ZoomInButton;
     private System.Windows.Forms.ToolStripButton ZoomOutButton;
     private System.Windows.Forms.ToolStripButton FitContentButton;
+    private yWorks.Controls.GraphControl graphControl;
+    private System.Windows.Forms.SplitContainer splitContainer1;
+    private System.Windows.Forms.RichTextBox description;  
   }
 }

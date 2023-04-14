@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,14 +28,13 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.ClickHandler.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.Input.ClickHandler
 {
@@ -91,7 +90,7 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
       var graph = new DefaultGraph();
 
       // Create a few nodes of different height. Some of them show disabled buttons.
-      var expandStyle = new GrowShrinkButtonNodeStyleDecorator(new ShinyPlateNodeStyle { Brush = Brushes.DarkOrange });
+      var expandStyle = new GrowShrinkButtonNodeStyleDecorator(DemoStyles.CreateDemoNodeStyle());
       graph.CreateNode(new RectD(0, 0, 80, 40), expandStyle);
       graph.CreateNode(new RectD(120, 0, 80, 100), expandStyle);
       graph.CreateNode(new RectD(240, 0, 80, 150), expandStyle);

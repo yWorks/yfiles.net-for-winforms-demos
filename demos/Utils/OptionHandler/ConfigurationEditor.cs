@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -115,7 +115,7 @@ namespace Demo.yFiles.Toolkit.OptionHandler
       var panel = new Panel() {
           Height = 20, Width = rootPanel.Width - (topLevelGroupPaddingLeft + topLevelGroupPaddingRight)
       };
-      var label = new Label() {Text = option.Label, AutoSize = true};
+      var label = new Label() {Text = option.Label, AutoSize = true, Dock = DockStyle.Fill};
       panel.Controls.Add(label);
 
       // create a control according to component type
@@ -146,6 +146,7 @@ namespace Demo.yFiles.Toolkit.OptionHandler
           comboBox.Dock = DockStyle.Right;
           comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
           panel.Controls.Add(comboBox);
+          comboBox.SizeChanged += (sender, args) => UpdatePanelHeight(panel);
           optionBuffer[comboBox] = option;
           return panel;
 
@@ -285,6 +286,28 @@ namespace Demo.yFiles.Toolkit.OptionHandler
           return panel;
       }
 
+    }
+
+    private static void UpdatePanelHeight(Panel panel) {
+      // Limit the label's width to the available space and calculate its new
+      // height. If the text in the label wraps, the height will change.
+      Label label = (Label) panel.Controls[0];
+      ComboBox comboBox = (ComboBox) panel.Controls[1];
+      var oldHeight = panel.Height;
+      label.MaximumSize = new Size(panel.Width - comboBox.PreferredSize.Width, Int32.MaxValue);
+      panel.Height = Math.Max(label.Height + 5, 25);
+
+      // If the height has changed, move all subsequent controls by the change.
+      var delta = panel.Height - oldHeight;
+      if (delta != 0 && panel.Parent != null) {
+        var collection = panel.Parent.Controls;
+        var index = collection.IndexOf(panel);
+        for (index++; index < collection.Count; index++) {
+          var oldLocation = collection[index].Location;
+          var newLocation = new Point(oldLocation.X, oldLocation.Y + delta);
+          collection[index].Location = newLocation;
+        }
+      } 
     }
 
     /// <summary>

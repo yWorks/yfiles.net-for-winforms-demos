@@ -5,9 +5,9 @@ Complex demo application that showcases most features that are present in yFiles
 You will find the following programming samples in this package: 
 
 
-| Name | Description 
-|:---|:---
-|**GraphEditor** | Complex demo application that showcases most features that are present in yFiles.NET. 
+| Name | Description |
+|:---|:---|
+|**GraphEditor** | Complex demo application that showcases most features that are present in yFiles.NET. |
 
 ## Running the Demos
 
@@ -21,7 +21,7 @@ You will find the following programming samples in this package:
 
 #### See also
 [Product Page](https://www.yworks.com/products/yfiles.net)  
-[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[API Documentation](https://docs.yworks.com/yfilesdotnet)    
 [Help and Support](https://www.yworks.com/products/yfiles/support)
 
 

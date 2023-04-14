@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Aggregation;
+using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
@@ -163,7 +164,7 @@ namespace Demo.yFiles.Graph.AggregateGraphWrapperDemo
         var separateAllowed = Graph.Nodes.Any(n => AggregateGraph.IsAggregationItem(n));
         var separateAll = new ToolStripMenuItem("Separate All" ) { Enabled = separateAllowed };
         separateAll.Click += (o, args) => {
-          AggregateGraph.SeparateAll();
+          AggregateGraph.SeparateToOriginalItems();
           RunLayout();
         };
         e.Menu.Items.Add(separateAll);
@@ -266,10 +267,10 @@ namespace Demo.yFiles.Graph.AggregateGraphWrapperDemo
     /// </summary>
     /// <remarks>
     /// Before aggregating the nodes, all existing aggregations are
-    /// <see cref="AggregateGraphWrapper.SeparateAll">separated</see>.
+    /// <see cref="AggregateGraphWrapper.SeparateToOriginalItems">separated</see>.
     /// </remarks>
     private void AggregateAll<TKey>(Func<INode, TKey> selector, Func<TKey, INodeStyle> styleFactory) {
-      AggregateGraph.SeparateAll();
+      AggregateGraph.SeparateToOriginalItems();
 
       foreach (var grouping in Graph.Nodes.GroupBy(selector).ToList()) {
         Aggregate(grouping.ToList(), grouping.Key, styleFactory);
@@ -357,6 +358,10 @@ namespace Demo.yFiles.Graph.AggregateGraphWrapperDemo
 
     public AggregateGraphWrapperForm() {
       InitializeComponent();
+      // register zoom commands on buttons
+      ZoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
+      ZoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
+      FitContentButton.SetCommand(Commands.FitGraphBounds, graphControl);
       // load description
       description.LoadFile(new MemoryStream(Properties.Resources.description), RichTextBoxStreamType.RichText);
     }

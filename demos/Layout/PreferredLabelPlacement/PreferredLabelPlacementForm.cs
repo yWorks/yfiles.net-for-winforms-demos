@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -30,7 +30,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -39,13 +38,12 @@ using System.Windows.Forms;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
 using Demo.yFiles.Option.I18N;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms.Geometry;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.LabelModels;
-using yWorks.Graph.Styles;
 using yWorks.Layout;
 using yWorks.Layout.Hierarchic;
 using yWorks.Layout.Labeling;
@@ -78,36 +76,31 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
     private static readonly IList<LabelAngleOnRightSideRotations> AngleRotations;
 
     static PreferredLabelPlacementForm() {
-      PlacementsAlongEdge = new List<LabelPlacements>
-                              {
-                                LabelPlacements.AtCenter,
-                                LabelPlacements.AtSource,
-                                LabelPlacements.AtTarget,
-                                LabelPlacements.Anywhere
-                              };
-      PlacementsSideOfEdge = new List<LabelPlacements>
-                               {
-                                 LabelPlacements.OnEdge,
-                                 LabelPlacements.RightOfEdge,
-                                 LabelPlacements.LeftOfEdge,
-                                 LabelPlacements.Anywhere
-                               };
-      SideReferences = new List<LabelSideReferences>
-                         {
-                           LabelSideReferences.RelativeToEdgeFlow,
-                           LabelSideReferences.AbsoluteWithLeftInNorth,
-                           LabelSideReferences.AbsoluteWithRightInNorth
-                         };
-      AngleReferences = new List<LabelAngleReferences>
-                          {
-                            LabelAngleReferences.RelativeToEdgeFlow,
-                            LabelAngleReferences.Absolute
-                          };
-      AngleRotations = new List<LabelAngleOnRightSideRotations>
-                         {
-                           LabelAngleOnRightSideRotations.Clockwise,
-                           LabelAngleOnRightSideRotations.CounterClockwise
-                         };
+      PlacementsAlongEdge = new List<LabelPlacements> {
+        LabelPlacements.AtCenter,
+        LabelPlacements.AtSource,
+        LabelPlacements.AtTarget,
+        LabelPlacements.Anywhere
+      };
+      PlacementsSideOfEdge = new List<LabelPlacements> {
+        LabelPlacements.OnEdge,
+        LabelPlacements.RightOfEdge,
+        LabelPlacements.LeftOfEdge,
+        LabelPlacements.Anywhere
+      };
+      SideReferences = new List<LabelSideReferences> {
+        LabelSideReferences.RelativeToEdgeFlow,
+        LabelSideReferences.AbsoluteWithLeftInNorth,
+        LabelSideReferences.AbsoluteWithRightInNorth
+      };
+      AngleReferences = new List<LabelAngleReferences> {
+        LabelAngleReferences.RelativeToEdgeFlow,
+        LabelAngleReferences.Absolute
+      };
+      AngleRotations = new List<LabelAngleOnRightSideRotations> {
+        LabelAngleOnRightSideRotations.Clockwise,
+        LabelAngleOnRightSideRotations.CounterClockwise
+      };
     }
 
     /// <summary>
@@ -182,12 +175,11 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
     }
 
     private void InitializeInputModes() {
-      var geim = new GraphEditorInputMode
-                   {
-                     AllowCreateEdge = false,
-                     AllowCreateNode = false,
-                     AllowCreateBend = false,
-                   };
+      var geim = new GraphEditorInputMode {
+        AllowCreateEdge = false,
+        AllowCreateNode = false,
+        AllowCreateBend = false,
+      };
       // if edge creation is allowed, add a new label when an edge has been created
       geim.CreateEdgeInputMode.EdgeCreated += (sender, args) => graphControl.Graph.AddLabel(args.Item, "Label");
 
@@ -198,16 +190,8 @@ namespace Demo.yFiles.Layout.PreferredLabelPlacement
 
     private void InitializeStyles() {
       var graph = graphControl.Graph;
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange, DrawShadow = false};
+      DemoStyles.InitDemoStyles(graph);
       graph.NodeDefaults.Size = new SizeD(50, 30);
-
-      graph.EdgeDefaults.Labels.LayoutParameter = FreeEdgeLabelModel.Instance.CreateDefaultParameter();
-      graph.EdgeDefaults.Labels.Style = new DefaultLabelStyle
-      {
-        BackgroundPen = Pens.LightBlue,
-        BackgroundBrush = new SolidBrush(Color.FromArgb(128, 255, 255, 255)),
-        AutoFlip = false
-      };
     }
 
     #endregion

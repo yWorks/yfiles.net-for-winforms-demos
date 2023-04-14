@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -36,6 +36,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using Demo.yFiles.Toolkit;
 using Demo.yFiles.DataBinding.GraphBuilder.Properties;
 using yWorks.Controls;
 using yWorks.Controls.Input;
@@ -55,6 +56,7 @@ namespace Demo.yFiles.DataBinding.GraphBuilder
   {
     public GraphBuilderForm() {
       InitializeComponent();
+      InitializeGraphDefaults();
       RegisterToolStripCommands();
       // Load description
       description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
@@ -70,13 +72,6 @@ namespace Demo.yFiles.DataBinding.GraphBuilder
       // create the graph
       var dataProvider = XDocument.Load("Resources/model.xml");
       var graphBuilder = CreateOrganizationBuilder(dataProvider);
-      var newGraph = graphBuilder.Graph;
-
-      // add some insets to group nodes
-      newGraph.GetDecorator().NodeDecorator.InsetsProviderDecorator.SetImplementation(newGraph.IsGroupNode, new GroupNodeInsetsProvider());
-
-      graphControl.InputMode = new MoveViewportInputMode();
-      graphControl.Graph = newGraph;
 
       // Perform an animated layout of the organization chart graph when the window is loaded.
       graphControl.MorphLayout(new HierarchicLayout
@@ -98,28 +93,30 @@ namespace Demo.yFiles.DataBinding.GraphBuilder
       var businessunits = dataProvider.Descendants().Where(p => p.Name.LocalName == "businessunit");
 
       // create the GraphBuilder to configure
-      var graphBuilder = new yWorks.Graph.DataBinding.GraphBuilder();
+      graphControl.Graph.Clear();
+      var graphBuilder = new yWorks.Graph.DataBinding.GraphBuilder(graphControl.Graph);
 
       // configure tne nodes source to use the employees enumerable
       var nodesSource = graphBuilder.CreateNodesSource(employees);
       // group by business units
       nodesSource.ParentIdProvider = employee => employee.Attribute("businessUnit").Value;
-      var nodeBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, 1), Color.FromArgb(255, 165, 0), Color.FromArgb(255, 237, 204));
       // choose the node size so that the labels fit
       nodesSource.NodeCreator.LayoutProvider = element => {
         var width = 7 * Math.Max(element.Attribute("name").Value.Length, element.Attribute("position").Value.Length);
         return new RectD(0, 0, width, 40);
       };
-      nodesSource.NodeCreator.Defaults.Style = new ShapeNodeStyle {
-          Pen = Pens.DarkOrange,
-          Brush = nodeBrush,
-          Shape = ShapeNodeShape.RoundRectangle
-      };
       // take the name attribute as node name
       var nodeNameLabels = nodesSource.NodeCreator.CreateLabelBinding(element => element.Attribute("name").Value);
-      nodeNameLabels.Defaults.LayoutParameter = new InteriorStretchLabelModel() {Insets = new InsetsD(0, 0, 0, 10)}.CreateParameter(InteriorStretchLabelModel.Position.Center);
+      nodeNameLabels.Defaults.LayoutParameter = new InteriorStretchLabelModel() {Insets = new InsetsD(5, 5, 5, 5)}.CreateParameter(InteriorStretchLabelModel.Position.Center);
+      var nodeNameLabelStyle = DemoStyles.CreateDemoNodeLabelStyle();
+      nodeNameLabelStyle.Insets = InsetsD.Empty;
+      nodeNameLabelStyle.StringFormat = new StringFormat {
+        Alignment = StringAlignment.Center,
+        LineAlignment = StringAlignment.Near
+      };
+      nodeNameLabels.Defaults.Style = nodeNameLabelStyle;
       var nodePositionLabels = nodesSource.NodeCreator.CreateLabelBinding(element => element.Attribute("position").Value);
-      nodePositionLabels.Defaults.LayoutParameter = new InteriorStretchLabelModel() {Insets = new InsetsD(0, 10, 0, -5)}.CreateParameter(InteriorStretchLabelModel.Position.Center);
+      nodePositionLabels.Defaults.LayoutParameter = new InteriorStretchLabelModel() {Insets = new InsetsD(5, 20, 5, 5)}.CreateParameter(InteriorStretchLabelModel.Position.Center);
       
       // create the group nodes from the business unit's enumerable
       var groupNodesSource = graphBuilder.CreateGroupNodesSource(businessunits, (businessunit) => businessunit.Attribute("name").Value);
@@ -131,34 +128,34 @@ namespace Demo.yFiles.DataBinding.GraphBuilder
         return null;
       };
       groupNodesSource.NodeCreator.Defaults.Size = new SizeD(50, 50);
-      var groupNodeBrush = new LinearGradientBrush(new PointF(0.5f, 0), new PointF(0.5f, 1), Color.FromArgb(225, 242, 253), Color.LightSkyBlue);
-      groupNodesSource.NodeCreator.Defaults.Style = new ShapeNodeStyle() {
-          Pen = Pens.LightSkyBlue,
-          Brush = groupNodeBrush
-      };
       var groupLabels = groupNodesSource.NodeCreator.CreateLabelBinding(element => element.Attribute("name").Value);
-      groupLabels.Defaults.Style = new DefaultLabelStyle() {
-          TextBrush = Brushes.DarkGray,
-          Font = new Font("Arial", 24)
-      };
       groupLabels.Defaults.LayoutParameter = InteriorLabelModel.NorthWest;
 
       // create the edges from an element's parent XML node to the element itself
       var edgesSource = graphBuilder.CreateEdgesSource(employees, element => element.Parent, element => element);
-      edgesSource.EdgeCreator.Defaults.Style = new PolylineEdgeStyle() {SmoothingLength = 20};
+      edgesSource.EdgeCreator.Defaults.Labels = graphControl.Graph.EdgeDefaults.Labels;
       var edgeLabels = edgesSource.EdgeCreator.CreateLabelBinding(element => element.Attribute("position").Value);
-      edgeLabels.Defaults.Style = new DefaultLabelStyle() {
-        BackgroundBrush = new SolidBrush(Color.FromArgb(225, 242, 253)),
-        BackgroundPen = Pens.LightSkyBlue,
-          Insets = new InsetsD(2),
-          Font = new Font("Arial", 8)
-      };
       edgeLabels.Defaults.LayoutParameter = new EdgePathLabelModel() { AutoRotation = false}.CreateDefaultParameter();
 
       graphBuilder.BuildGraph();
       return graphBuilder;
     }
     #endregion
+
+    private void InitializeGraphDefaults() {
+      var graph = graphControl.Graph;
+      
+      // initialize demo styles
+      DemoStyles.InitDemoStyles(graph);
+      // remove insets of demo node label styles 
+      ((DefaultLabelStyle) graph.NodeDefaults.Labels.Style).Insets = InsetsD.Empty;
+      // set insets and bigger text size for demo group node label styles 
+      var groupLabelStyle = (DefaultLabelStyle) graph.GroupNodeDefaults.Labels.Style;
+      groupLabelStyle.Insets = new InsetsD(2);
+      groupLabelStyle.Font = new Font(groupLabelStyle.Font.FontFamily, 18);
+      // increase tab height of GroupNodeStyle so the increased group node labels fit into the header
+      ((GroupNodeStyle) graph.GroupNodeDefaults.Style).TabHeight = 28;
+    }
 
     #region Application Start
 
@@ -175,10 +172,4 @@ namespace Demo.yFiles.DataBinding.GraphBuilder
     #endregion
   }
 
-
-  sealed class GroupNodeInsetsProvider : INodeInsetsProvider {
-    public InsetsD GetInsets(INode node) {
-      return new InsetsD(5, 20, 5, 5);
-    }
-  }
 }

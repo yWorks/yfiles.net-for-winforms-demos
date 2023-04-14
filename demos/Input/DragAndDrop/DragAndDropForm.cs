@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.DragAndDrop.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -67,8 +68,8 @@ namespace Demo.yFiles.Input.DragAndDrop
       // by default the mode available in GraphEditorInputMode is disabled, so first enable it
       nodeDropInputMode.Enabled = true;
 
-      // we want nodes that have a PanelNodeStyle assigned to be created as group nodes.
-      nodeDropInputMode.IsGroupNodePredicate = draggedNode => draggedNode.Style is PanelNodeStyle;
+      // we want nodes that have a GroupNodeStyle assigned to be created as group nodes.
+      nodeDropInputMode.IsGroupNodePredicate = draggedNode => draggedNode.Style is GroupNodeStyle;
 
       // we enable dropping nodes onto leaf nodes ...
       nodeDropInputMode.AllowNonGroupNodeAsParent = true;
@@ -136,6 +137,8 @@ namespace Demo.yFiles.Input.DragAndDrop
       }
       graphControl.Graph.SetUndoEngineEnabled(true);
 
+      DemoStyles.InitDemoStyles(graphControl.Graph);
+
       // populate the control with some nodes
       CreateSampleGraph();
 
@@ -145,17 +148,17 @@ namespace Demo.yFiles.Input.DragAndDrop
 
     private void CreateSampleGraph() {
       // Create a group node in which the dragged node can be dropped
-      INode groupNode = graphControl.Graph.CreateGroupNode(null, new RectD(100, 100, 70, 70), new PanelNodeStyle{Color = Color.LightBlue, Insets = new InsetsD(0, 15, 0, 0) });
-      graphControl.Graph.AddLabel(groupNode, "Group Node", InteriorStretchLabelModel.North);
+      INode groupNode = graphControl.Graph.CreateGroupNode(null, new RectD(100, 100, 70, 70));
+      graphControl.Graph.AddLabel(groupNode, "Group Node");
       graphControl.Graph.AddLabel(groupNode, "Drop a node over me!", ExteriorLabelModel.South);
 
       // Create a node to which the dragged node can snap
-      INode node1 = graphControl.Graph.CreateNode(new RectD(300, 100, 30, 30), new BevelNodeStyle{Color = Color.DarkOrange});
+      INode node1 = graphControl.Graph.CreateNode(new RectD(300, 100, 30, 30));
       graphControl.Graph.AddLabel(node1, "Sample Node", ExteriorLabelModel.North);
       graphControl.Graph.AddLabel(node1, "Drag a node near me!", ExteriorLabelModel.South);
 
       // Create a node which can be converted to a group node automatically, if a node is dropped onto it
-      INode node2 = graphControl.Graph.CreateNode(new RectD(450, 200, 30, 30), new BevelNodeStyle{Color = Color.Green});
+      INode node2 = graphControl.Graph.CreateNode(new RectD(450, 200, 30, 30), DemoStyles.CreateDemoNodeStyle(Themes.PaletteGreen));
       graphControl.Graph.AddLabel(node2, "Sample Node", ExteriorLabelModel.North);
       graphControl.Graph.AddLabel(node2, "Drag a node onto me to convert me to a group node!", ExteriorLabelModel.South);
     }
@@ -172,28 +175,34 @@ namespace Demo.yFiles.Input.DragAndDrop
       // register for the mouse down event to initiate the drag operation
       styleListBox.MouseDown += styleListBox_MouseDown;
 
-      int nodeSize = 30;
+      const int nodeWidth = 60;
+      const int nodeHeight = 40;
 
       // Create a new Graph in which the palette nodes live
-      DefaultGraph nodeContainer = new DefaultGraph();
+      IGraph nodeContainer = new DefaultGraph();
+      DemoStyles.InitDemoStyles(nodeContainer);
+      
+      var defaultLabelStyle = new DefaultLabelStyle{
+        BackgroundPen = new Pen(new SolidBrush(Color.FromArgb(101, 152, 204)), 1),
+        BackgroundBrush = Brushes.White,
+        Insets = new InsetsD(3, 5, 3, 5)
+      };
+
+      nodeContainer.NodeDefaults.Labels.Style = defaultLabelStyle;
+      nodeContainer.EdgeDefaults.Labels.Style = defaultLabelStyle;
+      
       // Create some nodes
+      nodeContainer.CreateNode(new RectD(0, 0, nodeWidth, nodeHeight), DemoStyles.CreateDemoShapeNodeStyle(ShapeNodeShape.Rectangle));
+      nodeContainer.CreateNode(new RectD(0, 0, nodeWidth, nodeHeight));
 
-      nodeContainer.CreateNode(new RectD(20, 20, nodeSize, nodeSize), new ShapeNodeStyle{Shape = ShapeNodeShape.Rectangle, Pen = Pens.Black, Brush = Brushes.DarkOrange});
-      nodeContainer.CreateNode(new RectD(20, 20, nodeSize, nodeSize), new ShapeNodeStyle{Shape = ShapeNodeShape.RoundRectangle, Pen = Pens.Black, Brush = Brushes.DarkOrange});
-      nodeContainer.CreateNode(new RectD(20, 20, nodeSize, nodeSize), new BevelNodeStyle{Color = Color.DarkOrange});
-      nodeContainer.CreateNode(new RectD(20, 20, nodeSize, nodeSize), new ShinyPlateNodeStyle{Brush = Brushes.DarkOrange});
-
-      INode node = nodeContainer.CreateNode(new RectD(0, 0, 70, 70), new PanelNodeStyle{Color = Color.LightBlue, Insets = new InsetsD(0, 15, 0, 0) });
-      nodeContainer.AddLabel(node, "Group Node", InteriorStretchLabelModel.North);
+      INode node = nodeContainer.CreateGroupNode(layout:new RectD(0, 0, 70, 70));
+      nodeContainer.AddLabel(node, "Group Node");
       
       var nodeLabelContainer = nodeContainer.CreateNode(new RectD(0, 0, 70, 70), VoidNodeStyle.Instance, "Node Label Container");
       var nodeLabel = nodeContainer.AddLabel(nodeLabelContainer, "Node Label", InteriorLabelModel.Center);
 
       var edgeLabelContainer = nodeContainer.CreateNode(new RectD(0, 0, 70, 70), VoidNodeStyle.Instance, "Edge Label Container");
       var edgeLabelTemplate = nodeContainer.AddLabel(edgeLabelContainer, "Edge Label", FreeNodeLabelModel.Instance.CreateDefaultParameter());
-
-      var portContainer = nodeContainer.CreateNode(new RectD(0, 0, 70, 70), VoidNodeStyle.Instance, "Port Container");
-      nodeContainer.AddPort(portContainer, FreeNodePortLocationModel.NodeCenterAnchored, new NodeStylePortStyleAdapter(new ShapeNodeStyle{Brush = Brushes.Red, Pen = Pens.Black, Shape = ShapeNodeShape.Ellipse}){RenderSize = new SizeD(10,10)});
 
       // Add nodes to listview
       foreach (INode n in nodeContainer.Nodes) {

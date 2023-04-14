@@ -74,7 +74,12 @@
     </Reference>
     <Reference Include="System.Core" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="IncrementalHierarchicLayoutDemo.cs">
       <SubType>Form</SubType>

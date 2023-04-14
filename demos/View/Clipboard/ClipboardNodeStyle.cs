@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using Demo.yFiles.Toolkit;
+using yWorks.Annotations;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -45,8 +47,6 @@ namespace Demo.yFiles.Graph.Clipboard
   /// </summary>
   public class ClipboardNodeStyle : NodeStyleBase<IVisual>
   {
-    private const double roundingFactor = 0.1;
-    
     protected override IVisual CreateVisual(IRenderContext context, INode node) {
       return new ClipboardNodeVisual(node);
     }
@@ -60,7 +60,7 @@ namespace Demo.yFiles.Graph.Clipboard
       return cnv;
     }
 
-    private class ClipboardNodeVisual : IVisual
+    private sealed class ClipboardNodeVisual : IVisual
     {
       internal INode node;
 
@@ -72,60 +72,27 @@ namespace Demo.yFiles.Graph.Clipboard
         var layout = node.Layout;
 
         // Draw a rounded rectangle
-        double roundingX = layout.Width*roundingFactor;
-        double roundingY = layout.Height*roundingFactor;
+        var palette = Themes.Palette31;
+        var path = NewRoundRectanglePath(layout, 3.5);
+
+        // paint lower part
+        graphics.FillPath(palette.Fill, path);
+
+        // paint upper part
+        var oldClip = graphics.Clip;
+        graphics.IntersectClip(new RectangleF(
+          (float) layout.X, (float) layout.Y, (float) layout.Width, (float) (layout.Height * 0.5)));
+        graphics.FillPath(palette.NodeLabelFill, path);
+        graphics.Clip = oldClip;
+
+        // paint border
+        try {
+          graphics.DrawPath(new Pen(palette.Stroke, 1.5f), path);
+        } catch {
+          // ignore
+        }
 
         ClipboardBusinessObject businessObject = node.Tag as ClipboardBusinessObject;
-
-        GraphicsPath upperPath = new GraphicsPath();
-        GraphicsPath lowerPath = new GraphicsPath();
-        upperPath.AddBezier((float) layout.X, (float) (layout.Y + roundingY), (float) layout.X,
-            (float) (layout.Y + (roundingY/2)),
-            (float) (layout.X + (roundingX/2)), (float) layout.Y, (float) (layout.X + roundingX), (float) layout.Y);
-        upperPath.AddLine((float) (layout.X + roundingX), (float) layout.Y,
-            (float) (layout.X + layout.Width - roundingX), (float) layout.Y);
-
-        upperPath.AddBezier((float) (layout.X + layout.Width - roundingX), (float) (layout.Y),
-            (float) (layout.X + layout.Width - (roundingX/2)), (float) (layout.Y),
-            (float) (layout.X + layout.Width), (float) (layout.Y + (roundingY/2)), (float) (layout.X + layout.Width),
-            (float) (layout.Y + roundingY));
-        upperPath.AddLine((float) (layout.X + layout.Width), (float) (layout.Y + roundingY),
-            (float) (layout.X + layout.Width), (float) (layout.Y + layout.Height/2));
-
-        upperPath.AddLine((float) (layout.X + layout.Width), (float) (layout.Y + layout.Height/2), (float) (layout.X),
-            (float) (layout.Y + layout.Height/2));
-        upperPath.AddLine((float) (layout.X), (float) (layout.Y + layout.Height/2), (float) layout.X,
-            (float) (layout.Y + roundingY));
-
-
-        lowerPath.AddBezier((float) (layout.X + layout.Width), (float) (layout.Y + layout.Height - roundingY),
-            (float) (layout.X + layout.Width), (float) (layout.Y + layout.Height - (roundingY/2)),
-            (float) (layout.X + layout.Width - (roundingX/2)), (float) (layout.Y + layout.Height),
-            (float) (layout.X + layout.Width - roundingX), (float) (layout.Y + layout.Height));
-        lowerPath.AddLine((float) (layout.X + layout.Width - roundingX), (float) (layout.Y + layout.Height),
-            (float) (layout.X + roundingX), (float) (layout.Y + layout.Height));
-
-        lowerPath.AddBezier((float) (layout.X + roundingX), (float) (layout.Y + layout.Height),
-            (float) (layout.X + (roundingX/2)), (float) (layout.Y + layout.Height),
-            (float) (layout.X), (float) (layout.Y + layout.Height - (roundingY/2)), (float) (layout.X),
-            (float) (layout.Y + layout.Height - roundingY));
-        lowerPath.AddLine((float) layout.X, (float) (layout.Y + layout.Height - roundingY), (float) (layout.X),
-            (float) (layout.Y + (layout.Height/2)));
-        lowerPath.AddLine((float) layout.X, (float) (layout.Y + (layout.Height/2)), (float) (layout.X + layout.Width),
-            (float) (layout.Y + (layout.Height/2)));
-        lowerPath.AddLine((float) (layout.X + layout.Width), (float) (layout.Y + (layout.Height/2)),
-            (float) (layout.X + layout.Width), (float) (layout.Y + layout.Height - roundingY));
-
-        graphics.FillPath(
-            new LinearGradientBrush(
-                new RectangleF((float) layout.X, (float) layout.Y, (float) layout.Width, (float) layout.Height),
-                Mix(Color.SkyBlue, Color.White, 0.5), Mix(Color.DodgerBlue, Color.White, 0.5), 90f), upperPath);
-        graphics.FillPath(
-            new LinearGradientBrush(
-                new RectangleF((float) layout.X, (float) layout.Y, (float) layout.Width, (float) layout.Height),
-                Color.SkyBlue, Color.DodgerBlue, 90f), lowerPath);
-
-
         if (businessObject != null) {
           // Draw a line to visualize the business object's value
           graphics.DrawLine(Pens.Black, (float) (layout.X + 10), (float) (layout.Y + (layout.Height*3/4)),
@@ -137,28 +104,42 @@ namespace Demo.yFiles.Graph.Clipboard
         }
       }
 
-      ///<summary>
-      /// Mixes two colors using the provided ratio.
-      ///</summary>
-      public static Color Mix(Color color0, Color color1, double ratio) {
-        double iratio = 1 - ratio;
-        double a = color0.A*ratio + color1.A*iratio;
-        double r = color0.R*ratio + color1.R*iratio;
-        double g = color0.G*ratio + color1.G*iratio;
-        double b = color0.B*ratio + color1.B*iratio;
-        return
-            Color.FromArgb((int) Math.Round(a), (int) Math.Round(r),
-                (int) Math.Round(g), (int) Math.Round(b));
+      private static GraphicsPath NewRoundRectanglePath(IRectangle layout, double radius) {
+        var x = layout.X;
+        var y = layout.Y;
+        var width = layout.Width;
+        var height = layout.Height;
+
+        var arcX = Math.Min(width * 0.5, radius);
+        var arcY = Math.Min(height * 0.5, radius);
+      
+        var bezierArcApproximation = 0.552284749830794; // (Math.Sqrt(2) - 1) * 4 / 3
+        var cx = (1 - bezierArcApproximation) * arcX;
+        var cy = (1 - bezierArcApproximation) * arcY;
+
+        var path = new GeneralPath();
+        path.MoveTo(x, y + arcY);
+        path.CubicTo(x, y + cy, x + cx, y, x + arcX, y);
+        path.LineTo(x + width - arcX, y);
+        path.CubicTo(x + width - cx, y, x + width, y + cy, x + width, y + arcY);
+        path.LineTo(x + width, y + height - arcY);
+        path.CubicTo(x + width, y + height - cy, x + width - cx, y + height, x + width - arcX, y + height);
+        path.LineTo(x + arcX, y + height);
+        path.CubicTo(x + cx, y + height, x, y + height - cy, x, y + height - arcY);
+        path.Close();
+        return path.CreatePath();
       }
     }
 
 
     /// <summary>
-    /// Provides a custom handle for modifing the business object's value
+    /// Provides a custom handle for modifying the business object's value
     /// </summary>
     protected override object Lookup(INode node, Type type) {
       if (type == typeof (IHandleProvider)) {
         return new MyHandleProvider(node);
+      } else if (type == typeof(INodeSizeConstraintProvider)) {
+        return new NodeSizeConstraintProvider(new SizeD(120, 60), SizeD.Infinite);
       } else {
         return base.Lookup(node, type);
       }
@@ -167,7 +148,7 @@ namespace Demo.yFiles.Graph.Clipboard
     /// <summary>
     /// Custom handle provider
     /// </summary>
-    private class MyHandleProvider : IHandleProvider
+    private sealed class MyHandleProvider : IHandleProvider
     {
       private readonly INode node;
 
@@ -182,7 +163,7 @@ namespace Demo.yFiles.Graph.Clipboard
       /// <summary>
       /// Handle for modifying the value of the business object
       /// </summary>
-      private class DataHandle : IHandle, IPoint
+      private sealed class DataHandle : IHandle, IPoint
       {
         private readonly INode node;
         private double originalValue;
@@ -234,6 +215,9 @@ namespace Demo.yFiles.Graph.Clipboard
           }
         }
 
+        public void HandleClick([NotNull] ClickEventArgs eventArgs) {
+        }
+
         public HandleTypes Type {
           get { return HandleTypes.Resize | HandleTypes.Variant2; }
         }
@@ -262,7 +246,7 @@ namespace Demo.yFiles.Graph.Clipboard
       /// <summary>
       /// Custom <see cref="IUndoUnit"/> to make value changes undoable.
       /// </summary>
-      private class BusinessValueUndoUnit : UndoUnitBase
+      private sealed class BusinessValueUndoUnit : UndoUnitBase
       {
         private readonly ClipboardBusinessObject obj;
         private readonly double oldValue;

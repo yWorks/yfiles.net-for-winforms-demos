@@ -5,11 +5,12 @@ Utility projects for common functionality in demos.
 You will find the following programming samples in this package: 
 
 
-| Name | Description 
-|:---|:---
-|**Aggregation** | A demo library that provides an IGraph implementation that is used to wrap a large graph and provide a smaller graph. 
-|**Option** | This demo implements a generic framework to display and edit settings. 
-|**OptionHandler** | Support project for the `LayoutStyles` demo and other demos. It provides an editor for the `LayoutConfigurations`. 
+| Name | Description |
+|:---|:---|
+|**Aggregation** | A demo library that provides an IGraph implementation that is used to wrap a large graph and provide a smaller graph. |
+|**DemoToolkit** | Support project for several demo applications. |
+|**Option** | This demo implements a generic framework to display and edit settings. |
+|**OptionHandler** | Support project for the `LayoutStyles` demo and other demos. It provides an editor for the `LayoutConfigurations`. |
 
 ## Running the Demos
 
@@ -23,7 +24,7 @@ You will find the following programming samples in this package:
 
 #### See also
 [Product Page](https://www.yworks.com/products/yfiles.net)  
-[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[API Documentation](https://docs.yworks.com/yfilesdotnet)    
 [Help and Support](https://www.yworks.com/products/yfiles/support)
 
 

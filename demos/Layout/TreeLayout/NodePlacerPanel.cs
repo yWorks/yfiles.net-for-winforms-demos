@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -38,6 +38,7 @@ using Demo.yFiles.Layout.Tree.Configuration;
 using Demo.yFiles.Option.DataBinding;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
+using Demo.yFiles.Toolkit;
 using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.Styles;
@@ -127,7 +128,7 @@ namespace Demo.yFiles.Layout.Tree
       set { 
         if(level != value) {
           level = CoerceLevel(value);
-          OnLevelChanged(value);
+          OnLevelChanged(level);
         } 
       }
     }
@@ -260,27 +261,9 @@ namespace Demo.yFiles.Layout.Tree
       DictionaryMapper<INode, bool> assistantMap =
         graph.MapperRegistry.CreateMapper<INode, bool>(AssistantNodePlacer.AssistantNodeDpKey);
       graph.NodeDefaults.Size = new SizeD(40, 30);
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle
-      {
-        Brush = Brushes.LightGray,
-        Insets = new InsetsD(5),
-        DrawShadow = false,
-        Pen = Pens.Black
-      };
-      var rootStyle = new ShinyPlateNodeStyle
-      {
-        Brush = Brushes.Red,
-        Insets = new InsetsD(5),
-        Pen = Pens.Black,
-        DrawShadow = false
-      };
-      var assistantStyle = new ShinyPlateNodeStyle
-      {
-        Brush = Brushes.LightGray,
-        Insets = new InsetsD(5),
-        Pen = new Pen(Brushes.Black, 1) {DashStyle = DashStyle.Dash},
-        DrawShadow = false
-      };
+      DemoStyles.InitDemoStyles(graph, Themes.Palette58);
+      var rootStyle = DemoStyles.CreateDemoNodeStyle(Themes.PaletteRed);
+      var assistantStyle = NewAssistantStyle(Themes.Palette58);
       INode root = graph.CreateNode();
       graph.SetStyle(root, rootStyle);
       INode n1 = graph.CreateNode();
@@ -298,13 +281,19 @@ namespace Demo.yFiles.Layout.Tree
       previewLayout = new TreeLayout();
     }
 
+    internal static INodeStyle NewAssistantStyle(Palette palette) {
+      var style = DemoStyles.CreateDemoNodeStyle(palette);
+      style.Pen.DashStyle = DashStyle.Dash;
+      return style;
+    }
+
     ///<summary>
     /// Update the preview canvas: Apply a new layout with the current placer.
     ///</summary>
     public void UpdatePreview() {
       INodePlacer placer = CurrentDescriptor.Configuration != null
-                             ? CurrentDescriptor.Configuration.CreateNodePlacer()
-                             : null;
+        ? CurrentDescriptor.Configuration.CreateNodePlacer()
+        : null;
       previewLayout.DefaultNodePlacer = placer ?? new DefaultNodePlacer();
       try {
         previewControl.Graph.ApplyLayout(previewLayout);
@@ -347,20 +336,20 @@ namespace Demo.yFiles.Layout.Tree
 
     private Color CurrentBrush {
       get {
-        Color layerBrush = LayerBrushes[Level % LayerBrushes.Length];
-        return layerBrush;
+        SolidBrush fill = (SolidBrush) LayerPalettes[Level % LayerPalettes.Length].Fill;
+        return fill.Color;
       }
     }
 
 
-    public static readonly Color[] LayerBrushes = {
-                                                    Color.Red,
-                                                    Color.FromArgb(255, 128, 0),
-                                                    Color.FromArgb(224, 224, 0),
-                                                    Color.FromArgb(64, 208, 64),
-                                                    Color.FromArgb(0, 255, 255),
-                                                    Color.Blue
-                                                  };
+    public static readonly Palette[] LayerPalettes = {
+        Themes.PaletteRed, 
+        Themes.PaletteOrange, 
+        Themes.Palette22, 
+        Themes.PaletteGreen, 
+        Themes.Palette21,
+        Themes.PaletteLightblue
+    };
 
     private EditorControl editorControl;
     private OptionHandler nodePlacerOptionHandler;

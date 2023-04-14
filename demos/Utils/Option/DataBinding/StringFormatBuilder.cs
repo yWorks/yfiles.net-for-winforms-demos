@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -63,6 +63,9 @@ namespace Demo.yFiles.Option.DataBinding
       directionItem.SetAttribute(OptionItem.SUPPORT_NULL_VALUE_ATTRIBUTE, true);
       directionItem.SetAttribute(OptionItem.NULL_VALUE_STRING_ATTRIBUTE, "LeftToRight");
       context.BindItem(directionItem, StringFormatPropertyMapBuilder.DirectionProperty);
+
+      BoolOptionItem wrapItem = new BoolOptionItem(StringFormatPropertyMapBuilder.WrappingProperty);
+      context.BindItem(wrapItem, StringFormatPropertyMapBuilder.WrappingProperty);
     }
 
     #endregion
@@ -74,6 +77,7 @@ namespace Demo.yFiles.Option.DataBinding
     internal const string AlignmentProperty = "Alignment";
     internal const string LineAlignmentProperty = "LineAlignment";
     internal const string TrimmingProperty = "Trimming";
+    internal const string WrappingProperty = "Wrapping";
 
     public StringFormatPropertyMapBuilder() : base(true) {}
 
@@ -116,6 +120,19 @@ namespace Demo.yFiles.Option.DataBinding
                                         delegate(StringAlignment value) { context.CurrentInstance.LineAlignment = value; });
       context.AddEntry<StringTrimming>(TrimmingProperty, delegate { return context.CurrentInstance.Trimming; },
                                        delegate(StringTrimming value) { context.CurrentInstance.Trimming = value; });
+      context.AddEntry(WrappingProperty,
+                 new DelegateGetter<bool>(delegate {
+                                              StringFormat format = context.CurrentInstance;
+                                              return (format.FormatFlags & StringFormatFlags.NoWrap) != StringFormatFlags.NoWrap;
+                 }),
+                 new DelegateSetter<bool>(
+                   delegate(bool value) {
+                     if (value) {
+                       context.CurrentInstance.FormatFlags &= ~StringFormatFlags.NoWrap;
+                     } else 
+                       context.CurrentInstance.FormatFlags |= StringFormatFlags.NoWrap;
+                     }
+                   ));
     }
 
     #endregion

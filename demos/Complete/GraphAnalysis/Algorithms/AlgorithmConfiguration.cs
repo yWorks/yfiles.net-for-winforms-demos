@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -135,8 +135,8 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
       if (gradient) {
         var colors = new Color[count];
         float stepCount = count - 1;
-        var c1 = Color.LightBlue;
-        var c2 = Color.Blue;
+        var c1 = StyleUtils.StartColor;
+        var c2 = StyleUtils.EndColor;
 
         for (int i = 0; i < count; i++) {
           float r = c1.R * (((stepCount - i) / stepCount)) + c2.R * (i / stepCount);
@@ -150,25 +150,9 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
         }
 
         return colors;
+      } else {
+        return StyleUtils.Colors;
       }
-
-      return new[] {
-          Color.RoyalBlue,
-          Color.Gold,
-          Color.Crimson,
-          Color.DarkTurquoise,
-          Color.CornflowerBlue,
-          Color.DarkSlateBlue,
-          Color.OrangeRed,
-          Color.MediumSlateBlue,
-          Color.ForestGreen,
-          Color.MediumVioletRed,
-          Color.DarkCyan,
-          Color.Chocolate,
-          Color.Orange,
-          Color.LimeGreen,
-          Color.MediumOrchid
-      };
     }
 
     /// <summary>
@@ -356,43 +340,29 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
           return new Pen(new SolidBrush((Color) tag.CurrentColor), thickness);
         }
         if (tag.GradientValue != null) {
-          var v = Math.Min(1, Math.Max(0, (float) (double) tag.GradientValue));
-          var c1 = Color.LightBlue;
-          var c2 = Color.Blue;
-          Color color;
-
-          if (tag.LightToDark) {
-            float r = c1.R * (1 - v) + c2.R * v;
-            float g = c1.G * (1 - v) + c2.G * v;
-            float b = c1.B * (1 - v) + c2.B * v;
-            color = Color.FromArgb((int) r, (int) g, (int) b);
-
-          } else {
-            float r = c2.R * (1 - v) + c1.R * v;
-            float g = c2.G * (1 - v) + c1.G * v;
-            float b = c2.B * (1 - v) + c1.B * v;
-
-            color = Color.FromArgb((int) r, (int) g, (int) b);
-          }
-
-
-          return new Pen(color, thickness);
+          return StyleUtils.GetGradientPen((double) tag.GradientValue, tag.LightToDark, thickness);
         }
       }
 
-      return Pens.Black;
+      return StyleUtils.DefaultPen;
     }
 
     protected override IArrow GetTargetArrow() {
       var tag = Edge.Tag as Tag;
       if (tag != null && tag.Directed) {
-        if (tag.CurrentColor != null) {
-          return new Arrow((Color) tag.CurrentColor) { Type = ArrowType.Default, Pen = null };
-        }
-        return new Arrow(Color.Black) { Type = ArrowType.Default, Pen = null };
+        return new Arrow(GetArrowColor(tag)) { Type = ArrowType.Triangle, Pen = null };
       }
-
       return Arrows.None;
+    }
+
+    private Color GetArrowColor(Tag tag) {
+      if (tag.CurrentColor != null) {
+        return (Color) tag.CurrentColor;
+      }
+      if (tag.GradientValue != null) {
+        return StyleUtils.GetGradientColor((double) tag.GradientValue, tag.LightToDark);
+      }
+      return StyleUtils.DefaultPenColor;
     }
   }
 
@@ -411,26 +381,7 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
           return new SolidBrush((Color) tag.CurrentColor);
         }
         if (tag.GradientValue != null) {
-          var v = Math.Min(1, Math.Max(0, (float) (double) tag.GradientValue));
-          var c1 = Color.LightBlue;
-          var c2 = Color.Blue;
-          Color color;
-
-          if (tag.LightToDark) {
-            float r = c1.R * (1 - v) + c2.R * v;
-            float g = c1.G * (1 - v) + c2.G * v;
-            float b = c1.B * (1 - v) + c2.B * v;
-            color = Color.FromArgb((int) r,(int) g,(int) b);
-            
-          } else {
-            float r = c2.R * (1 - v) + c1.R * v;
-            float g = c2.G * (1 - v) + c1.G * v;
-            float b = c2.B * (1 - v) + c1.B * v;
-
-            color = Color.FromArgb((int) r, (int) g, (int) b);
-          }
-
-          return new SolidBrush(color);
+          return StyleUtils.GetGradientBrush((double) tag.GradientValue, tag.LightToDark);
         }
       }
 
@@ -454,11 +405,11 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
           return null;
         }
         if (tag.GradientValue != null) {
-          return Pens.Black;
+          return StyleUtils.GetGradientPen((double) tag.GradientValue, tag.LightToDark);
         }
       }
 
-      return Pens.Black;
+      return StyleUtils.DefaultPen;
     }
   }
 
@@ -483,24 +434,6 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
 
   public class ColorGroup
   {
-    private static readonly Color[] colors = {
-        Color.RoyalBlue,
-        Color.Gold,
-        Color.Crimson,
-        Color.DarkTurquoise,
-        Color.CornflowerBlue,
-        Color.DarkSlateBlue,
-        Color.OrangeRed,
-        Color.MediumSlateBlue,
-        Color.ForestGreen,
-        Color.MediumVioletRed,
-        Color.DarkCyan,
-        Color.Chocolate,
-        Color.Orange,
-        Color.LimeGreen,
-        Color.MediumOrchid
-    };
-
     public int Index { get; private set; }
 
     public ColorGroup(int index) {
@@ -508,7 +441,59 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
     }
 
     public Color Color {
-      get { return colors[Index % colors.Length]; }
+      get { return StyleUtils.Colors[Index % StyleUtils.Colors.Length]; }
+    }
+  }
+
+  internal static class StyleUtils {
+    internal static readonly Color StartColor = Color.LightBlue;
+    internal static readonly Color EndColor = Color.FromArgb(51, 64, 247);
+
+    internal static readonly Color[] Colors = {
+      Color.RoyalBlue,
+      Color.Gold,
+      Color.Crimson,
+      Color.DarkTurquoise,
+      Color.CornflowerBlue,
+      Color.DarkSlateBlue,
+      Color.OrangeRed,
+      Color.MediumSlateBlue,
+      Color.ForestGreen,
+      Color.MediumVioletRed,
+      Color.DarkCyan,
+      Color.Chocolate,
+      Color.Orange,
+      Color.LimeGreen,
+      Color.MediumOrchid
+    };
+
+    internal static readonly Color DefaultPenColor = Color.DarkGray;
+    internal static readonly Pen DefaultPen = new Pen(Brushes.DarkGray, 3);
+
+    internal static Color GetGradientColor(double gradientValue, bool lightToDark) {
+      var v = Math.Min(1, Math.Max(0, (float) gradientValue));
+      var c1 = StartColor;
+      var c2 = EndColor;
+
+      if (lightToDark) {
+        float r = c1.R * (1 - v) + c2.R * v;
+        float g = c1.G * (1 - v) + c2.G * v;
+        float b = c1.B * (1 - v) + c2.B * v;
+        return Color.FromArgb((int) r,(int) g,(int) b);
+      } else {
+        float r = c2.R * (1 - v) + c1.R * v;
+        float g = c2.G * (1 - v) + c1.G * v;
+        float b = c2.B * (1 - v) + c1.B * v;
+        return Color.FromArgb((int) r, (int) g, (int) b);
+      }
+    }
+
+    internal static Brush GetGradientBrush(double gradientValue, bool lightToDark) {
+      return new SolidBrush(GetGradientColor(gradientValue, lightToDark));
+    }
+
+    internal static Pen GetGradientPen(double gradientValue, bool lightToDark, double thickness = 1.0) {
+      return new Pen(GetGradientBrush(gradientValue, lightToDark), (float) thickness);
     }
   }
 }

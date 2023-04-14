@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,7 +28,8 @@
  ***************************************************************************/
 
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.IO;
 using yWorks.Controls;
 
 namespace Demo.yFiles.Layout.NodeLabeling
@@ -38,10 +39,10 @@ namespace Demo.yFiles.Layout.NodeLabeling
   /// </summary>
   internal class BackgroundVisualCreator : IVisualCreator
   {
-    private static readonly Image image;
+    private static readonly PointF[] usMap;
 
     static BackgroundVisualCreator() {
-      image = Image.FromFile("Resources/us_map.png");
+      usMap = GetUSMap();
     }
 
     public IVisual CreateVisual(IRenderContext context) {
@@ -58,11 +59,20 @@ namespace Demo.yFiles.Layout.NodeLabeling
     private class ImageVisual : IVisual
     {
       public void Paint(IRenderContext context, Graphics g) {
-        var old = g.InterpolationMode;
-        g.InterpolationMode = InterpolationMode.NearestNeighbor;
-        g.DrawImage(image, new Rectangle(15, 5, 645, 399));
-        g.InterpolationMode = old;
+        g.FillPolygon(new SolidBrush(Color.FromArgb(0xCC, 0xCC, 0xCC)), usMap);
       }
+    }
+
+    private static PointF[] GetUSMap() {
+      var lines = File.ReadAllLines("Resources/us_map.txt");
+      PointF[] coordinates = new PointF[lines.Length];
+      for (int i = 0; i < lines.Length; i++) {
+        var point = lines[i].Split(' ');
+        var c1 = float.Parse(point[0], CultureInfo.InvariantCulture);
+        var c2 = float.Parse(point[1], CultureInfo.InvariantCulture);
+        coordinates[i] = new PointF(c1, c2);
+      }
+      return coordinates;
     }
   }
 }

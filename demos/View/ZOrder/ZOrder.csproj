@@ -74,20 +74,22 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ZOrderChangedEventArgs.cs" />
+    <Compile Include="ZOrderNodePositionHandler.cs" />
+    <Compile Include="ZOrderReparentHandler.cs" />
+    <Compile Include="ZOrderSupport.cs" />
     <Compile Include="ZOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ZOrderForm.Designer.cs">
       <DependentUpon>ZOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ZOrderGraphClipboard.cs" />
-    <Compile Include="ZOrderGraphMLIOHandler.cs" />
-    <Compile Include="ZOrderGraphModelManager.cs" />
-    <Compile Include="ZOrderNodePositionHandler.cs" />
-    <Compile Include="ZOrderGraphEditorInputMode.cs" />
-    <Compile Include="ZOrderSupport.cs" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

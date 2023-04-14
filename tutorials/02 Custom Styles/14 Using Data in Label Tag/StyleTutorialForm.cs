@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -73,7 +73,19 @@ namespace Tutorial.CustomStyles
       // initialize the graph
       InitializeGraph();
       // initialize the input mode
-      graphControl.InputMode = new GraphEditorInputMode();
+      graphControl.InputMode = new GraphEditorInputMode
+      {
+          //To ensure the label button receives the click before any element it is overlapping,
+          //we change the click hit order to conform with the visual order
+          ClickHitTestOrder = new[]
+          {
+              GraphItemTypes.Bend,
+              GraphItemTypes.Label,
+              GraphItemTypes.Edge,
+              GraphItemTypes.Node,
+              GraphItemTypes.Port
+          }
+      };
       graphControl.FitGraphBounds();
 
       RegisterCommands();

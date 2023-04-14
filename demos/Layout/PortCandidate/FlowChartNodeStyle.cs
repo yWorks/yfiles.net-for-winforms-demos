@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -29,6 +29,7 @@
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Geometry;
 using yWorks.Graph;
@@ -44,8 +45,18 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
   /// </summary>
   public class FlowChartNodeStyle : NodeStyleBase<VisualGroup>
   {
+    public FlowChartNodeStyle() {
+      NodeStyle = DemoStyles.CreateDemoShapeNodeStyle(ShapeNodeShape.Rectangle);
+      PortStyle = new CirclePortStyle();
+    }
+
     private ShapeNodeStyle NodeStyle { get; set; }
     private IPortStyle PortStyle { get; set; }
+
+    protected override GeneralPath GetOutline(INode node) {
+      // delegate outline calculation to the NodeStyle
+      return NodeStyle.Renderer.GetShapeGeometry(node, NodeStyle).GetOutline();
+    }
 
     private FlowChartType flowChartType;
     public FlowChartType FlowChartType {
@@ -68,15 +79,6 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
       }
     }
 
-    public FlowChartNodeStyle() {
-      NodeStyle = new ShapeNodeStyle
-      {
-        Brush = new LinearGradientBrush(new PointF(0, 0), new PointF(1, 1), Color.FromArgb(255, 221, 136), Color.FromArgb(255, 153, 0)),
-        Pen = new Pen(new SolidBrush(Color.FromArgb(255, 153, 0)))
-      };
-      PortStyle = new CirclePortStyle();
-    }
-    
     #region Rendering
 
     /// <summary>
@@ -90,12 +92,9 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
       return visual;
     }
 
-    protected override VisualGroup UpdateVisual(IRenderContext context, VisualGroup group, INode node) {
-      if (group == null) {
-        return CreateVisual(context, node);
-      }
+    protected override VisualGroup UpdateVisual(IRenderContext context, VisualGroup oldVisual, INode node) {
       // update the node visualization
-      group.Children[0] = NodeStyle.Renderer.GetVisualCreator(node, NodeStyle).UpdateVisual(context, group.Children[0]);
+      oldVisual.Children[0] = NodeStyle.Renderer.GetVisualCreator(node, NodeStyle).UpdateVisual(context, oldVisual.Children[0]);
 
       // update the "visual" ports
       int count = 1;
@@ -104,24 +103,24 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
           var parameter = FreeNodePortLocationModel.Instance.CreateParameter(PointD.Origin, new PointD(portDescriptor.X, portDescriptor.Y));
           var port = new SimplePort(node, parameter) { LookupImplementation = Lookups.Empty };
           // see if we have a visual to update...
-          if (count < group.Children.Count) {
-            var oldPortVisual = group.Children[count];
-            group.Children[count] = PortStyle.Renderer.GetVisualCreator(port, PortStyle).UpdateVisual(context, oldPortVisual);
+          if (count < oldVisual.Children.Count) {
+            var oldPortVisual = oldVisual.Children[count];
+            oldVisual.Children[count] = PortStyle.Renderer.GetVisualCreator(port, PortStyle).UpdateVisual(context, oldPortVisual);
           } else {
             // no - add a new one
             var portVisual = PortStyle.Renderer.GetVisualCreator(port, PortStyle).CreateVisual(context);
-            group.Children.Add(portVisual);
+            oldVisual.Children.Add(portVisual);
           }
         }
         count++;
       }
       // see if the number of ports decreased
-      while (count < group.Children.Count) {
+      while (count < oldVisual.Children.Count) {
         // yes, remove the old visual
-        var index = group.Children.Count - 1;
-        group.Children.RemoveAt(index);
+        var index = oldVisual.Children.Count - 1;
+        oldVisual.Children.RemoveAt(index);
       }
-      return group;
+      return oldVisual;
     }
 
     /// <summary>
@@ -149,10 +148,13 @@ namespace Demo.yFiles.Layout.PortCandidateDemo
 
     #endregion
 
-    
-    protected override GeneralPath GetOutline(INode node) {
-      // delegate outline calculation to the NodeStyle
-      return NodeStyle.Renderer.GetShapeGeometry(node, NodeStyle).GetOutline();
+    /// <summary>
+    /// Returns the size of the node based on its tag.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public static SizeD GetNodeTypeSize(INode node) {
+      return GetNodeTypeSize(((FlowChartNodeStyle) node.Style).FlowChartType);
     }
 
     /// <summary>

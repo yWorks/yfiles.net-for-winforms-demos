@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -113,7 +113,7 @@ namespace Demo.yFiles.Layout.LogicGate
       foreach (var node in graph.Nodes) {
         nodeStyleListBox.Items.Add(node);
       }
-      nodeStyleListBox.ItemHeight = 65;
+      nodeStyleListBox.ItemHeight = 80;
       //Handle list item drawing
       nodeStyleListBox.DrawItem += nodeStyleListBox_DrawItem;
 
@@ -202,7 +202,7 @@ namespace Demo.yFiles.Layout.LogicGate
       }
 
       Rectangle bounds = e.Bounds;
-      Rectangle insets = Rectangle.FromLTRB(5, 5, 5, 25);
+      Rectangle insets = Rectangle.FromLTRB(5, 5, 5, 40);
 
       Graphics g = e.Graphics;
       SmoothingMode oldMode = g.SmoothingMode;
@@ -233,7 +233,7 @@ namespace Demo.yFiles.Layout.LogicGate
         if (lgns != null) {
           g.DrawString(lgns.GateType.ToString(), new Font("Arial", 8.25f), Brushes.Black, -10, 20);
         } else if (node.Labels.Any()) {
-          g.DrawString(node.Labels.First().Text.Replace("\n", " "), new Font("Arial", 8.25f), Brushes.Black, -10, 20);
+          g.DrawString(node.Labels.First().Text, new Font("Arial", 8.25f), Brushes.Black, -10, 20);
         }
         g.Transform = transform;
         g.SmoothingMode = oldMode;

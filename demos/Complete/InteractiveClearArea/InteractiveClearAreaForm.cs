@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,11 +32,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 using yWorks.Layout.Partial;
 using yWorks.Utils;
 
@@ -169,8 +169,7 @@ namespace Demo.yFiles.Graph.InteractiveClearArea
     /// </summary>
     protected virtual void InitializeGraph() {
       GraphControl.Graph.SetUndoEngineEnabled(true);
-      
-      GraphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle {Brush = Brushes.Orange};
+      DemoStyles.InitDemoStyles(GraphControl.Graph);
     }
 
     /// <summary>
@@ -416,10 +415,16 @@ namespace Demo.yFiles.Graph.InteractiveClearArea
     
     private sealed class IndicatorRectangle : TemplateVisual
     {      
-      private static readonly SolidBrush fill = new SolidBrush(Color.FromArgb(0xAA, Color.Red));
+      private static readonly SolidBrush fill = new SolidBrush(Color.FromArgb(0xA6, 0x00, 0xA7, 0xFF));
+      private static readonly Pen pen = new Pen(new SolidBrush(Color.FromArgb(0xA6, 0x4D, 0x83, 0x99)), 3f);
       
       public override void Paint(IRenderContext ctx, Graphics g) {
         g.FillRectangle(fill, (float) X, (float) Y, (float) Width, (float) Height);
+        try {
+          g.DrawRectangle(pen, (float) X, (float) Y, (float) Width, (float) Height);
+        } catch {
+          // ignore
+        }
       }
     }
     

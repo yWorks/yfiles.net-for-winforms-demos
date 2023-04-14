@@ -27,11 +27,18 @@
   <key id="d9" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
   <data key="d9">
     <y:SharedData>
-      <yforms:DefaultLabelStyle x:Key="1" Font="Arial" TextBrush="Black">
-      </yforms:DefaultLabelStyle>
-      <yforms:ShinyPlateNodeStyle x:Key="3" Brush="Orange" Pen="Orange" />
-      <yforms:ShinyPlateNodeStyle x:Key="4" Brush="LightSkyBlue" Pen="LightSkyBlue" />
-      <yforms:ShapeNodeStyle x:Key="5" Brush="Black" Pen="Black" Shape="Ellipse" />
+      <yforms:DefaultLabelStyle x:Key="1" TextBrush="Black"/>
+      <yforms:RectangleNodeStyle x:Key="3" Brush="#ff6c00" CornerSize="3.5">
+        <yforms:RectangleNodeStyle.Pen>
+          <yforms:Pen Brush="#662b00" Width="1.5"/>
+        </yforms:RectangleNodeStyle.Pen>
+      </yforms:RectangleNodeStyle>
+      <yforms:RectangleNodeStyle x:Key="4" Brush="#68b0e3" CornerSize="3.5">
+        <yforms:RectangleNodeStyle.Pen>
+          <yforms:Pen Brush="#662b00" Width="1.5"/>
+        </yforms:RectangleNodeStyle.Pen>
+      </yforms:RectangleNodeStyle>
+      <yforms:ShapeNodeStyle x:Key="5" Brush="#662b00" Pen="#662b00" Shape="Ellipse" />
     </y:SharedData>
   </data>
   <graph id="G" edgedefault="directed">

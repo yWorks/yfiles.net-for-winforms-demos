@@ -26,16 +26,22 @@
   <key id="d9" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
   <data key="d9">
     <y:SharedData>
-      <yforms:DefaultLabelStyle x:Key="1" Font="Arial" TextBrush="Black" >
-      </yforms:DefaultLabelStyle>
-      <yforms:ShinyPlateNodeStyle x:Key="2" Brush="#ffcc00" Pen="#ffcc00" />
-      <yforms:ShinyPlateNodeStyle x:Key="3" Brush="#bdb992" Pen="#bdb992" />
-      <yforms:PolylineEdgeStyle x:Key="4" TargetArrow="None" SourceArrow="Default">
+      <yforms:DefaultLabelStyle x:Key="1" TextBrush="Black" />
+      <yforms:ShapeNodeStyle x:Key="2" Brush="#ffab26" Pen="#662b00" />
+      <yforms:ShapeNodeStyle x:Key="3" Brush="#b9ccd6" Pen="#662b00" />
+      <yforms:PolylineEdgeStyle x:Key="4" TargetArrow="None">
         <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="DarkBlue" DashStyle="Dash"/>
+          <yforms:Pen Brush="#336699" DashStyle="Dash"/>
         </yforms:PolylineEdgeStyle.Pen>
+        <yforms:PolylineEdgeStyle.SourceArrow>
+          <yforms:Arrow Type="Default" Brush="#336699"/>
+        </yforms:PolylineEdgeStyle.SourceArrow>
       </yforms:PolylineEdgeStyle>
-      <yforms:PolylineEdgeStyle x:Key="5" TargetArrow="Default" SourceArrow="None" Pen="DarkBlue"/>
+      <yforms:PolylineEdgeStyle x:Key="5" SourceArrow="None" Pen="#336699">
+        <yforms:PolylineEdgeStyle.TargetArrow>
+          <yforms:Arrow Type="Default" Brush="#336699"/>
+        </yforms:PolylineEdgeStyle.TargetArrow>
+      </yforms:PolylineEdgeStyle>
     </y:SharedData>
   </data>
   <graph id="G" edgedefault="directed">

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,6 +32,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.NodeGroupResizing.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -109,22 +110,13 @@ namespace Demo.yFiles.Graph.Input.NodeGroupResizing
       };
       graphEditorInputMode.Add(nodeGroupResizingInputMode);
 
+      // set style defaults
+      DemoStyles.InitDemoStyles(graphControl.Graph);
+
       // load sample graph
       graphControl.ImportFromGraphML("Resources/sampleGraph.graphml");
       graphControl.FitContent();
       graphControl.Graph.GetUndoEngine().Clear();
-
-      // set style defaults
-      graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
-      var groupNodeDefaults = graphControl.Graph.GroupNodeDefaults;
-      groupNodeDefaults.Style = new PanelNodeStyle {
-          Color = groupNodeColor, 
-          Insets = new InsetsD(5, 18, 5, 5), 
-          LabelInsetsColor = groupNodeColor,
-      };
-      groupNodeDefaults.Labels.Style = new DefaultLabelStyle { StringFormat  = {Alignment = StringAlignment.Far} };
-      groupNodeDefaults.Labels.LayoutParameter = InteriorStretchLabelModel.North;
 
       cmbResizeMode.SelectedIndex = 0;
     }

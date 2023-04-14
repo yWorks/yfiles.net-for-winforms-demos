@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,18 +28,16 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.MixedLayout.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
-using yWorks.Graph.LabelModels;
 using yWorks.Layout;
 using yWorks.Layout.Hierarchic;
 using yWorks.Layout.Tree;
@@ -110,26 +108,7 @@ namespace Demo.yFiles.Layout.MixedLayout
       graph.NodeDefaults.Size = new SizeD(60, 30);
 
       // set the style as the default for all new nodes
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle
-      {
-        Brush = Brushes.Orange,
-        Insets = new InsetsD(5),
-        Radius = 5,
-      };
-
-      // set the style as the default for all new edges
-      graph.EdgeDefaults.Style = new PolylineEdgeStyle {TargetArrow = Arrows.Default};
-
-      var groupNodeStyle = new CollapsibleNodeStyleDecorator(new PanelNodeStyle
-                                                                {
-                                                                  Color = Color.FromArgb(255, 202, 220, 255),
-                                                                  LabelInsetsColor = Color.FromArgb(255, 218, 234, 255),
-                                                                  Insets = new InsetsD(15, 31, 15, 15)
-                                                                });
-      var groupNodeDefaults = graph.GroupNodeDefaults;
-      groupNodeDefaults.Labels.LayoutParameter = InteriorStretchLabelModel.North;
-      groupNodeDefaults.Labels.Style = new DefaultLabelStyle { StringFormat = { Alignment = StringAlignment.Far } };
-      groupNodeDefaults.Style = groupNodeStyle;
+      DemoStyles.InitDemoStyles(graph);
     }
 
     private void InitializeInputModes() {

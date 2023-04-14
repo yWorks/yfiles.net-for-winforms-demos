@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,8 +28,9 @@
  ***************************************************************************/
 
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
+using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.Styles;
 
@@ -41,88 +42,75 @@ namespace Demo.yFiles.Graph.Collapse
   /// </summary>
   /// <remarks>The drawing of the plus/minus sign depends on the content 
   /// of the node's tag.</remarks>
-  public class CollapseNodeStyle : NodeStyleBase<VisualGroup>
+  public class CollapseNodeStyle : NodeStyleBase<IVisual>
   {
-    private readonly Color collapsedColor2 = Color.FromArgb(255, 255, 153, 0);
-    private readonly Color collapsedColor1 = Color.FromArgb(255, 255, 204, 0);
-    private readonly Color expandedColor1 = Color.FromArgb(255, 204, 255, 255);
-    private readonly Color expandedColor2 = Color.FromArgb(255, 153, 204, 255);
+    private readonly INodeStyle collapsedBackground;
+    private readonly INodeStyle expandedBackground;
+
+    public CollapseNodeStyle() {
+      collapsedBackground = DemoStyles.CreateDemoNodeStyle(Themes.Palette401);
+      expandedBackground = DemoStyles.CreateDemoNodeStyle(Themes.Palette403);
+    }
 
     public CollapsedState CollapsedState { get; set; }
 
-    protected override VisualGroup CreateVisual(IRenderContext context, INode node) {
-      var layout = node.Layout;
-
-      // Get the background colors dependent on the collapse state
-      var backgroundColor1 = CollapsedState == CollapsedState.Collapsed ? collapsedColor1 : expandedColor1;
-      var backgroundColor2 = CollapsedState == CollapsedState.Collapsed ? collapsedColor2 : expandedColor2;
-
-      var background = new RectangleVisual(0, 0, layout.Width, layout.Height) {
-        Brush = new LinearGradientBrush(new PointF(0, 0), new PointF(0, (float) layout.Height), backgroundColor1, backgroundColor2),
-        Pen = Pens.LightGray
-      };
-      var symbol = new SymbolVisual(new Point((int) (layout.Width / 2), (int) (layout.Height / 2)), CollapsedState);
-
-      return new VisualGroup {
-        Transform = new Matrix(1, 0, 0, 1, (float) layout.X, (float) layout.Y),
-        Children = {
-          background, symbol
-        }
+    protected override IVisual CreateVisual(IRenderContext context, INode node) {
+      var state = CollapsedState;
+      var background = CollapsedState.Collapsed == state ? collapsedBackground : expandedBackground;
+      return new CollapseNodeVisual {
+          background = background.Renderer.GetVisualCreator(node, background).CreateVisual(context),
+          center = node.Layout.GetCenter(),
+          state = state
       };
     }
 
-    protected override VisualGroup UpdateVisual(IRenderContext context, VisualGroup oldGroup, INode node) {
-      if (oldGroup == null || oldGroup.Children.Count != 3) {
-        return CreateVisual(context, node);
+    protected override IVisual UpdateVisual(IRenderContext context, IVisual oldVisual, INode node) {
+      var cv = oldVisual as CollapseNodeVisual;
+      if (cv != null) {
+        var state = CollapsedState;
+        var background = CollapsedState.Collapsed == state ? collapsedBackground : expandedBackground;
+        cv.background = background.Renderer.GetVisualCreator(node, background).UpdateVisual(context, cv.background);
+        cv.center = node.Layout.GetCenter();
+        cv.state = state;
+        return cv;
       }
-
-      // Update the transform if the node has moved
-      var layout = node.Layout;
-      if (oldGroup.Transform.OffsetX != (float) layout.X || oldGroup.Transform.OffsetY != (float) layout.Y) {
-        oldGroup.Transform = new Matrix(1, 0, 0, 1, (float) layout.X, (float) layout.Y);
-      }
-
-      // Update the symbol and background colors if the collapsed state changed
-      var symbol = (SymbolVisual) oldGroup.Children[2];
-      if (symbol.collapsedState != CollapsedState) {
-        symbol.collapsedState = CollapsedState;
-
-        var backgroundColor1 = CollapsedState == CollapsedState.Collapsed ? collapsedColor1 : expandedColor1;
-        var backgroundColor2 = CollapsedState == CollapsedState.Collapsed ? collapsedColor2 : expandedColor2;
-
-        var background = (ShapeVisual) oldGroup.Children[0];
-        ((LinearGradientBrush) background.Brush).LinearColors = new[] { backgroundColor1, backgroundColor2 };
-      }
-
-      return oldGroup;
+      return CreateVisual(context, node);
     }
 
-    private class SymbolVisual : IVisual
+    private sealed class CollapseNodeVisual : IVisual
     {
-      private Point center;
-      internal CollapsedState collapsedState;
+      internal IVisual background;
+      internal PointD center;
+      internal CollapsedState state;
+      private readonly Brush brush;
 
-      public SymbolVisual(Point center, CollapsedState collapsedState) {
-        this.center = center;
-        this.collapsedState = collapsedState;
+      internal CollapseNodeVisual() {
+        brush = new SolidBrush(Color.FromArgb(0x99, 0x99, 0x99));
       }
 
-      public void Paint(IRenderContext context, Graphics g) {
-        if (collapsedState == CollapsedState.Collapsed) {
-          // draw plus sign
-          g.FillRectangle(Brushes.LightGray, center.X - 10, center.Y - 4, 20, 8);
-          g.FillRectangle(Brushes.LightGray, center.X - 4, center.Y - 10, 8, 20);
-          g.FillRectangle(Brushes.White, center.X - 9, center.Y - 3, 18, 6);
-          g.FillRectangle(Brushes.White, center.X - 3, center.Y - 9, 6, 18);
-          g.FillRectangle(Brushes.LightGray, center.X - 8, center.Y - 2, 16, 4);
-          g.FillRectangle(Brushes.LightGray, center.X - 2, center.Y - 8, 4, 16);
-        } else if (collapsedState == CollapsedState.Expanded) {
-          // draw minus sign
-          g.FillRectangle(Brushes.LightGray, center.X - 10, center.Y - 4, 20, 8);
-          g.FillRectangle(Brushes.White, center.X - 9, center.Y - 3, 18, 6);
-          g.FillRectangle(Brushes.LightGray, center.X - 8, center.Y - 2, 16, 4);
+      public void Paint(IRenderContext context, Graphics graphics) {
+        var bg = background;
+        if (bg != null) {
+          bg.Paint(context, graphics);
         }
 
+        PaintStateSymbol(graphics);
+      }
+
+      private void PaintStateSymbol(Graphics graphics) {
+        var x = (float) center.X;
+        var y = (float) center.Y;
+        if (CollapsedState.Collapsed == state) {
+          // draw plus sign
+          graphics.FillRectangle(Brushes.White, x - 9, y - 3, 18, 6);
+          graphics.FillRectangle(Brushes.White, x - 3, y - 9, 6, 18);
+          graphics.FillRectangle(brush, x - 8, y - 2, 16, 4);
+          graphics.FillRectangle(brush, x - 2, y - 8, 4, 16);
+        } else if (CollapsedState.Expanded == state) {
+          // draw minus sign
+          graphics.FillRectangle(Brushes.White, x - 9, y - 3, 18, 6);
+          graphics.FillRectangle(brush, x - 8, y - 2, 16, 4);
+        }
       }
     }
   }
@@ -131,30 +119,20 @@ namespace Demo.yFiles.Graph.Collapse
   /// An implementation of <see cref="NodeStyleBase" /> which visualizes 
   /// the leaf nodes in the tree.
   /// </summary>
-  public class LeafNodeStyle : NodeStyleBase<RectangleVisual> {
+  public class LeafNodeStyle : NodeStyleBase<IVisual>
+  {
+    private readonly INodeStyle wrapped;
 
-    private readonly Color backgroundColor1 = Color.FromArgb(255, 204, 255, 153);
-    private readonly Color backgroundColor2 = Color.FromArgb(255, 153, 204, 51);
-
-    protected override RectangleVisual CreateVisual(IRenderContext context, INode node) {
-      var layout = node.Layout;
-      return new RectangleVisual(0, 0, layout.Width, layout.Height) {
-        Brush = new LinearGradientBrush(new PointF(0, 0), new PointF(0, (float) layout.Height), backgroundColor1, backgroundColor2),
-        Pen = Pens.LightGray,
-        Transform = new Matrix(1, 0, 0, 1, (float) layout.X, (float) layout.Y)
-      };
+    public LeafNodeStyle() {
+      wrapped = DemoStyles.CreateDemoNodeStyle(Themes.Palette25);
     }
 
-    protected override RectangleVisual UpdateVisual(IRenderContext context, RectangleVisual rect, INode node) {
-      if (rect == null) {
-        return CreateVisual(context, node);
-      }
-      // in this demo only the position can change, so this is the only thing we have to update
-      var layout = node.Layout;
-      if (rect.Transform.OffsetX != (float) layout.X || rect.Transform.OffsetY != (float) layout.Y) {
-        rect.Transform = new Matrix(1, 0, 0, 1, (float) layout.X, (float) layout.Y);
-      }
-      return rect;
+    protected override IVisual CreateVisual(IRenderContext context, INode node) {
+      return wrapped.Renderer.GetVisualCreator(node, wrapped).CreateVisual(context);
+    }
+
+    protected override IVisual UpdateVisual(IRenderContext context, IVisual oldVisual, INode node) {
+      return wrapped.Renderer.GetVisualCreator(node, wrapped).UpdateVisual(context, oldVisual);
     }
   }
 }

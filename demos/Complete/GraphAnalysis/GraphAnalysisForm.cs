@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -165,8 +165,9 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
       graph.EdgeDefaults.Labels.Style = new DefaultLabelStyle {
           Font = new Font(FontFamily.GenericSansSerif, 10,FontStyle.Regular, GraphicsUnit.Pixel),
           BackgroundBrush = Brushes.AliceBlue,
-          BackgroundPen = (Pen) new Pen(Brushes.LightSkyBlue, 2),
-          AutoFlip = false
+          BackgroundPen = new Pen(Brushes.LightSkyBlue, 2),
+          AutoFlip = false,
+          Insets = new InsetsD(3, 5, 3, 5)
       };
     }
 
@@ -434,7 +435,7 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
         // no specific item - just clear the graph
         graph.Clear();
         // and fit the content
-        graphControl.FitGraphBounds();
+        await graphControl.FitGraphBounds();
         return;
       }
       inLoadSample = true;
@@ -487,7 +488,7 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
       }
       directed = directionComboBox.SelectedIndex == 1;
 
-      ResetStyles();
+      CurrentConfig.ResetGraph(graphControl.Graph);
       UpdateGraphInformation();
 
       if (!preventLayout) {

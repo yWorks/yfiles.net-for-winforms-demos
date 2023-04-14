@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,6 +35,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Events.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -157,17 +158,7 @@ namespace Demo.yFiles.Graph.Events
 
     private void InitializeGraph() {
       var graph = graphControl.Graph;
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle {Brush = Brushes.Orange};
-      var groupStyle = new PanelNodeStyle {
-        Color = Color.FromArgb(255, 214, 229, 248),
-        LabelInsetsColor = Color.FromArgb(255, 214, 229, 248),
-        Insets = new InsetsD(5, 18, 5, 5)
-      };
-      graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(groupStyle);
-      graph.GroupNodeDefaults.Labels.LayoutParameter = InteriorStretchLabelModel.North;
-      graph.GroupNodeDefaults.Labels.Style = new DefaultLabelStyle {
-        StringFormat = new StringFormat {Alignment = StringAlignment.Far}
-      };
+      DemoStyles.InitDemoStyles(graph, foldingEnabled: true);
     }
 
     private void InitializeInputModes() {
@@ -651,6 +642,9 @@ namespace Demo.yFiles.Graph.Events
       editorMode.PopulateItemContextMenu -= GeimOnPopulateItemContextMenu;
       editorMode.QueryItemToolTip -= GeimOnQueryItemToolTip;
       editorMode.ValidateLabelText -= GeimOnValidateLabelText;
+      editorMode.ElementsCopied -= GeimOnElementsCopied;
+      editorMode.ElementsCut -= GeimOnElementsCut;
+      editorMode.ElementsPasted -= GeimOnElementsPasted;
       viewerMode.CanvasClicked -= GvimOnCanvasClicked;
       viewerMode.ItemClicked -= GvimOnItemClicked;
       viewerMode.ItemDoubleClicked -= GvimOnItemDoubleClicked;
@@ -662,6 +656,7 @@ namespace Demo.yFiles.Graph.Events
       viewerMode.MultiSelectionStarted -= GvimOnMultiSelectionStarted;
       viewerMode.PopulateItemContextMenu -= GvimOnPopulateItemContextMenu;
       viewerMode.QueryItemToolTip -= GvimOnQueryItemToolTip;
+      viewerMode.ElementsCopied -= GvimOnElementsCopied;
     }
 
     private void OnLogMoveModeEventsClicked(object sender, EventArgs args) {
@@ -932,6 +927,7 @@ namespace Demo.yFiles.Graph.Events
 
       editorMode.HandleInputMode.Dragged += InputModeOnDragged;
       editorMode.HandleInputMode.Dragging += InputModeOnDragging;
+      editorMode.HandleInputMode.Clicked += InputModeOnClick;
     }
 
     private void DeregisterHandleModeEvents(object sender,  EventArgs args) {
@@ -944,6 +940,7 @@ namespace Demo.yFiles.Graph.Events
 
       editorMode.HandleInputMode.Dragged -= InputModeOnDragged;
       editorMode.HandleInputMode.Dragging -= InputModeOnDragging;
+      editorMode.HandleInputMode.Clicked -= InputModeOnClick;
     }
 
     private void OnLogMoveViewportModeEventsClicked(object sender, EventArgs args) {
@@ -1608,6 +1605,9 @@ namespace Demo.yFiles.Graph.Events
 
     private void InputModeOnDragStarted(object sender, InputModeEventArgs inputModeEventArgs) {
       Log(sender.GetType().Name + " DragStarted" + GetAffectedItems(sender), "DragStarted");
+    }
+    private void InputModeOnClick(object sender, ClickEventArgs clickEventArgs) {
+      Log(sender.GetType().Name + " Clicked Handle", "HandleClicked");
     }
 
     private static string GetAffectedItems(object sender) {

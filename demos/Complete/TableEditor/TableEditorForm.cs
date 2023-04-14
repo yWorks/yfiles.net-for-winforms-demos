@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,6 +35,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.TableEditor.Properties;
 using Demo.yFiles.Graph.TableEditor.Style;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -72,10 +73,7 @@ namespace Demo.yFiles.Graph.TableEditor
     /// <summary>
     /// The default style for normal nodes
     /// </summary>
-    private readonly ShinyPlateNodeStyle defaultNormalNodeStyle = new ShinyPlateNodeStyle {
-      Radius = 0,
-      Brush = Brushes.Orange
-    };
+    private readonly INodeStyle defaultNormalNodeStyle = DemoStyles.CreateDemoNodeStyle();
 
     /// <summary>
     /// The default size for normal nodes

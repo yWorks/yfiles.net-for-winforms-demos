@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.ZOrder.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -86,10 +87,10 @@ namespace Demo.yFiles.Graph.ZOrder
       ungroupButton.SetCommand(Commands.UngroupSelection, graphControl);
 
       // z-Order commands
-      raiseButton.SetCommand(ZOrderGraphEditorInputMode.Raise, graphControl);
-      lowerButton.SetCommand(ZOrderGraphEditorInputMode.Lower, graphControl);
-      toFrontButton.SetCommand(ZOrderGraphEditorInputMode.ToFront, graphControl);
-      toBackButton.SetCommand(ZOrderGraphEditorInputMode.ToBack, graphControl);
+      raiseButton.SetCommand(ZOrderSupport.RaiseCommand, graphControl);
+      lowerButton.SetCommand(ZOrderSupport.LowerCommand, graphControl);
+      toFrontButton.SetCommand(ZOrderSupport.ToFrontCommand, graphControl);
+      toBackButton.SetCommand(ZOrderSupport.ToBackCommand, graphControl);
 
     }
 
@@ -188,7 +189,7 @@ namespace Demo.yFiles.Graph.ZOrder
             "Level: " + zIndex
         );
       } else {
-        graph.AddLabel(node, "Level: " + zIndex, null, null, null, ShowZOrderFlag.Instance);
+        graph.AddLabel(node, "Level: " + zIndex, tag: ShowZOrderFlag.Instance);
       }
     }
 
@@ -208,22 +209,7 @@ namespace Demo.yFiles.Graph.ZOrder
       // copy first label of collapsed group node
       view.Manager.FolderNodeConverter = new DefaultFolderNodeConverter() { CopyFirstLabel = true };
 
-      // configure the group node style.
-      // PanelNodeStyle is a nice style especially suited for group nodes
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
-      graphControl.Graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(
-          new PanelNodeStyle {
-              Color = groupNodeColor, 
-              Insets = new InsetsD(5, 20, 5, 5), 
-              LabelInsetsColor = groupNodeColor,
-          });
-      graphControl.Graph.GroupNodeDefaults.Labels.LayoutParameter = new InteriorLabelModel {
-          Insets = new InsetsD(20, 0, 0, 0)
-      }.CreateParameter(InteriorLabelModel.Position.NorthWest);
-      
-      // Set the default node style
-      graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
-      graphControl.Graph.NodeDefaults.Size = new SizeD(70, 40);
+      DemoStyles.InitDemoStyles(graphControl.Graph, foldingEnabled: true);
     }
 
     /// <summary>

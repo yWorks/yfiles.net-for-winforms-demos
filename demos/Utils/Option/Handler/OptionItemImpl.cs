@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,13 +34,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using Demo.yFiles.Option.Editor;
-using Demo.yFiles.Option.I18N;
-using Demo.yFiles.Option.View;
 
 namespace Demo.yFiles.Option.Handler
 {
@@ -317,23 +312,19 @@ namespace Demo.yFiles.Option.Handler
       if (converter != null && converter.CanConvertTo(typeof(string))) {
         return converter.ConvertToString(Value);
       }
-      ISerializable serializable = Value as ISerializable;
-      if (serializable != null) {
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        MemoryStream str = new MemoryStream();
-        formatter.Serialize(str, serializable);
-        return Convert.ToBase64String(str.ToArray(),
-                                      Base64FormattingOptions.InsertLineBreaks);
-      } else if (Value is double) {
+      if (Value is double) {
         return XmlConvert.ToString((double) Value);
-      } else if (Value is float) {
+      }
+      if (Value is float) {
         return XmlConvert.ToString((float) Value);
-      } else if (Value is int) {
+      }
+      if (Value is int) {
         return XmlConvert.ToString((int) Value);
-      } else if (Value is bool) {
+      }
+      if (Value is bool) {
         return XmlConvert.ToString((bool) Value);
-      } else if (Value is string) {
+      }
+      if (Value is string) {
         return (string) Value;
       }
       return Value.ToString();
@@ -362,22 +353,7 @@ namespace Demo.yFiles.Option.Handler
             return value.FirstChild.Value;
         }
       }
-      BinaryFormatter formatter = new BinaryFormatter();
-      string text = value.FirstChild.Value;
-      if (text != null && text != "") {
-        try {
-          byte[] rawData = Convert.FromBase64String(text);
-          return formatter.Deserialize(new MemoryStream(rawData));
-        }
-        catch(ArgumentNullException) {
-          return null;
-        }
-        catch(FormatException) {
-          return null;
-        }
-      } else {
-        return null;
-      }
+      return null;
     }
 
     internal virtual TypeConverter CreateConverter() {

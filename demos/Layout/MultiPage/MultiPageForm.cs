@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,6 +35,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.MultiPage.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms;
 using yWorks.Algorithms.Geometry;
 using yWorks.Controls;
@@ -96,6 +97,10 @@ namespace Demo.yFiles.Layout.MultiPage
       InitializeInputMode();
       // load the original graph
       modelGraph = new DefaultGraph();
+      // set a default node label style similar to those used for the visualization later,
+      // so the node labels read from the GraphML file are assigned a correct size that considers the
+      // paddings of the label style
+      modelGraph.NodeDefaults.Labels.Style = DemoStyles.CreateDemoNodeLabelStyle(Themes.Palette21);
       GraphMLIOHandler ioHandler = new GraphMLIOHandler();
       ioHandler.Read(modelGraph, "Resources/pop-artists-small.graphml");
       // add the page bounds visual
@@ -107,12 +112,11 @@ namespace Demo.yFiles.Layout.MultiPage
 
     private void InitializeInputMode() {
       // create the inputmode and disable selection and focus
-      GraphViewerInputMode mode = new GraphViewerInputMode()
-                                    {
-                                      ClickableItems = GraphItemTypes.Node,
-                                      SelectableItems = GraphItemTypes.None,
-                                      FocusableItems = GraphItemTypes.None,
-                                    };
+      GraphViewerInputMode mode = new GraphViewerInputMode {
+        ClickableItems = GraphItemTypes.Node,
+        SelectableItems = GraphItemTypes.None,
+        FocusableItems = GraphItemTypes.None,
+      };
       // handle clicks on nodes
       mode.ItemClicked += (sender, e) => GotoReferencingNode((INode)e.Item);
 	    // register the command bindings for the custom commands
@@ -244,7 +248,7 @@ namespace Demo.yFiles.Layout.MultiPage
             ShowLoadingIndicator(false);
           }));
         }
-        }).Start();
+      }).Start();
     }
 
     /// <summary>
@@ -252,64 +256,50 @@ namespace Demo.yFiles.Layout.MultiPage
     /// </summary>
     private void ApplyLayoutResult(MultiPageLayoutResult multiPageLayout, double pageWidth, double pageHeight)
     {
-      // typeface format for underlined labels
-      Font normalFont = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f, GraphicsUnit.Pixel);
-      Font font = new Font(SystemFonts.DefaultFont.FontFamily, 9.0f, FontStyle.Underline, GraphicsUnit.Pixel);
-
       // use the MultiPageGraphBuilder to create a list of IGraph instances that represent the single pages
       MultiPageIGraphBuilder builder = new MultiPageIGraphBuilder(multiPageLayout) {
         // assign custom template node styles for the auxiliary nodes introduced by the multipage layout.
         // also set the label style and model parameter. 
         // if nothing is specified, the values of the original graph are copied.
         NormalNodeDefaults = {
-          Style =
-            new ShapeNodeStyle {
-              Shape = ShapeNodeShape.RoundRectangle,
-              Pen = new Pen(Color.FromArgb(0xFF, 0x99, 0xCC, 0xFF)),
-              Brush =
-                new LinearGradientBrush(new Point(0, 0), new Point(0, 1), Color.FromArgb(0xFF, 0xCC, 0xFF, 0xFF),
-                    Color.FromArgb(0xFF, 0x99, 0xCC, 0xFF))
-            },
+          Style = DemoStyles.CreateDemoNodeStyle(Themes.Palette21),
           Labels = {
-            Style = new DefaultLabelStyle {Font = normalFont},
+            Style = DemoStyles.CreateDemoNodeLabelStyle(Themes.Palette21),
             LayoutParameter = InteriorLabelModel.Center
           }
         },
         ConnectorNodeDefaults = {
-          Style =
-            new ShapeNodeStyle {
-              Shape = ShapeNodeShape.RoundRectangle,
-              Pen = new Pen(Color.FromArgb(0xFF, 0xFF, 0x99, 0x00)),
-              Brush =
-                new LinearGradientBrush(new Point(0, 0), new Point(0, 1), Color.FromArgb(0xFF, 0xFF, 0xCC, 0x00), Color.FromArgb(0xFF, 0xFF, 0x99, 0x00))
-            },
+          Style = DemoStyles.CreateDemoNodeStyle(Themes.Palette23),
           Labels = {
-            Style = new DefaultLabelStyle {Font = font},
+            Style = DemoStyles.CreateDemoNodeLabelStyle(Themes.Palette23),
             LayoutParameter = InteriorLabelModel.Center
           }
         },
         ProxyNodeDefaults = {
-          Style =
-            new ShapeNodeStyle {
-              Shape = ShapeNodeShape.RoundRectangle,
-              Pen = new Pen(Color.FromArgb(0xFF, 0x99, 0xCC, 0x33)),
-              Brush =
-                new LinearGradientBrush(new Point(0, 0), new Point(0, 1), Color.FromArgb(0xFF, 0xCC, 0xFF, 0x99), Color.FromArgb(0xFF, 0x99, 0xCC, 0x33))
-            },
+          Style = DemoStyles.CreateDemoNodeStyle(Themes.Palette25),
           Labels = {
-            Style = new DefaultLabelStyle {Font = font},
+            Style = DemoStyles.CreateDemoNodeLabelStyle(Themes.Palette25),
             LayoutParameter = InteriorLabelModel.Center
           }
         },
         ProxyReferenceNodeDefaults = {
-          Style =
-            new ShapeNodeStyle{Shape = ShapeNodeShape.RoundRectangle, Pen = new Pen(Color.FromArgb(0xFF, 0xFF, 0x00, 0xFF)),
-                Brush = new LinearGradientBrush(new Point(0, 0), new Point(0, 1), Color.FromArgb(0xFF, 0xFF, 0xA6, 0xFF), Color.FromArgb(0xFF, 0xFF, 0x00, 0xFF))
-            },
+          Style = DemoStyles.CreateDemoNodeStyle(Themes.Palette14),
           Labels = {
-            Style = new DefaultLabelStyle {Font = font},
+            Style = DemoStyles.CreateDemoNodeLabelStyle(Themes.Palette14),
             LayoutParameter = InteriorLabelModel.Center
           }
+        },
+        NormalEdgeDefaults = {
+          Style =DemoStyles.CreateDemoEdgeStyle(Themes.Palette21) 
+        },
+        ConnectorEdgeDefaults = {
+          Style = DemoStyles.CreateDemoEdgeStyle(Themes.Palette23)
+        },
+        ProxyEdgeDefaults = {
+          Style = DemoStyles.CreateDemoEdgeStyle(Themes.Palette25)
+        },
+        ProxyReferenceEdgeDefaults = {
+          Style = DemoStyles.CreateDemoEdgeStyle(Themes.Palette14)
         }
       };
 

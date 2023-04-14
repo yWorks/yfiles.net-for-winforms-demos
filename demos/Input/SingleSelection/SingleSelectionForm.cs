@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,14 +28,13 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.SingleSelection.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.Input.SingleSelection
 {
@@ -67,12 +66,13 @@ namespace Demo.yFiles.Graph.Input.SingleSelection
       base.OnLoad(e);
 
     
-      graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
       var graphEditorInputMode = new GraphEditorInputMode();
       graphControl.InputMode = graphEditorInputMode;
       oldPasteItems = graphEditorInputMode.PasteSelectableItems;
 
       EnableSingleSelection(true);
+      
+      DemoStyles.InitDemoStyles(graphControl.Graph);
 
       LoadGraph();
       graphControl.FitGraphBounds();

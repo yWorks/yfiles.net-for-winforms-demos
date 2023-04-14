@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,9 +35,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.Configurations;
 using Demo.yFiles.Layout.LayoutStyles.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
-using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.Styles;
 using Application = System.Windows.Forms.Application;
@@ -119,7 +119,9 @@ namespace Demo.yFiles.Layout.LayoutStyles
       new LayoutConfigurationData("Classic Tree", new ClassicTreeLayoutConfig()),
       new LayoutConfigurationData("Balloon", new BalloonLayoutConfig()),
       new LayoutConfigurationData("Radial", new RadialLayoutConfig()),
+      new LayoutConfigurationData("Compact Disk", new CompactDiskLayoutConfig()),
       new LayoutConfigurationData("Series-Parallel", new SeriesParallelLayoutConfig()),
+      new LayoutConfigurationData("Components", new ComponentLayoutConfig()),
       new LayoutConfigurationData("Tabular", new TabularLayoutConfig()),
       new LayoutConfigurationData("Edge Router", new PolylineEdgeRouterConfig()),
       new LayoutConfigurationData("Channel Router", new ChannelEdgeRouterConfig()),
@@ -127,7 +129,6 @@ namespace Demo.yFiles.Layout.LayoutStyles
       new LayoutConfigurationData("Organic Router", new OrganicEdgeRouterConfig()),
       new LayoutConfigurationData("Parallel Router", new ParallelEdgeRouterConfig()),
       new LayoutConfigurationData("Labeling", new LabelingConfig()),
-      new LayoutConfigurationData("Components", new ComponentLayoutConfig()),
       new LayoutConfigurationData("Partial", new PartialLayoutConfig()),
       new LayoutConfigurationData("Graph Transform", new GraphTransformerConfig()),
     };
@@ -148,6 +149,7 @@ namespace Demo.yFiles.Layout.LayoutStyles
         new SampleData("Classic Tree", lcd["Classic Tree"]),
         new SampleData("Balloon", lcd["Balloon"]),
         new SampleData("Radial", lcd["Radial"]),
+        new SampleData("Compact Disk", lcd["Compact Disk"]),
         new SampleData("Series-Parallel", lcd["Series-Parallel"]),
         new SampleData("Edge Router", lcd["Edge Router"]),
         new SampleData("Bus Router", lcd["Bus Router"]),
@@ -211,14 +213,7 @@ namespace Demo.yFiles.Layout.LayoutStyles
     }
 
     private void SetShowTargetArrowState(bool isLayoutDirected) {
-      var currentStyle = Graph.EdgeDefaults.Style as PolylineEdgeStyle;
-      if (currentStyle == null) {
-        Graph.EdgeDefaults.Style = new PolylineEdgeStyle();
-      }
-      if (currentStyle != null) {
-        currentStyle.TargetArrow = isLayoutDirected ? Arrows.Default : Arrows.None;
-        Graph.EdgeDefaults.Style = currentStyle;
-      }
+      Graph.EdgeDefaults.Style = DemoStyles.CreateDemoEdgeStyle(showTargetArrow : isLayoutDirected);
     }
 
     /// <summary>
@@ -286,7 +281,7 @@ namespace Demo.yFiles.Layout.LayoutStyles
                      ".graphml";
       graphControl.GraphMLIOHandler.ClearGraphBeforeRead = true;
       graphControl.GraphMLIOHandler.Read(Graph, fileName);
-      graphControl.FitGraphBounds();
+      await graphControl.FitGraphBounds();
       // Force re-evaluation of special samples and their layouts for sub-structure layouts.
       OnLayoutChanged(sender, e);
       await ApplyLayout(true);
@@ -391,20 +386,7 @@ namespace Demo.yFiles.Layout.LayoutStyles
       Graph.SetUndoEngineEnabled(true);
 
       // set some nice default styles
-      Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
-
-      // get a hold of the group node defaults
-      var groupNodeDefaults = Graph.GroupNodeDefaults;
-
-      // configure the group node style.
-      //PanelNodeStyle is a nice style especially suited for group nodes
-      Color groupNodeColor = Color.FromArgb(255, 214, 229, 248);
-      groupNodeDefaults.Style = new PanelNodeStyle
-      {
-        Color = groupNodeColor,
-        Insets = new InsetsD(5),
-        LabelInsetsColor = groupNodeColor
-      };
+      DemoStyles.InitDemoStyles(Graph);
     }
 
     /// <summary>
@@ -543,12 +525,13 @@ namespace Demo.yFiles.Layout.LayoutStyles
     }
 
     private void GenerateRandomEdgeDirectedness(object sender, EventArgs routedEventArgs) {
+      var prototype = GetDemoArrow();
       foreach (var edge in Graph.Edges) {
         var directed = random.Next(2) != 0;
         var style = edge.Style as PolylineEdgeStyle;
         if (style != null) {
           var newStyle = (PolylineEdgeStyle) style.Clone();
-          newStyle.TargetArrow = directed ? Arrows.Default : Arrows.None;
+          newStyle.TargetArrow = directed ? CreateArrow(newStyle, prototype) : Arrows.None;
           Graph.SetStyle(edge, newStyle);
         }
       }
@@ -559,13 +542,24 @@ namespace Demo.yFiles.Layout.LayoutStyles
     }
 
     private void ResetEdgeDirectedness(bool directed = false) {
+      var prototype = GetDemoArrow();
       foreach (var edge in Graph.Edges) {
         var style = edge.Style as PolylineEdgeStyle;
         if (style != null) {
-          style.TargetArrow = directed || !style.TargetArrow.Equals(Arrows.None) ? Arrows.Default : Arrows.None;
+          var createArrow = directed || !style.TargetArrow.Equals(Arrows.None);
+          style.TargetArrow = createArrow ? CreateArrow(style, prototype) : Arrows.None;
         }
       }
       Graph.InvalidateDisplays();
+    }
+
+    private static Arrow GetDemoArrow() {
+      var demoArrow = DemoStyles.CreateDemoEdgeStyle(showTargetArrow : true).TargetArrow as Arrow;
+      return demoArrow ?? new Arrow() {Type = ArrowType.None};
+    }
+
+    private static IArrow CreateArrow(PolylineEdgeStyle style, Arrow arrow) {
+      return new Arrow() { Brush = style.Pen.Brush, Scale = arrow.Scale, Type = arrow.Type };
     }
 
     private void GenerateRandomLabels(List<ILabelOwner> items) {

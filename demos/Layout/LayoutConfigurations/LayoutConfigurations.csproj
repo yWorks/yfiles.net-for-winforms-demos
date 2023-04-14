@@ -85,6 +85,7 @@
     <Compile Include="ChannelEdgeRouterConfig.cs" />
     <Compile Include="CircularLayoutConfig.cs" />
     <Compile Include="ClassicTreeLayoutConfig.cs" />
+    <Compile Include="CompactDiskLayoutConfig.cs" />
     <Compile Include="ComponentLayoutConfig.cs" />
     <Compile Include="DescriptionResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -126,6 +127,8 @@
     <None Include="Resources\Bus-Router.rtf" />
     <None Include="Resources\Channel-Router.rtf" />
     <None Include="Resources\Circular.rtf" />
+    <None Include="Resources\ClassicTree.rtf" />
+    <None Include="Resources\Compact-Disk.rtf" />
     <None Include="Resources\Components.rtf" />
     <None Include="Resources\Hierarchic.rtf" />
     <None Include="Resources\Labeling.rtf" />
@@ -139,9 +142,6 @@
     <None Include="Resources\Series-Parallel.rtf" />
     <None Include="Resources\Tabular.rtf" />
     <None Include="Resources\Tree.rtf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ClassicTree.rtf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

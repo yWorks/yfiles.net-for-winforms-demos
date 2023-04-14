@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Graph.Clipboard.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -79,7 +80,7 @@ namespace Demo.yFiles.Graph.Clipboard
                                            focusedGraphControl.Select();
                                          };
 
-      // initialize the focuesed control
+      // initialize the focused control
       focusedGraphControl = tabControl.SelectedIndex == 0 ? graphControl : graphControl2;
 
       // Enable loading and saving 
@@ -140,7 +141,7 @@ namespace Demo.yFiles.Graph.Clipboard
     protected virtual void InitializeGraph() {
       IGraph graph = graphControl.Graph;
       
-      /// Enable undo/redo.
+      // Enable undo/redo.
       graph.SetUndoEngineEnabled(true);
 
       graph.NodeDefaults.Size = new SizeD(120, 60);
@@ -148,6 +149,7 @@ namespace Demo.yFiles.Graph.Clipboard
       var style = new ClipboardNodeStyle();
       // set the style as the default for all new nodes
       graph.NodeDefaults.Style = style;
+      graph.EdgeDefaults.Style = DemoStyles.CreateDemoEdgeStyle(Themes.Palette31);
 
       graph.NodeDefaults.Labels.LayoutParameter = ExteriorLabelModel.North;
       graph.EdgeDefaults.Labels.LayoutParameter = NinePositionsEdgeLabelModel.CenterAbove;

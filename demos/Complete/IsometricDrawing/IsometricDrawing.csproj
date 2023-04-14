@@ -80,7 +80,6 @@
     <Compile Include="IsometricDrawingDemo.Designer.cs">
       <DependentUpon>IsometricDrawingDemo.cs</DependentUpon>
     </Compile>
-    <Compile Include="IsometricGraphModelManager.cs" />
     <Compile Include="IsometricGroupNodeStyle.cs" />
     <Compile Include="IsometricNodeStyle.cs" />
     <Compile Include="Model\EdgeData.cs" />

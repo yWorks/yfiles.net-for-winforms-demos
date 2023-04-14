@@ -5,10 +5,10 @@ These source code samples demonstrate how to use the `TreeSource` and `GraphSour
 You will find the following programming samples in this package: 
 
 
-| Name | Description 
-|:---|:---
-|**AdjacencyGraphBuilder** | Demonstrates data binding using class `AdjacencyGraphBuilder`. 
-|**GraphBuilder** | Demonstrates data binding using class `GraphBuilder`. 
+| Name | Description |
+|:---|:---|
+|**AdjacencyGraphBuilder** | Demonstrates data binding using class `AdjacencyGraphBuilder`. |
+|**GraphBuilder** | Demonstrates data binding using class `GraphBuilder`. |
 
 ## Running the Demos
 
@@ -22,7 +22,7 @@ You will find the following programming samples in this package:
 
 #### See also
 [Product Page](https://www.yworks.com/products/yfiles.net)  
-[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[API Documentation](https://docs.yworks.com/yfilesdotnet)    
 [Help and Support](https://www.yworks.com/products/yfiles/support)
 
 

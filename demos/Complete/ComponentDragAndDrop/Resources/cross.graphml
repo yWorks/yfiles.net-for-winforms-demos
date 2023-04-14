@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Created by @PRODUCT@ @ASSEMBLY_VERSION@-->
+<!--Created by yFiles.NET 5.5-->
 <graphml xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:yforms="http://www.yworks.com/xml/yfiles.net/5.0/forms" xmlns:forms="http://www.yworks.com/xml/yfiles-common/1.0/forms" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.net/5.0/ygraphml.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns">
   <key id="d0" attr.name="NodeLabels" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeLabels" />
   <key id="d1" attr.name="NodeGeometry" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeGeometry" />
@@ -22,10 +22,10 @@
   <key id="d10" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
   <data key="d10">
     <y:SharedData>
-      <yforms:ShapeNodeStyle x:Key="1" Pen="{x:Null}" Brush="#FF008B8B" Shape="Ellipse" />
+      <yforms:ShapeNodeStyle x:Key="1" Pen="{x:Null}" Brush="#76b041" Shape="Ellipse" />
       <yforms:PolylineEdgeStyle x:Key="2">
         <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="#FF008B8B" Width="5" />
+          <yforms:Pen Brush="#76b041" Width="5" />
         </yforms:PolylineEdgeStyle.Pen>
       </yforms:PolylineEdgeStyle>
     </y:SharedData>

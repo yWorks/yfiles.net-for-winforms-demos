@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -230,7 +230,6 @@ namespace Demo.yFiles.Graph.RenderPolicies
       // 
       // graphControl
       // 
-      this.graphControl.AnimateScrollCommands = false;
       this.graphControl.BackColor = System.Drawing.Color.White;
       this.graphControl.Cursor = System.Windows.Forms.Cursors.Cross;
       this.graphControl.Dock = System.Windows.Forms.DockStyle.Fill;

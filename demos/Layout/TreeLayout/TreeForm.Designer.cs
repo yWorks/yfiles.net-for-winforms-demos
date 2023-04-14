@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -245,7 +245,7 @@ namespace Demo.yFiles.Layout.Tree
       // 
       this.splitContainer2.Panel2.Controls.Add(this.nodePlacerPanel);
       this.splitContainer2.Size = new System.Drawing.Size(754, 701);
-      this.splitContainer2.SplitterDistance = 448;
+      this.splitContainer2.SplitterDistance = 400;
       this.splitContainer2.TabIndex = 1;
       // 
       // graphControl
@@ -364,7 +364,7 @@ namespace Demo.yFiles.Layout.Tree
       this.Controls.Add(this.splitContainer1);
       this.Icon = global::Demo.yFiles.Layout.Tree.Properties.Resources.yIcon;
       this.Name = "TreeForm";
-      this.Text = "Generic Tree Demo";
+      this.Text = "Tree Layout Demo";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using Demo.yFiles.Graph.SelectionStyling.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -84,13 +85,7 @@ namespace Demo.yFiles.Graph.SelectionStyling
       description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
       // initialize default graph styles
       var graph = graphControl.Graph;
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.DarkOrange };
-      graph.NodeDefaults.Size = new SizeD(50, 30);
-
-      graph.NodeDefaults.Labels.Style = new MySimpleLabelStyle();
-      graph.NodeDefaults.Labels.LayoutParameter =
-        new ExteriorLabelModel {Insets = new InsetsD(15)}.CreateParameter(ExteriorLabelModel.Position.North);
-      graph.EdgeDefaults.Labels.Style = new MySimpleLabelStyle();
+      DemoStyles.InitDemoStyles(graph);
 
       // initialize the graph
       graphControl.ImportFromGraphML("Resources\\SelectionStyling.graphml");

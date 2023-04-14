@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -48,6 +48,10 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
   {
     private const double MinNodeHeight = 40;
     private const double MaxNodeHeight = 150;
+    private const double GrowShrinkStep = 10;
+    private const double ButtonRadius = ButtonDiameter / 2;
+    private const double ButtonDiameter = 25;
+    private const double ButtonDistance = 5;
 
     public GrowShrinkButtonNodeStyleDecorator(INodeStyle wrappedStyle) {
       if (wrappedStyle == null) {
@@ -95,9 +99,9 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
     private static ButtonType GetHitButton(ICanvasContext context, INode node, PointD location) {
       // Get anchor point near the top of the node
       var anchor = GetAnchor(node);
-      var upAnchor = anchor - new PointD(12.5, 0);
-      var downAnchor = anchor + new PointD(12.5, 0);
-      var circleRadius = 12.5 + context.HitTestRadius;
+      var upAnchor = anchor - new PointD(ButtonRadius + ButtonDistance / 2, 0);
+      var downAnchor = anchor + new PointD(ButtonRadius + ButtonDistance / 2, 0);
+      var circleRadius = ButtonRadius + context.HitTestRadius;
       if (CanShrink(node) && upAnchor.DistanceTo(location) < circleRadius) {
         return ButtonType.Shrink;
       }
@@ -150,9 +154,9 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
         var graph = ((GraphControl) context.CanvasControl).Graph;
         double newHeight = node.Layout.Height;
         if (clickedButton == ButtonType.Shrink) {
-          newHeight -= 10;
+          newHeight -= GrowShrinkStep;
         } else if (clickedButton == ButtonType.Grow) {
-          newHeight += 10;
+          newHeight += GrowShrinkStep;
         }
         var newLayout = new RectD(node.Layout.X, node.Layout.Y, node.Layout.Width, Math.Min(MaxNodeHeight, Math.Max(MinNodeHeight, newHeight)));
         graph.SetNodeLayout(node, newLayout);
@@ -186,7 +190,7 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
 
         // Shrink button
         var canShrink = CanShrink(node);
-        g.FillEllipse(canShrink ? Brushes.DarkSlateGray : disabledBrush, (float) (anchor.X - 27.5), (float) (anchor.Y - 12.5), 25, 25);
+        g.FillEllipse(canShrink ? Brushes.DarkSlateGray : disabledBrush, (float) (anchor.X - ButtonDistance / 2 - ButtonDiameter), (float) (anchor.Y - ButtonRadius), (float) ButtonDiameter, (float) ButtonDiameter);
         var up = new GraphicsPath();
         up.AddPolygon(new PointF[] {
           anchor - new PointD(5, 0), anchor - new PointD(15, 6), anchor - new PointD(25, 0),
@@ -199,7 +203,7 @@ namespace Demo.yFiles.Graph.Input.ClickHandler
 
         // Grow button
         var canGrow = CanGrow(node);
-        g.FillEllipse(canGrow ? Brushes.DarkSlateGray : disabledBrush, (float) (anchor.X + 2.5), (float) (anchor.Y - 12.5), 25, 25);
+        g.FillEllipse(canGrow ? Brushes.DarkSlateGray : disabledBrush, (float) (anchor.X + ButtonDistance / 2), (float) (anchor.Y - ButtonRadius), (float) ButtonDiameter, (float) ButtonDiameter);
         var down = new GraphicsPath();
         down.AddPolygon(new PointF[] {
           anchor + new PointD(5, 0), anchor + new PointD(15, 6), anchor + new PointD(25, 0),

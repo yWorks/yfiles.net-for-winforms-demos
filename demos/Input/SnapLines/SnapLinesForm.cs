@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,6 +35,7 @@ using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.SnapLines.Properties;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Graph;
@@ -131,6 +132,8 @@ namespace Demo.yFiles.Graph.Input.SnapLines
       GraphControl.Invalidate();
       GraphControl.ZoomChanged += delegate { UpdateGrid(); };
       GraphControl.ViewportChanged += delegate { UpdateGrid(); };
+
+      DemoStyles.InitDemoStyles(GraphControl.Graph);
 
       InitializeGraph();
     }

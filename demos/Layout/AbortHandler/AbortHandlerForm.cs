@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,17 +28,16 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.AbortHandler.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 using yWorks.Layout;
 using yWorks.Layout.Hierarchic;
 using yWorks.Layout.Organic;
@@ -95,7 +94,7 @@ namespace Demo.yFiles.Layout.AbortHandler
     private void RegisterToolStripCommands() {
       zoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
       zoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
-      fitContentButton.SetCommand(Commands.FitContent, graphControl);
+      fitContentButton.SetCommand(Commands.FitGraphBounds, graphControl);
 
       cutButton.SetCommand(Commands.Cut, graphControl);
       copyButton.SetCommand(Commands.Copy, graphControl);
@@ -114,7 +113,7 @@ namespace Demo.yFiles.Layout.AbortHandler
     /// </summary>
     protected virtual void InitializeGraph() {
       // set the default node style and size
-      GraphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
+      DemoStyles.InitDemoStyles(GraphControl.Graph);
       GraphControl.Graph.NodeDefaults.Size = new SizeD(60, 40);
 
       BuildGraph(GraphControl.Graph);

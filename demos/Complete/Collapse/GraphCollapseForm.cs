@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Collapse.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms;
 using yWorks.Controls;
 using yWorks.Controls.Input;
@@ -259,13 +260,8 @@ namespace Demo.yFiles.Graph.Collapse
       fullGraph.NodeDefaults.Size = new SizeD(60, 30);
       fullGraph.NodeDefaults.ShareStyleInstance = false;
 
-
-      // and a style for the labels
-      DefaultLabelStyle labelStyle = new DefaultLabelStyle();
-      Font font = new Font(FontFamily.GenericSansSerif, 12, GraphicsUnit.Pixel);
-      labelStyle.Font = font;
-      fullGraph.NodeDefaults.Labels.Style = labelStyle;
-
+      // Create a nice default style for the edges
+      fullGraph.EdgeDefaults.Style = DemoStyles.CreateDemoEdgeStyle();
 
       // now build a simple sample tree
       BuildTree(fullGraph, 3, 3, 3);

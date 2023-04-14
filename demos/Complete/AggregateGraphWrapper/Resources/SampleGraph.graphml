@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Created by @PRODUCT@ @ASSEMBLY_VERSION@-->
+<!--Created by yFiles.NET 5.5-->
 <graphml xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:yforms="http://www.yworks.com/xml/yfiles.net/5.0/forms" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.wpf/3.0/ygraphml.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns">
   <key id="d0" attr.type="boolean" attr.name="Expanded" for="node" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/Expanded">
     <default>true</default>
@@ -28,30 +28,16 @@
   <key id="d14" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData" />
   <data key="d14">
     <y:SharedData>
-      <yforms:ShapeNodeStyle x:Key="2" Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
-      <yforms:ShapeNodeStyle x:Key="4" Pen="{x:Null}" Brush="#FF9932CC" />
-      <yforms:ShapeNodeStyle x:Key="5" Pen="{x:Null}" Brush="#FF9932CC" Shape="Octagon" />
-      <yforms:ShapeNodeStyle x:Key="7" Pen="{x:Null}" Brush="#FF6495ED" />
-      <yforms:ShapeNodeStyle x:Key="8" Pen="{x:Null}" Brush="#FF9932CC" Shape="Diamond" />
-      <yforms:ShapeNodeStyle x:Key="9" Pen="{x:Null}" Brush="#FF6495ED" Shape="Diamond" />
-      <yforms:ShapeNodeStyle x:Key="10" Pen="{x:Null}" Brush="#FF008B8B" Shape="Diamond" />
-      <yforms:ShapeNodeStyle x:Key="11" Pen="{x:Null}" Brush="#FF008B8B" Shape="Octagon" />
-      <yforms:ShapeNodeStyle x:Key="12" Pen="{x:Null}" Brush="#FF008B8B" />
-      <yforms:PolylineEdgeStyle x:Key="13">
-        <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="#FF008B8B" Width="1" />
-        </yforms:PolylineEdgeStyle.Pen>
-      </yforms:PolylineEdgeStyle>
-      <yforms:PolylineEdgeStyle x:Key="14">
-        <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="#FF9932CC" Width="1" />
-        </yforms:PolylineEdgeStyle.Pen>
-      </yforms:PolylineEdgeStyle>
-      <yforms:PolylineEdgeStyle x:Key="15">
-        <yforms:PolylineEdgeStyle.Pen>
-          <yforms:Pen Brush="#FF6495ED" Width="1" />
-        </yforms:PolylineEdgeStyle.Pen>
-      </yforms:PolylineEdgeStyle>
+      <yforms:ShapeNodeStyle x:Key="BlueSquare" Pen="#617984" Brush="#67b7dc" />
+      <yforms:ShapeNodeStyle x:Key="BlueOctagon" Pen="#617984" Brush="#67b7dc" Shape="Octagon" />
+      <yforms:ShapeNodeStyle x:Key="GreenSquare" Pen="#304F52" Brush="#177E89" />
+      <yforms:ShapeNodeStyle x:Key="GreenOctagon" Pen="#304F52" Brush="#177E89" Shape="Octagon" />
+      <yforms:ShapeNodeStyle x:Key="GreenDiamond" Pen="#304F52" Brush="#177E89" Shape="Diamond" />
+      <yforms:ShapeNodeStyle x:Key="PurpleOctagon" Pen="#66485B" Brush="#aa4586" Shape="Octagon" />
+      <yforms:ShapeNodeStyle x:Key="PurpleDiamond" Pen="#66485B" Brush="#aa4586" Shape="Diamond" />
+      <yforms:PolylineEdgeStyle x:Key="13" Pen="#FF008B8B" />
+      <yforms:PolylineEdgeStyle x:Key="14" Pen="#FF9932CC" />
+      <yforms:PolylineEdgeStyle x:Key="15" Pen="#FF6495ED" />
     </y:SharedData>
   </data>
   <graph id="G">
@@ -60,7 +46,7 @@
         <y:RectD X="0" Y="1201" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>/>
     </node>
@@ -69,7 +55,7 @@
         <y:RectD X="273" Y="643" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -82,7 +68,7 @@
         <y:RectD X="515" Y="582" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -97,7 +83,7 @@
         <y:RectD X="963" Y="913" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -109,7 +95,7 @@
         <y:RectD X="480" Y="709" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -120,7 +106,7 @@
         <y:RectD X="1174" Y="0" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -129,7 +115,7 @@
         <y:RectD X="1018" Y="1243" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -142,7 +128,7 @@
         <y:RectD X="781" Y="689" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -156,7 +142,7 @@
         <y:RectD X="167" Y="505" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -165,7 +151,7 @@
         <y:RectD X="851" Y="463" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -175,7 +161,7 @@
         <y:RectD X="892" Y="685" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -185,7 +171,7 @@
         <y:RectD X="64" Y="1073" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -195,7 +181,7 @@
         <y:RectD X="1012" Y="772" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -204,7 +190,7 @@
         <y:RectD X="907" Y="1309" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -215,7 +201,7 @@
         <y:RectD X="1089" Y="883" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -226,7 +212,7 @@
         <y:RectD X="379" Y="434" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -237,7 +223,7 @@
         <y:RectD X="1165" Y="304" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -247,7 +233,7 @@
         <y:RectD X="962" Y="499" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -257,7 +243,7 @@
         <y:RectD X="683" Y="1595" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -266,7 +252,7 @@
         <y:RectD X="1315" Y="454" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -276,7 +262,7 @@
         <y:RectD X="449" Y="1094" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -286,7 +272,7 @@
         <y:RectD X="134" Y="731" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -295,7 +281,7 @@
         <y:RectD X="660" Y="1397" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -307,7 +293,7 @@
         <y:RectD X="560" Y="1033" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -320,7 +306,7 @@
         <y:RectD X="907" Y="289" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -330,7 +316,7 @@
         <y:RectD X="1321" Y="118" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -342,7 +328,7 @@
         <y:RectD X="1346" Y="343" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -352,7 +338,7 @@
         <y:RectD X="262" Y="999" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -364,7 +350,7 @@
         <y:RectD X="886" Y="1449" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -374,7 +360,7 @@
         <y:RectD X="796" Y="1217" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -384,7 +370,7 @@
         <y:RectD X="404" Y="569" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -395,7 +381,7 @@
         <y:RectD X="473" Y="820" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -411,7 +397,7 @@
         <y:RectD X="439" Y="983" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -426,7 +412,7 @@
         <y:RectD X="1063" Y="1402" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -436,7 +422,7 @@
         <y:RectD X="167" Y="1262" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -447,7 +433,7 @@
         <y:RectD X="281" Y="316" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -456,7 +442,7 @@
         <y:RectD X="1475" Y="616" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
     </node>
@@ -465,7 +451,7 @@
         <y:RectD X="738" Y="281" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -474,7 +460,7 @@
         <y:RectD X="362" Y="760" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -486,7 +472,7 @@
         <y:RectD X="887" Y="127" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
     </node>
@@ -495,7 +481,7 @@
         <y:RectD X="258" Y="1394" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="12" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -504,7 +490,7 @@
         <y:RectD X="1045" Y="661" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -519,7 +505,7 @@
         <y:RectD X="1356" Y="929" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
     </node>
@@ -528,7 +514,7 @@
         <y:RectD X="175" Y="1114" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -540,7 +526,7 @@
         <y:RectD X="99" Y="620" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -549,7 +535,7 @@
         <y:RectD X="1437" Y="730" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
     </node>
@@ -558,7 +544,7 @@
         <y:RectD X="632" Y="1144" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -571,7 +557,7 @@
         <y:RectD X="1196" Y="1289" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -580,7 +566,7 @@
         <y:RectD X="1210" Y="164" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="12" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -590,7 +576,7 @@
         <y:RectD X="397" Y="1208" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -602,7 +588,7 @@
         <y:RectD X="998" Y="1088" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -612,7 +598,7 @@
         <y:RectD X="591" Y="804" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="12" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -624,7 +610,7 @@
         <y:RectD X="1244" Y="799" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -634,7 +620,7 @@
         <y:RectD X="1434" Y="147" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -644,7 +630,7 @@
         <y:RectD X="522" Y="210" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -653,7 +639,7 @@
         <y:RectD X="184" Y="842" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="10" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -662,7 +648,7 @@
         <y:RectD X="286" Y="1130" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="4" />
+        <y:GraphMLReference ResourceKey="GreenSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -672,7 +658,7 @@
         <y:RectD X="796" Y="574" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -683,7 +669,7 @@
         <y:RectD X="1165" Y="1006" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
     </node>
@@ -692,7 +678,7 @@
         <y:RectD X="529" Y="1337" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -705,7 +691,7 @@
         <y:RectD X="771" Y="1378" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="11" />
+        <y:GraphMLReference ResourceKey="GreenOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -716,7 +702,7 @@
         <y:RectD X="702" Y="838" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -730,7 +716,7 @@
         <y:RectD X="901" Y="799" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -741,7 +727,7 @@
         <y:RectD X="740" Y="455" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
     </node>
@@ -750,7 +736,7 @@
         <y:RectD X="874" Y="1071" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="5" />
+        <y:GraphMLReference ResourceKey="PurpleOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -763,7 +749,7 @@
         <y:RectD X="392" Y="1322" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="2" />
+        <y:GraphMLReference ResourceKey="BlueOctagon" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -775,7 +761,7 @@
         <y:RectD X="587" Y="915" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="9" />
+        <y:GraphMLReference ResourceKey="GreenDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -787,7 +773,7 @@
         <y:RectD X="629" Y="490" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -797,7 +783,7 @@
         <y:RectD X="307" Y="874" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -807,7 +793,7 @@
         <y:RectD X="551" Y="365" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="7" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -817,7 +803,7 @@
         <y:RectD X="763" Y="1060" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <y:GraphMLReference ResourceKey="8" />
+        <y:GraphMLReference ResourceKey="PurpleDiamond" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -827,7 +813,7 @@
         <y:RectD X="711" Y="949" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -839,7 +825,7 @@
         <y:RectD X="840" Y="913" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -850,7 +836,7 @@
         <y:RectD X="652" Y="693" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -864,7 +850,7 @@
         <y:RectD X="549" Y="1463" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -875,7 +861,7 @@
         <y:RectD X="685" Y="1255" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -889,7 +875,7 @@
         <y:RectD X="512" Y="1205" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -900,7 +886,7 @@
         <y:RectD X="1300" Y="587" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -913,7 +899,7 @@
         <y:RectD X="1196" Y="474" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -925,7 +911,7 @@
         <y:RectD X="1073" Y="542" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>
@@ -938,7 +924,7 @@
         <y:RectD X="1047" Y="342" Width="50" Height="50" />
       </data>
       <data key="d4">
-        <yforms:ShapeNodeStyle Pen="{x:Null}" Brush="#FF6495ED" Shape="Octagon" />
+        <y:GraphMLReference ResourceKey="BlueSquare" />
       </data>
       <port name="p0"/>
       <port name="p1"/>

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -47,8 +47,10 @@ using Scope = yWorks.Layout.Organic.Scope;
 using yWorks.Layout.Labeling;
 using yWorks.Controls;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Demo.yFiles.Toolkit;
 using Neo4JIntegration.Properties;
 
 namespace Neo4JIntegration
@@ -378,10 +380,13 @@ namespace Neo4JIntegration
       nodesSource.NodeCreator.Defaults.Style = nodeStyle;
       nodesSource.NodeCreator.Defaults.Size = new SizeD(240, 80);
       var edgesSource = builder.CreateEdgesSource(edges, e => e.StartNodeId, e => e.EndNodeId, e => e.Id);
-      edgesSource.EdgeCreator.Defaults.Style = new BezierEdgeStyle { TargetArrow = Arrows.Default };
+      var style58 = Themes.Palette58;
+      var demoEdgeStyle = DemoStyles.CreateDemoEdgeStyle(style58);
+      edgesSource.EdgeCreator.Defaults.Style = new BezierEdgeStyle { TargetArrow = demoEdgeStyle.TargetArrow, Pen = demoEdgeStyle.Pen };
       var labelBinding = edgesSource.EdgeCreator.CreateLabelBinding(item => item.Type);
       labelBinding.Defaults.LayoutParameter = new EdgeSegmentLabelModel().CreateParameterFromSource(0, 0, EdgeSides.AboveEdge);
-      
+      labelBinding.Defaults.Style = DemoStyles.CreateDemoEdgeLabelStyle(style58);
+
       builder.NodeCreated +=
         (sender, e) => {
           // Ensure that nodes have the correct size
@@ -475,6 +480,11 @@ namespace Neo4JIntegration
     private void OnUnloaded(object sender, EventArgs e) {
       //Close the session
       Session?.CloseAsync();
+    }
+
+    private void OnLinkClicked(object sender, LinkClickedEventArgs e) {
+      var startInfo = new ProcessStartInfo { FileName = e.LinkText, UseShellExecute = true };
+      Process.Start(startInfo);
     }
 
     #region Main

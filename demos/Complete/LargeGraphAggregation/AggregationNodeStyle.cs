@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -81,8 +81,8 @@ namespace Demo.yFiles.Complete.LargeGraphAggregation
         gp.MoveTo(-4,0);
         gp.LineTo(4,0);
       }
-      gp.Transform(new Matrix2D(1,0,0,1, node.Layout.Width / 2, node.Layout.Height / 2));
       GeneralPathVisual path = new GeneralPathVisual(gp);
+      path.Transform = new Matrix(1,0,0,1, (float) (node.Layout.Width * 0.5), (float) (node.Layout.Height * 0.5));
       path.Pen = new Pen(Brushes.DimGray){Width = 1.5f};
       vg.Add(path);
       vg.Transform = new Matrix(1, 0, 0, 1, (float) node.Layout.X, (float) node.Layout.Y);
@@ -112,6 +112,12 @@ namespace Demo.yFiles.Complete.LargeGraphAggregation
       if (oldVisual.Transform.OffsetX != (float) layout.X || oldVisual.Transform.OffsetY != (float) layout.Y) {
         oldVisual.Transform = new Matrix(1, 0, 0, 1, (float) layout.X, (float) layout.Y);
       }
+      // Update the size if it has changed
+      var ellipseVisual = (EllipseVisual) vg.Children[0];
+      ellipseVisual.Bounds = new RectD(PointD.Origin, layout.GetSize());
+      // Update the position of the expand/collapse icon if the size of the node has changed
+      var pathVisual = (GeneralPathVisual) vg.Children[1];
+      pathVisual.Transform = new Matrix(1,0,0,1, (float) (layout.Width * 0.5), (float) (layout.Height * 0.5));
       return oldVisual;
     }
 

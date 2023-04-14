@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.HierarchicGrouping.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms;
 using yWorks.Algorithms.Geometry;
 using yWorks.Controls;
@@ -244,6 +245,8 @@ namespace Demo.yFiles.Graph.HierarchicGrouping
 
       // and set it to the GraphControl
       graphControl.Graph = foldingView.Graph;
+
+      DemoStyles.InitDemoStyles(graphControl.Graph, foldingEnabled:true);
 
       // decorate the behavior of nodes
       NodeDecorator nodeDecorator = graphControl.Graph.GetDecorator().NodeDecorator;

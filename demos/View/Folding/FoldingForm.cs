@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Folding.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -142,9 +143,7 @@ namespace Demo.yFiles.Graph.Folding
       InitializeFoldingManager();
 
       // initialize the master graph
-      foldingManager.MasterGraph.GroupNodeDefaults.Style =
-        new CollapsibleNodeStyleDecorator(new PanelNodeStyle {Color = Color.LightSkyBlue });
-      foldingManager.MasterGraph.NodeDefaults.Style = new BevelNodeStyle { Color = Color.Black };
+      DemoStyles.InitDemoStyles(foldingManager.MasterGraph, foldingEnabled: true);
 
       // enable undoability on the master graph
       foldingManager.MasterGraph.SetUndoEngineEnabled(true);
@@ -197,8 +196,6 @@ namespace Demo.yFiles.Graph.Folding
     private void InitializeFoldingManager() {
       // configure our way of displaying collapsed group nodes
       DefaultFolderNodeConverter folderNodeConverter = new DefaultFolderNodeConverter();
-      // we want a different style for collapsed group nodes
-      folderNodeConverter.FolderNodeStyle = new CollapsibleNodeStyleDecorator(new PanelNodeStyle { Color = Color.Orange });
       // and another initial size
       folderNodeConverter.FolderNodeSize = new MutableSize(40, 40);
       // register the converter

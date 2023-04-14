@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,6 +32,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.MoveUnselectedNodes.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -137,14 +138,15 @@ namespace Demo.yFiles.Graph.Input.MoveUnselectedNodes
     /// </summary>
     protected virtual void InitializeGraph() {
       // set the default node style
-      Graph.NodeDefaults.Style = new PanelNodeStyle
-      {
-        Color = Color.Orange,
-        LabelInsetsColor = Color.Gold,
-        Insets = new InsetsD(5,20,5,5)
+      Graph.NodeDefaults.Style = new GroupNodeStyle {
+        TabBrush = Themes.PaletteOrange.Fill,
+        ContentAreaInsets = InsetsD.Empty
       };
       Graph.NodeDefaults.Size = new SizeD(60,80);
-      Graph.NodeDefaults.Labels.LayoutParameter = InteriorLabelModel.North;
+      Graph.NodeDefaults.Labels.LayoutParameter = new GroupNodeLabelModel().CreateTabBackgroundParameter();
+      Graph.NodeDefaults.Labels.Style = new DefaultLabelStyle { TextBrush = Brushes.White };
+
+      Graph.EdgeDefaults.Style = DemoStyles.CreateDemoEdgeStyle();
 
       // Create a sample node
       Graph.AddLabel(Graph.CreateNode(), "Node");

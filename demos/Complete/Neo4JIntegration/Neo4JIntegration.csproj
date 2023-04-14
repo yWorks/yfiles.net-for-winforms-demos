@@ -68,6 +68,7 @@
     <Reference Include="yWorks.yFilesNET.Viewer">
       <HintPath>..\..\..\..\lib\net40\yWorks.yFilesNET.Viewer.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionDialog.cs">
@@ -146,7 +147,12 @@
     <None Include="Resources\mono16\play2-16.png" />
     <None Include="Resources\mono16\plus-16.png" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Neo4j.Driver">
       <Version>4.3.2</Version>

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -42,20 +42,24 @@ namespace Demo.yWorks.LayoutGraphViewer
 {
   public class LayoutGraphPanel : Panel
   {
+    private static readonly Brush nodeFill = new SolidBrush(Color.FromArgb(255, 108, 0));
+    private static readonly Brush nodeStroke = new SolidBrush(Color.FromArgb(102, 43, 0));
+    private static readonly Brush groupNodeStroke = new SolidBrush(Color.FromArgb(4, 45, 55));
+    private static readonly Brush labelFill = new SolidBrush(Color.FromArgb(255, 195, 152));
+    private static readonly Pen edgePen = new Pen(nodeStroke, 2);
+    private static readonly Pen nodePen = new Pen(nodeStroke, 2);
+    private static readonly Pen groupNodePen = new Pen(groupNodeStroke, 2);
+    private static readonly Font labelFont = new Font("sansserif", 6);
+
     private LayoutGraph layoutGraph;
 
-    private Pen edgePen;
-    private Pen nodeBorderPen;
-    private Pen labelBorderPen;
     private GroupingSupport grouping;
-    private SolidBrush nodeFillBrush;
-    private Font labelFont;
-    private Brush labelBrush;
+
+    private Brush nodeFillBrush;
 
     private Rectangle worldRect = new Rectangle(0, 0, 500, 500);
     private int insets = 20;
     private float zoom = 1.0f;
-    private Color nodeFillColor = Color.Yellow;
 
     public Rectangle WorldRect {
       get { return this.worldRect; }
@@ -92,12 +96,9 @@ namespace Demo.yWorks.LayoutGraphViewer
       this.HScroll = true;
       this.VScroll = true;
       this.layoutGraph = graph;
-      this.edgePen = new Pen(Brushes.Black, 1);
-      this.nodeBorderPen = new Pen(Brushes.DarkGray, 1);
-      this.labelBorderPen = new Pen(Brushes.Red, 1);
-      this.nodeFillBrush = new SolidBrush(nodeFillColor);
-      this.labelBrush = Brushes.Black;
-      this.labelFont = new Font("sansserif", 6);
+
+      this.nodeFillBrush = nodeFill;
+
       this.MouseDown += new MouseEventHandler(LayoutGraphPanel_MouseDown);
       SetWorldRect(rect.X - insets, rect.Y - insets, rect.Width + insets*2, rect.Height + insets*2);
     }
@@ -158,36 +159,29 @@ namespace Demo.yWorks.LayoutGraphViewer
         }
       }
       if (grouping.IsGroupNode(node)) {
-        SolidBrush oldBrush = this.nodeFillBrush;
-        Color color = Color.FromArgb(Math.Min(255, (int) (oldBrush.Color.R*0.9f)),
-                                     Math.Min(255, (int) (oldBrush.Color.G*0.9f)),
-                                     Math.Min(255, (int) (oldBrush.Color.B*0.9f)));
-        this.nodeFillBrush = new SolidBrush(color);
         for (ListCell cell = this.grouping.GetChildren(node).FirstCell; cell != null; cell = cell.Succ()) {
           Node child = (Node) cell.Info;
           PaintNodeAndChildren(g, layoutGraph, child);
         }
-        this.nodeFillBrush.Dispose();
-        this.nodeFillBrush = oldBrush;
       }
     }
 
     protected void PaintNodeLabel(Graphics g, LayoutGraph graph, Node node, INodeLabelLayout label) {
       YOrientedRectangle pos = GetNodeLabelLocation(graph, node, label);
-      DrawOrientedRect(pos, g);
+      PaintOrientedRect(pos, g);
     }
 
-    private void DrawOrientedRect(YOrientedRectangle pos, Graphics g) {
+    private void PaintOrientedRect(YOrientedRectangle pos, Graphics g) {
       points[0] = new PointF((float) pos.AnchorX, (float) pos.AnchorY);
       points[1] = new PointF((float)(pos.AnchorX + pos.Height * pos.UpX), (float)(pos.AnchorY + pos.Height * pos.UpY));
       points[2] = new PointF((float)(pos.AnchorX + pos.Height * pos.UpX + pos.Width * -pos.UpY), (float)(pos.AnchorY + pos.Height * pos.UpY + pos.Width * pos.UpX));
       points[3] = new PointF((float)(pos.AnchorX + pos.Width * -pos.UpY), (float)(pos.AnchorY + pos.Width * pos.UpX));
-      g.DrawPolygon(this.labelBorderPen, points);
+      g.FillPolygon(labelFill, points);
     }
 
     protected void PaintEdgeLabel(Graphics g, LayoutGraph graph, Edge edge, IEdgeLabelLayout label) {
       YOrientedRectangle pos = GetEdgeLabelLocation(graph, edge, label);
-      DrawOrientedRect(pos, g);
+      PaintOrientedRect(pos, g);
     }
 
     protected void PaintEdge(Graphics g, LayoutGraph graph, Edge e) {
@@ -207,20 +201,23 @@ namespace Demo.yWorks.LayoutGraphViewer
     private PointF[] points = new PointF[4];
 
     protected void PaintNode(Graphics g, LayoutGraph graph, Node node) {
+      var isGroupNode = grouping != null && grouping.IsGroupNode(node);
+
       INodeLayout nl = graph.GetLayout(node);
-      RectangleF rect = RectangleF.FromLTRB((float) nl.X, (float) nl.Y, (float) (nl.X + nl.Width),
-                                            (float) (nl.Y + nl.Height));
-      Region r = new Region(rect);
-      g.FillRegion(nodeFillBrush, r);
-      points[0] = new PointF(rect.X, rect.Y);
-      points[1] = new PointF(rect.X + rect.Width, rect.Y);
-      points[2] = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
-      points[3] = new PointF(rect.X, rect.Y + rect.Height);
-      g.DrawPolygon(nodeBorderPen, points);
+      RectangleF rect = RectangleF.FromLTRB(
+        (float) nl.X, (float) nl.Y, (float) (nl.X + nl.Width), (float) (nl.Y + nl.Height));
+
+      if (!isGroupNode) {
+        g.FillRectangle(nodeFillBrush, rect);
+      }
+
+      g.DrawRectangle(isGroupNode ? groupNodePen : nodePen, rect.X, rect.Y, rect.Width, rect.Height);
+
       string text = node.Index.ToString();
       SizeF size = g.MeasureString(text, labelFont);
-      g.DrawString(text, labelFont, labelBrush, rect.X + rect.Width*0.5f - size.Width*0.5f,
-                   rect.Y + rect.Height*0.5f - size.Height*0.5f);
+      var textX = rect.X + rect.Width*0.5f - size.Width*0.5f;
+      var textY = rect.Y + rect.Height*0.5f - size.Height*0.5f;
+      g.DrawString(text, labelFont, isGroupNode ? groupNodeStroke : nodeStroke, textX, textY);
     }
 
     public void ExportToEmf(string emfFile) {

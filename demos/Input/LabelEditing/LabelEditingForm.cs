@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -36,6 +36,7 @@ using Demo.yFiles.Graph.Input.LabelEditing.Properties;
 using Demo.yFiles.Option.Constraint;
 using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -405,12 +406,8 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
       graph.SetUndoEngineEnabled(true);
 
       // Set the default node style
-      graph.NodeDefaults.Style = new ShapeNodeStyle {
-        Shape = ShapeNodeShape.Ellipse,
-        Pen = Pens.Black,
-        Brush = Brushes.CornflowerBlue
-      };
-      graph.NodeDefaults.Size = new SizeD(80, 30);
+      DemoStyles.InitDemoStyles(graph);
+      graph.NodeDefaults.Size = new SizeD(100, 100);
     }
 
     #region Command registration

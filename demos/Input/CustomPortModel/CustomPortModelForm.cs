@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,10 +28,10 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.CustomPortModel.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -108,10 +108,17 @@ namespace Demo.yFiles.Graph.CustomPortModel
     /// the our model and an edge to connect the ports.
     /// </summary>
     protected void InitializeGraph() {
+      DemoStyles.InitDemoStyles(graphControl.Graph);
+
       graphControl.Graph.NodeDefaults.Ports.LocationParameter = new MyNodePortLocationModel().CreateParameter(PortLocation.Center);
-      graphControl.Graph.NodeDefaults.Ports.Style = new NodeStylePortStyleAdapter(new ShapeNodeStyle() {Shape = ShapeNodeShape.Ellipse, Brush = Brushes.Red, Pen = null}) {RenderSize = new SizeD(3, 3)};
-      graphControl.Graph.NodeDefaults.Size = new SizeD(50, 50);
-      graphControl.Graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
+
+      // set the default port style and size for this demo
+      var shapeNodeStyle = DemoStyles.CreateDemoShapeNodeStyle(ShapeNodeShape.Ellipse, Themes.PaletteBlue);
+      graphControl.Graph.NodeDefaults.Ports.Style = new NodeStylePortStyleAdapter(shapeNodeStyle)
+      {
+        RenderSize = new SizeD(10, 10)
+      };
+      graphControl.Graph.NodeDefaults.Size = new SizeD(100, 100);
 
       var source = graphControl.Graph.CreateNode(new RectD(90, 90, 100, 100));
       var target = graphControl.Graph.CreateNode(new RectD(250, 90, 100, 100));

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -41,6 +41,7 @@ using yWorks.Graph.Styles;
 using yWorks.GraphML;
 using yWorks.Markup.Common;
 using yWorks.Markup.Platform;
+#pragma warning disable CS0618
 
 // Assembly attributes to allow the framework XAML deserializer to find our types.
 [assembly: XmlnsDefinition(GraphMLCompatibility.YfilesCommonNS20, "Demo.yFiles.IO.GraphML.Compat.Common")]

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -36,6 +36,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Viewer.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
@@ -227,26 +228,9 @@ namespace Demo.yFiles.Graph.Viewer
     private void EnableFolding() {
       // create the manager
       manager = new FoldingManager();
+      DemoStyles.InitDemoStyles(manager.MasterGraph, foldingEnabled: true);
       // replace the displayed graph with a managed view
       graphControl.Graph = manager.CreateFoldingView().Graph;
-      WrapGroupNodeStyles();
-    }
-
-    /// <summary>
-    /// Change the default style for group nodes.
-    /// </summary>
-    /// <remarks>We use <see cref="CollapsibleNodeStyleDecorator"/> to wrap the
-    /// <see cref="PanelNodeStyle"/> from the last demo, since we want to have nice
-    /// +/- buttons for collapse/expand. Note that if you haven't defined
-    /// a custom group node style, you don't have to do anything at all, since
-    /// <see cref="FoldingManager"/> already
-    /// provides such a decorated group node style by default.</remarks>
-    private void WrapGroupNodeStyles() {
-      //PanelNodeStyle is a nice style especially suited for group nodes
-      PanelNodeStyle style = new PanelNodeStyle {Color = Color.LightBlue};
-
-      //Wrap the style with CollapsibleNodeStyleDecorator
-      graphControl.Graph.GroupNodeDefaults.Style = new CollapsibleNodeStyleDecorator(style);
     }
 
     private void OnCurrentItemChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs) {
@@ -355,7 +339,8 @@ namespace Demo.yFiles.Graph.Viewer
 
     private void nodeUrlButton_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
       // Open the link...
-      Process.Start(new ProcessStartInfo {FileName = e.Link.LinkData.ToString(), UseShellExecute = true});
+      var startInfo = new ProcessStartInfo {FileName = e.Link.LinkData.ToString(), UseShellExecute = true};
+      Process.Start(startInfo);
     }
 
     /// <summary>

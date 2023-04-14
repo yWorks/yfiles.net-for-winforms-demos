@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -99,7 +99,6 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
       }
 
       private void ConfigureTextEditorInputMode(IInputModeContext context, TextEditorInputMode mode, ILabel label) {
-        var oldBackground = mode.TextBox.BackColor;
         var oldVisual = labelCanvasObject.Visible;
 
         // We know that this label helper is only used once this demo is properly set up.
@@ -127,7 +126,8 @@ namespace Demo.yFiles.Graph.Input.LabelEditing
         EventHandler<TextEventArgs> afterEditing = null;
         afterEditing = delegate {
           labelCanvasObject.Visible = oldVisual;
-          mode.TextBox.BackColor = oldBackground;
+          mode.TextBox.ResetBackColor();
+          mode.TextBox.ResetFont();
           mode.TextBox.Font = oldFont;
           context.CanvasControl.Invalidate();
           mode.TextEdited -= afterEditing;

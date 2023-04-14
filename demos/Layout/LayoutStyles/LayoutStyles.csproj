@@ -91,6 +91,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LayoutConfigurations\LayoutConfigurations.csproj">
       <Project>{d67fdf4c-0162-4f19-9091-160d5068594a}</Project>
       <Name>LayoutConfigurations</Name>
@@ -120,9 +124,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\circular.graphml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\classictree.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\components.graphml">
@@ -260,6 +261,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\yFiles.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\compactdisk.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--The following targets ensure that the project will build even when the ZIP file has been-->

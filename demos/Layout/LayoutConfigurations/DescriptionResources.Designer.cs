@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -149,6 +149,19 @@ namespace Demo.yFiles.Layout.Configurations {
         internal static string Classic_Tree {
             get {
                 return ResourceManager.GetString("Classic_Tree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
+        ///{\colortbl ;\red0\green0\blue0;}
+        ///{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\cf1\f0\fs18\lang1033 The nodes are arranged on a disk such that the disk&apos;s radius is minimized.\par
+        ///The layout mostly optimizes the dense placement of the nodes, while edges play a minor role. Hence, the compact disk layout is mostly suitable for graphs with small components whose loosely connected nodes should be gr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Compact_Disk {
+            get {
+                return ResourceManager.GetString("Compact_Disk", resourceCulture);
             }
         }
         

@@ -152,6 +152,10 @@
     <None Include="Resources\mono16\zoom-original3-16.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Utils\DemoToolkit\DemoToolkit.csproj">
+      <Project>{ec42f085-c094-4372-b3db-d8495bd3d543}</Project>
+      <Name>DemoToolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Utils\Option\Option.csproj">
       <Project>{C5CF497F-BFD2-40E3-B2B9-7DAAD32BBB64}</Project>
       <Name>Demo.yFiles.Option</Name>

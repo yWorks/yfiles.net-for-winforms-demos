@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -28,7 +28,6 @@
  ***************************************************************************/
 
 using System;
-using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Reflection;
@@ -38,11 +37,11 @@ using Demo.yFiles.Option.Editor;
 using Demo.yFiles.Option.Handler;
 using Demo.yFiles.Option.I18N;
 using Demo.yFiles.Printing.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 using yWorks.Utils;
 
 namespace Demo.yFiles.Printing
@@ -156,11 +155,10 @@ namespace Demo.yFiles.Printing
     private void InitializeGraph() {
       IGraph graph = graphControl.Graph;
       // initialize defaults
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.DarkOrange };
-      graph.EdgeDefaults.Style = new PolylineEdgeStyle {TargetArrow = Arrows.Default};
+      DemoStyles.InitDemoStyles(graph);
 
       // create sample graph
-      graph.AddLabel(graph.CreateNode(new PointD(30, 30)), "Node");
+      graph.AddLabel(graph.CreateNode(new RectD(15, 15, 50, 30)), "Node");
       INode node = graph.CreateNode(new PointD(90, 30));
       graph.CreateEdge(node, graph.CreateNode(new PointD(90, 90)));
 
@@ -243,9 +241,8 @@ namespace Demo.yFiles.Printing
     #endregion
 
     #region eventhandlers
-
-    private void printButton_Click(object sender, EventArgs e) {
-
+    
+    private void SetupPrintDocumentOptions() {
       GraphControl control = graphControl;
       // check if the rectangular region or the whole viewport should be printed
       bool useRect = (bool)handler.GetValue(OUTPUT, EXPORT_RECTANGLE);
@@ -269,7 +266,10 @@ namespace Demo.yFiles.Printing
       // set print area
       printDocument.PrintRectangle = bounds;
       printDocument.Projection = graphControl.Projection;
+    }
 
+    private void printPreviewButton_Click(object sender, EventArgs e) {
+      SetupPrintDocumentOptions();
       // show new PrintPreviewDialog
       PrintPreviewDialog dialog = new PrintPreviewDialog { Document = printDocument };
       DialogResult result = dialog.ShowDialog(this);
@@ -280,20 +280,29 @@ namespace Demo.yFiles.Printing
       printDocument.Print();
     }
 
-    private void printerSetupButton_Click(object sender, EventArgs e) {
+    private void printWithDialogButton_Click(object sender, EventArgs e) {
+      SetupPrintDocumentOptions();
       // show new PrintDialog
+      printDocument.DefaultPageSettings.Landscape = true;
       PrintDialog printDialog = new PrintDialog
       {
         AllowCurrentPage = false,
         AllowSomePages = false,
         PrinterSettings = printerSettings,
-        UseEXDialog = true,
+        UseEXDialog = false,
         Document = printDocument,
+        AllowPrintToFile = false,
       };
-      printDialog.ShowDialog(this);
+      DialogResult result = printDialog.ShowDialog(this);
+      if (result == DialogResult.Cancel || result == DialogResult.Abort || result == DialogResult.No) {
+        return;
+      }
+      // print
+      printDocument.Print();
     }
 
     private void pageSetupButton_Click(object sender, EventArgs e) {
+      SetupPrintDocumentOptions();
       // show new PageSetupDialog
       PageSetupDialog setupDialog = new PageSetupDialog
       {
@@ -305,6 +314,7 @@ namespace Demo.yFiles.Printing
         PageSettings = pageSettings,
         Document = printDocument,
       };
+      //We just want to setup the page settings here, so we don't react to the actual dialog result
       setupDialog.ShowDialog(this);
     }
 

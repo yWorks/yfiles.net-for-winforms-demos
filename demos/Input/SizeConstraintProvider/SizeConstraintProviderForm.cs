@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,12 +32,12 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.SizeConstraintProvider.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
 using yWorks.Graph.LabelModels;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.Input.SizeConstraintProvider
 {
@@ -69,13 +69,13 @@ namespace Demo.yFiles.Graph.Input.SizeConstraintProvider
 
           // Check if it is a known tag and choose the respective implementation.
           // Fallback to the default behavior otherwise.
-          if (!(nodeTag is Color)) {
+          if (!(nodeTag is Palette)) {
             return null;
-          } else if (Color.RoyalBlue.Equals(nodeTag)) {
+          } else if (Themes.PaletteLightblue.Equals(nodeTag)) {
             return blueSizeConstraintProvider;
-          } else if (Color.Green.Equals(nodeTag)) {
+          } else if (Themes.PaletteGreen.Equals(nodeTag)) {
             return new GreenSizeConstraintProvider();
-          } else if (Color.Orange.Equals(nodeTag)) {
+          } else if (Themes.PaletteOrange.Equals(nodeTag)) {
             return new NodeSizeConstraintProvider(
               new SizeD(50, 50), new SizeD(300, 300), boundaryRectangle.ToRectD());
           } else {
@@ -202,20 +202,19 @@ namespace Demo.yFiles.Graph.Input.SizeConstraintProvider
     /// Creates the sample graph of this demo.
     /// </summary>
     private static void CreateSampleGraph(IGraph graph) {
-      CreateNode(graph, 100, 100, 100, 60, Color.RoyalBlue, Color.WhiteSmoke, "Never Shrink\n(Max 3x)");
-      CreateNode(graph, 300, 100, 160, 30, Color.RoyalBlue, Color.WhiteSmoke, "Never Shrink (Max 3x)");
-      CreateNode(graph, 100, 215, 100, 30, Color.Green, Color.WhiteSmoke, "Enclose Label");
-      CreateNode(graph, 300, 200, 140, 80, Color.Green, Color.WhiteSmoke, "Enclose Label,\nEven Large Ones");
-      CreateNode(graph, 200, 340, 140, 140, Color.Orange, Color.Black, "Encompass Rectangle,\nMin and Max Size");
+      CreateNode(graph, 100, 100, 100, 60, Themes.PaletteLightblue, Color.WhiteSmoke, "Never Shrink\n(Max 3x)");
+      CreateNode(graph, 300, 100, 160, 30, Themes.PaletteLightblue, Color.WhiteSmoke, "Never Shrink (Max 3x)");
+      CreateNode(graph, 100, 215, 100, 30, Themes.PaletteGreen, Color.WhiteSmoke, "Enclose Label");
+      CreateNode(graph, 300, 200, 140, 80, Themes.PaletteGreen, Color.WhiteSmoke, "Enclose Label,\nEven Large Ones");
+      CreateNode(graph, 200, 340, 140, 140, Themes.PaletteOrange, Color.Black, "Encompass Rectangle,\nMin and Max Size");
     }
 
     /// <summary>
     /// Creates a sample node for this demo.
     /// </summary>
-    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Color fillColor, Color textColor, string labelText) {
-      var whiteTextLabelStyle = new DefaultLabelStyle { TextBrush = new SolidBrush(textColor) };
-      INode node = graph.CreateNode(new RectD(x, y, w, h), new ShinyPlateNodeStyle{Brush = new SolidBrush(fillColor)}, fillColor);
-      graph.SetStyle(graph.AddLabel(node, labelText), whiteTextLabelStyle);
+    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Palette palette, Color textColor, string labelText) {
+      INode node = graph.CreateNode(new RectD(x, y, w, h), DemoStyles.CreateDemoNodeStyle(palette), palette);
+      graph.SetStyle(graph.AddLabel(node, labelText), DemoStyles.CreateDemoNodeLabelStyle(palette));
     }
 
     #endregion

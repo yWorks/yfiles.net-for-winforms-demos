@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Created by yFiles .NET 5.0-->
 <graphml xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:yforms="http://www.yworks.com/xml/yfiles.net/5.0/forms" xmlns:forms="http://www.yworks.com/xml/yfiles-common/1.0/forms" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.net/5.0/ygraphml.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns">
   <key id="GraphDescription" for="graph" attr.name="GraphDescription" attr.type="string"/>
@@ -7,14 +7,25 @@
   <key id="d2" for="node" attr.name="NodeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeGeometry" />
   <key id="d3" for="node" attr.name="NodeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeStyle">
     <default>
-      <yforms:ShinyPlateNodeStyle Brush="Orange" Pen="Orange" />
+      <yforms:RectangleNodeStyle Brush="#ff6c00">
+        <yforms:RectangleNodeStyle.Pen>
+          <yforms:Pen Brush="#662b00" Width="1.5"/>
+        </yforms:RectangleNodeStyle.Pen>
+      </yforms:RectangleNodeStyle>
     </default>
   </key>
   <key id="d4" for="edge" attr.name="EdgeLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeLabels" />
   <key id="d5" for="edge" attr.name="EdgeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeGeometry" />
   <key id="d6" for="edge" attr.name="EdgeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeStyle">
     <default>
-      <yforms:PolylineEdgeStyle TargetArrow="Default" SourceArrow="None" />
+      <yforms:PolylineEdgeStyle>
+        <yforms:PolylineEdgeStyle.Pen>
+          <yforms:Pen Brush="#FF662B00" Width="1.5" />
+        </yforms:PolylineEdgeStyle.Pen>
+        <yforms:PolylineEdgeStyle.TargetArrow>
+          <yforms:Arrow Type="Triangle" Brush="#FF662B00" />
+        </yforms:PolylineEdgeStyle.TargetArrow>
+      </yforms:PolylineEdgeStyle>
     </default>
   </key>
   <key id="d7" for="port" attr.name="PortLocationParameter" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLocationParameter">

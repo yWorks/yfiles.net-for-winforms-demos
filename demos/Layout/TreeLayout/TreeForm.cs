@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -29,8 +29,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +36,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Demo.yFiles.Layout.Tree.Configuration;
 using Demo.yFiles.Layout.Tree.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Algorithms;
 using yWorks.Controls;
 using yWorks.Controls.Input;
@@ -64,8 +63,6 @@ namespace Demo.yFiles.Layout.Tree
     /// </summary>
     public TreeForm() {
       InitializeComponent();
-
-      
     }
 
     /// <summary>
@@ -131,10 +128,9 @@ namespace Demo.yFiles.Layout.Tree
     protected virtual void InitializeGraph() {
 
       IGraph graph = graphControl.Graph;
-      //Create graph
+
+      DemoStyles.InitDemoStyles(graph, Themes.Palette58);
       graph.NodeDefaults.Size = new SizeD(60, 40);
-      // set the style as the default for all new nodes
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = new SolidBrush(Color.FromArgb(255, 192, 192, 192)) };
 
       graph.SetUndoEngineEnabled(true);
 
@@ -174,7 +170,7 @@ namespace Demo.yFiles.Layout.Tree
       // forbid node and edge creation
       geim.AllowCreateEdge = true;
       geim.AllowCreateNode = false;
-      // Allow ownly node deletion
+      // Allow only node deletion
       geim.DeletableItems = GraphItemTypes.Node;
 
       geim.ContextMenuItems = GraphItemTypes.Node;
@@ -213,8 +209,7 @@ namespace Demo.yFiles.Layout.Tree
       // set the style according to the layer
       createEdgeInputMode.GestureStarted += (sender, args) => {
         int layer = GetLayer((INode) createEdgeInputMode.SourcePortCandidate.Owner) + 1;
-        createEdgeInputMode.DummyEdgeGraph.SetStyle(createEdgeInputMode.DummyTargetNode,
-            new ShinyPlateNodeStyle {Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer % NodePlacerPanel.LayerBrushes.Length])});
+        createEdgeInputMode.DummyEdgeGraph.SetStyle(createEdgeInputMode.DummyTargetNode, NewNodeStyle(layer));
       };
 
       // let the EdgeCreator create a new target node and connect the new edge to it
@@ -238,8 +233,7 @@ namespace Demo.yFiles.Layout.Tree
       IGraph graph = graphControl.Graph;
 
       // set the correct color for the layer
-      graph.SetStyle(node,
-        new ShinyPlateNodeStyle {Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer%NodePlacerPanel.LayerBrushes.Length])});
+      graph.SetStyle(node, NewNodeStyle(layer));
       // and the correct placer for the layer
       INodePlacer placer = null;
       if (layer >= nodePlacerPanel.NodePlacers.Count) {
@@ -314,13 +308,8 @@ namespace Demo.yFiles.Layout.Tree
       menuItem.Click += async delegate {
                           //Toggle the value in the map and set the style to indicate an assistant node
                           assistants[node] = !assistant;
-                          var shinyPlateNodeStyle = node.Style.Clone() as ShinyPlateNodeStyle;
-                          if (shinyPlateNodeStyle != null) {
-                            shinyPlateNodeStyle.Pen = !assistant
-                                                        ? new Pen(Brushes.Black, 2) {DashStyle = DashStyle.Dash}
-                                                        : null;
-                            graphControl.Graph.SetStyle(node, shinyPlateNodeStyle);
-                          }
+                          var layer = GetLayer(node); 
+                          graphControl.Graph.SetStyle(node, assistant ? NewNodeStyle(layer) : NewAssistantStyle(layer));
                           await ApplyLayout();
                         };
       e.Menu.Items.Add(menuItem);
@@ -350,7 +339,7 @@ namespace Demo.yFiles.Layout.Tree
       //Update the placer configuration
       UpdatePlacerList();
       //Center the graph to prevent the initial layout fading in from the top left corner
-      graphControl.FitGraphBounds();
+      await graphControl.FitGraphBounds();
       //And trigger new layout
       await ApplyLayout();
       //Clear the undo engine afterwards
@@ -368,7 +357,7 @@ namespace Demo.yFiles.Layout.Tree
     public void UpdatePlacerList() {
       IGraph graph = graphControl.Graph;
 
-      // Determine the root node of the tree:
+      // Determine the root node of the tree:  
       var graphAdapter = new YGraphAdapter(graph);
       INode root = graphAdapter.GetOriginalNode(Trees.GetRoot(graphAdapter.YGraph));
 
@@ -450,12 +439,8 @@ namespace Demo.yFiles.Layout.Tree
     private void CreateSampleGraph(IGraph graph) {
       graph.Clear();
       INode root = graph.CreateNode();
-      var style = new ShinyPlateNodeStyle { Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[0]) };
-      graph.SetStyle(root, style);
-      var placer = new DefaultNodePlacer
-                     {
-                       ChildPlacement = ChildPlacement.VerticalToRight
-                     };
+      graph.SetStyle(root, NewNodeStyle(0));
+      var placer = new DefaultNodePlacer { ChildPlacement = ChildPlacement.HorizontalDownward };
       placers[root] = placer;
       CreateSubTree(graph, root, 1, 2);
     }
@@ -469,15 +454,27 @@ namespace Demo.yFiles.Layout.Tree
       for (int i = 0; i < children; i++) {
         INode child = graph.CreateNode();
         graph.CreateEdge(root, child);
-        graph.SetStyle(child, new ShinyPlateNodeStyle {Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer%NodePlacerPanel.LayerBrushes.Length])});
+        graph.SetStyle(child, NewNodeStyle(layer));
 
-        var placer = new DefaultNodePlacer { ChildPlacement = ChildPlacement.VerticalToRight };
+        var placer = new DefaultNodePlacer { ChildPlacement = ChildPlacement.HorizontalDownward };
         placers[child] = placer;
 
         if (layers > 0) {
           CreateSubTree(graph, child, layer + 1, layers - 1);
         }
       }
+    }
+
+    private static INodeStyle NewAssistantStyle(int layer) {
+      return NodePlacerPanel.NewAssistantStyle(GetLayerPalette(layer));
+    }
+
+    private static INodeStyle NewNodeStyle(int layer) {
+      return DemoStyles.CreateDemoNodeStyle(GetLayerPalette(layer));
+    }
+
+    private static Palette GetLayerPalette(int layer) {
+      return NodePlacerPanel.LayerPalettes[layer % NodePlacerPanel.LayerPalettes.Length];
     }
 
     /////////////////////////// Org Chart ///////////////////////////////////
@@ -503,12 +500,7 @@ namespace Demo.yFiles.Layout.Tree
       assistants[node] = assistant;
 
       // Set a style according to the layer and the assistant status
-      graph.SetStyle(node,
-        new ShinyPlateNodeStyle
-        {
-          Brush = new SolidBrush(NodePlacerPanel.LayerBrushes[layer%NodePlacerPanel.LayerBrushes.Length]),
-          Pen = (assistant ? new Pen(Brushes.Black, 2) {DashStyle = DashStyle.Dash} : null)
-        });
+      graph.SetStyle(node, assistant ? NewAssistantStyle(layer) : NewNodeStyle(layer));
       // Connect to the parent
       if (parent != null) {
         graph.CreateEdge(parent, node);
@@ -519,30 +511,27 @@ namespace Demo.yFiles.Layout.Tree
       var placer = new AssistantNodePlacer();
       switch (layout) {
         case "left_below":
-          placer.ChildNodePlacer = new DefaultNodePlacer
-                                     {
-                                       ChildPlacement = ChildPlacement.VerticalToLeft,
-                                       RootAlignment = RootAlignment.LeadingOnBus,
-                                       RoutingStyle = RoutingStyle.ForkAtRoot
-                                     };
+          placer.ChildNodePlacer = new DefaultNodePlacer {
+            ChildPlacement = ChildPlacement.VerticalToLeft,
+            RootAlignment = RootAlignment.LeadingOnBus,
+            RoutingStyle = RoutingStyle.ForkAtRoot
+          };
           break;
         case "right_below":
-          placer.ChildNodePlacer = new DefaultNodePlacer
-                                     {
-                                       ChildPlacement = ChildPlacement.VerticalToRight,
-                                       RootAlignment = RootAlignment.LeadingOnBus,
-                                       RoutingStyle = RoutingStyle.ForkAtRoot
-                                     };
+          placer.ChildNodePlacer = new DefaultNodePlacer {
+            ChildPlacement = ChildPlacement.VerticalToRight,
+            RootAlignment = RootAlignment.LeadingOnBus,
+            RoutingStyle = RoutingStyle.ForkAtRoot
+          };
           break;
         case "below":
-          placer.ChildNodePlacer = new LeftRightNodePlacer() {PlaceLastOnBottom = false};
+          placer.ChildNodePlacer = new LeftRightNodePlacer {PlaceLastOnBottom = false};
           break;
         default:
-          placer.ChildNodePlacer = new DefaultNodePlacer
-                                     {
-                                       ChildPlacement = ChildPlacement.HorizontalDownward,
-                                       RootAlignment = RootAlignment.Median
-                                     };
+          placer.ChildNodePlacer = new DefaultNodePlacer {
+            ChildPlacement = ChildPlacement.HorizontalDownward,
+            RootAlignment = RootAlignment.Median
+          };
           break;
       }
       placers[node] = placer;

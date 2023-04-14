@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,11 +32,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
 {
@@ -45,6 +45,10 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
   /// </summary>
   public partial class ReshapeHandleProviderConfigurationForm : Form
   {
+    /// <summary>
+    /// A state object that stores whether resizing cyan nodes should keep their aspect ratio. 
+    /// </summary>
+    private readonly ApplicationState applicationState = new ApplicationState() { KeepAspectRatio = true};
 
     /// <summary>
     /// Registers a callback function as decorator that provides customized <see cref="IReshapeHandleProvider"/> for each node.
@@ -58,15 +62,16 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
       var nodeDecorator = graphControl.Graph.GetDecorator().NodeDecorator;
 
       // deactivate reshape handling for the red node
-      nodeDecorator.ReshapeHandleProviderDecorator.HideImplementation(node => Color.Firebrick.Equals(node.Tag));
+      nodeDecorator.ReshapeHandleProviderDecorator.HideImplementation(node => Themes.PaletteRed.Equals(node.Tag));
       
       // return customized reshape handle provider for the orange, blue and green node
       nodeDecorator.ReshapeHandleProviderDecorator.SetFactory(
-          node => Color.Orange.Equals(node.Tag) 
-                  || Color.RoyalBlue.Equals(node.Tag)
-                  || Color.Green.Equals(node.Tag) 
-                  || Color.Purple.Equals(node.Tag) 
-                  || Color.Gray.Equals(node.Tag),
+          node => Themes.PaletteOrange.Equals(node.Tag) 
+                  || Themes.PaletteLightblue.Equals(node.Tag)
+                  || Themes.PaletteGreen.Equals(node.Tag) 
+                  || Themes.PalettePurple.Equals(node.Tag) 
+                  || Themes.Palette510.Equals(node.Tag) 
+                  || Themes.PaletteBlue.Equals(node.Tag),
           (node) => {
             // Obtain the tag from the node
             object nodeTag = node.Tag;
@@ -76,24 +81,26 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
             var provider = new NodeReshapeHandleProvider(node, reshapeHandler, HandlePositions.Border);
 
             // Customize the handle provider depending on the node's color
-            if (Color.Orange.Equals(nodeTag)) {
+            if (Themes.PaletteOrange.Equals(nodeTag)) {
               // Restrict the node bounds to the boundaryRectangle
               provider.MaximumBoundingArea = boundaryRectangle;
-            } else if (Color.Green.Equals(nodeTag)) {
+            } else if (Themes.PaletteGreen.Equals(nodeTag)) {
               // Show only handles at the corners and always use aspect ratio resizing
               provider.HandlePositions = HandlePositions.Corners;
               provider.RatioReshapeRecognizer = EventRecognizers.Always;
-            } else if (Color.RoyalBlue.Equals(nodeTag)) {
+            } else if (Themes.PaletteLightblue.Equals(nodeTag)) {
               // Restrict the node bounds to the boundaryRectangle and
               // show only handles at the corners and always use aspect ratio resizing
               provider.MaximumBoundingArea = boundaryRectangle;
               provider.HandlePositions = HandlePositions.Corners;
               provider.RatioReshapeRecognizer = EventRecognizers.Always;
-            } else if (Color.Purple.Equals(nodeTag)) {
+            } else if (Themes.PalettePurple.Equals(nodeTag)) {
               provider = new PurpleNodeReshapeHandleProvider(node, reshapeHandler);
-            } else if (Color.Gray.Equals(nodeTag)) {
+            } else if (Themes.PaletteBlue.Equals(nodeTag)) {
               provider.HandlePositions = HandlePositions.SouthEast;
               provider.CenterReshapeRecognizer = EventRecognizers.Always;
+            } else if (Themes.Palette510.Equals(nodeTag)) {
+              provider = new CyanNodeReshapeHandleProvider(node, reshapeHandler, applicationState);
             }
             return provider;
           });
@@ -125,6 +132,9 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
       // Finally, set the input mode to the graph control.
       graphControl.InputMode = graphEditorInputMode;
 
+      // store the graphControl in the state so it can requery the handles when necessary
+      applicationState.GraphControl = graphControl;
+
       // Create the rectangle that limits the movement of some nodes
       // and add it to the GraphControl.
       var boundaryRectangle = new RectD(20, 20, 480, 550);
@@ -144,21 +154,21 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
     /// Creates the sample graph of this demo.
     /// </summary>
     private static void CreateSampleGraph(IGraph graph) {
-      CreateNode(graph, 80, 100, 140, 30, Color.Firebrick, Color.WhiteSmoke, "Fixed Size");
-      CreateNode(graph, 300, 100, 140, 30, Color.Green, Color.WhiteSmoke, "Keep Aspect Ratio");
-      CreateNode(graph, 80, 250, 140, 50, Color.Gray, Color.WhiteSmoke, "Keep Center");
-      CreateNode(graph, 300, 250, 140, 50, Color.Purple, Color.WhiteSmoke, "Keep Aspect Ratio\nat corners");
-      CreateNode(graph, 80, 410, 140, 30, Color.Orange, Color.Black, "Limited to Rectangle");
-      CreateNode(graph, 300, 400, 140, 50, Color.RoyalBlue, Color.WhiteSmoke, "Limited to Rectangle\nand Keep Aspect Ratio");
+      CreateNode(graph, 80, 100, 140, 30, Themes.PaletteRed, "Fixed Size");
+      CreateNode(graph, 300, 100, 140, 30, Themes.PaletteGreen, "Keep Aspect Ratio");
+      CreateNode(graph, 80, 200, 140, 50, Themes.PaletteBlue, "Keep Center");
+      CreateNode(graph, 300, 200, 140, 50, Themes.PalettePurple, "Keep Aspect Ratio\nat corners");
+      CreateNode(graph, 80, 310, 140, 30, Themes.PaletteOrange, "Limited to Rectangle");
+      CreateNode(graph, 300, 300, 140, 50, Themes.PaletteLightblue, "Limited to Rectangle\nand Keep Aspect Ratio");
+      CreateNode(graph, 80, 400, 140, 50, Themes.Palette510, "Keep Aspect Ratio\ndepending on State");
     }
 
     /// <summary>
     /// Creates a sample node for this demo.
     /// </summary>
-    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Color fillColor, Color textColor, string labelText) {
-      var whiteTextLabelStyle = new DefaultLabelStyle { TextBrush = new SolidBrush(textColor) };
-      INode node = graph.CreateNode(new RectD(x, y, w, h), new ShinyPlateNodeStyle { Brush = new SolidBrush(fillColor) }, fillColor);
-      graph.SetStyle(graph.AddLabel(node, labelText), whiteTextLabelStyle);
+    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Palette palette, string labelText) {
+      INode node = graph.CreateNode(new RectD(x, y, w, h), DemoStyles.CreateDemoNodeStyle(palette), palette);
+      graph.SetStyle(graph.AddLabel(node, labelText), DemoStyles.CreateDemoNodeLabelStyle(palette));
     }
 
     #endregion
@@ -191,9 +201,108 @@ namespace Demo.yFiles.Graph.Input.ReshapeHandleProviderConfiguration
         return handle;
       }
     }
+    
+    /// <summary>
+    /// A NodeReshapeHandleProvider for cyan nodes that toggles aspect ratio resizing on and of when clicking on its handles.
+    /// </summary>
+    private class CyanNodeReshapeHandleProvider : NodeReshapeHandleProvider
+    {
+      private readonly ApplicationState state;
+
+      public CyanNodeReshapeHandleProvider(INode node, IReshapeHandler reshapeHandler, ApplicationState state) : base(node, reshapeHandler, HandlePositions.Border) {
+        this.state = state;
+      }
+
+      public override IHandle GetHandle(IInputModeContext inputModeContext, HandlePositions position) {
+        var wrapped = base.GetHandle(inputModeContext, position) as NodeReshapeHandlerHandle;
+        wrapped.RatioReshapeRecognizer = state.KeepAspectRatio ? EventRecognizers.Always : EventRecognizers.Never;
+        return new ClickableNodeReshapeHandlerHandle(state, wrapped);
+      }
+    }
+
+    /// <summary>
+    /// A handle delegating most functionality to a wrapped <see cref="NodeReshapeHandlerHandle"/>.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="IHandle.HandleClick"/> toggles the <see cref="ApplicationState.KeepAspectRatio"/> state.
+    /// </remarks>
+    private class ClickableNodeReshapeHandlerHandle : IHandle
+    {
+      private readonly ApplicationState state;
+      private readonly NodeReshapeHandlerHandle wrapped;
+
+      public ClickableNodeReshapeHandlerHandle(ApplicationState state, NodeReshapeHandlerHandle wrapped) {
+        this.state = state;
+        this.wrapped = wrapped;
+      }
+
+      /// <summary>
+      /// <see cref="ApplicationState.ToggleAspectRatio">Toggles</see> the aspect ratio state of the application.
+      /// </summary>
+      /// <param name="eventArgs">The arguments describing the click.</param>
+      public void HandleClick(ClickEventArgs eventArgs) {
+        state.ToggleAspectRatio();
+      }
+
+      /// <summary>
+      /// Modifies the wrapped <see cref="IHandle.Type"/> by combining it with <see cref="HandleTypes.Variant2"/>.
+      /// </summary>
+      public HandleTypes Type {
+        get { return state.KeepAspectRatio ? wrapped.Type |= HandleTypes.Variant2 : wrapped.Type; }
+      }
+
+      #region Delegating to the wrapped handle
+
+      public IPoint Location {
+        get { return wrapped.Location; }
+      }
+
+      public Cursor Cursor {
+        get { return wrapped.Cursor; }
+      }
+
+      public void InitializeDrag(IInputModeContext inputModeContext) {
+        wrapped.InitializeDrag(inputModeContext);
+      }
+
+      public void CancelDrag(IInputModeContext inputModeContext, PointD originalLocation) {
+        wrapped.CancelDrag(inputModeContext, originalLocation);
+      }
+
+      public void DragFinished(IInputModeContext inputModeContext, PointD originalLocation, PointD newLocation) {
+        wrapped.DragFinished(inputModeContext, originalLocation, newLocation);
+      }
+
+      public void HandleMove(IInputModeContext inputModeContext, PointD originalLocation, PointD newLocation) {
+        wrapped.HandleMove(inputModeContext, originalLocation, newLocation);
+      }
+
+      #endregion
+    }
 
     #endregion
 
+    /// <summary>
+    /// Some application-wide state.
+    /// </summary>
+    class ApplicationState
+    {
+      public bool KeepAspectRatio { get; set; }
+
+      public GraphControl GraphControl { get; set; }
+
+      /// <summary>
+      /// Toggles the <see cref="KeepAspectRatio"/> state and <see cref="GraphEditorInputMode.RequeryHandles">requeries</see>
+      /// all handles to take the new state into account.
+      /// </summary>
+      public void ToggleAspectRatio() {
+        KeepAspectRatio = !KeepAspectRatio;
+        var geim = (GraphControl.InputMode as GraphEditorInputMode);
+        if (geim != null) {
+          geim.RequeryHandles();
+        }
+      }
+    }
 
     #region Application Start
 

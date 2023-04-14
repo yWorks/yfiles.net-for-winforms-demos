@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -40,6 +40,8 @@ namespace Demo.yFiles.Graph.Input.CustomSnapping.UI
   /// </summary>
   public class AdditionalSnapLineVisualCreator : IVisualCreator
   {
+    private readonly Brush SnapLineBrush = new SolidBrush(Color.FromArgb(0xCA, 0x0C, 0x3B));
+    
     public PointD From { get; set; }
 
     public PointD To { get; set; }
@@ -84,7 +86,7 @@ namespace Demo.yFiles.Graph.Input.CustomSnapping.UI
     }
 
     public IVisual CreateVisual(IRenderContext context) {
-      return new LineVisual(From, To) {Pen = Pens.Red};
+      return new LineVisual(From, To) {Pen = new Pen(SnapLineBrush, 2f)};
     }
 
     public IVisual UpdateVisual(IRenderContext context, IVisual oldVisual) {

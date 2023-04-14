@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -179,7 +179,6 @@ namespace Demo.yFiles.Graph.BezierEdgeStyle
             // 
             // graphOverviewControl
             // 
-            this.graphOverviewControl.AnimateScrollCommands = false;
             this.graphOverviewControl.AutoDrag = false;
             this.graphOverviewControl.BackColor = System.Drawing.Color.White;
             this.graphOverviewControl.Cursor = System.Windows.Forms.Cursors.SizeAll;

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -33,6 +33,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Demo.yFiles.IO.GraphML.Simple.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Graph;
@@ -170,11 +171,10 @@ namespace Demo.yFiles.IO.GraphML.Simple
     /// </summary>
     protected virtual void InitializeGraph()
     {
-      DefaultGraph defaultGraph = Graph.Lookup<DefaultGraph>();
-      if (defaultGraph != null)
-      {
-        defaultGraph.UndoEngineEnabled = true;
-      }
+      DemoStyles.InitDemoStyles(Graph);
+
+      Graph.SetUndoEngineEnabled(true);
+
       //Read initial graph from embedded resource
       graphmlIoHandler.Read(GraphControl.Graph, "Resources\\styles.graphml");
 

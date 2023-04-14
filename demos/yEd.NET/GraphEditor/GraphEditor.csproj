@@ -92,6 +92,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Styles\ArcEdgeStyle.cs" />
+    <Compile Include="Styles\BridgeEdgeStyle.cs" />
     <Compile Include="Styles\CirclePortStyle.cs" />
     <Compile Include="Styles\DynamicArrowEdgeStyleBase.cs" />
     <Compile Include="Styles\GroupNodeStyle.cs" />

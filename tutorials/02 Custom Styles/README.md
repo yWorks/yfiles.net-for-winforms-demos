@@ -9,30 +9,30 @@ If you are new to styles, respectively their customization, it is recommended to
 You will find the following programming samples in this package: 
 
 
-| Name | Description 
-|:---|:---
-|**01 Custom Node Style** | Shows how to create a custom node style. 
-|**02 Node Color** | Shows how to create properties so that the style can be changed dynamically. 
-|**03 Dropshadow** | This step shows how to add a drop shadow to the custom node style. 
-|**04 IsInside** | Shows how to override IsInside() and GetIntersection() in SimpleAbstractNodeStyle&lt;TVisual&gt;. 
-|**05 Hit Test** | Shows how to override IsHit() and IsInBox() in SimpleAbstractNodeStyle&lt;TVisual&gt;. 
-|**06 GetBounds** | Shows how to override the SimpleAbstractNodeStyle&lt;TVisual&gt;.GetBounds() method. 
-|**07 Rendering Performance** | Shows how to pre-render the drop shadow of nodes in order to improve the rendering performance in comparison to the built-in effect. 
-|**08 Edge from Node to Label** | Shows how to visually connect a node to its label(s) by means of edges. 
-|**09 Visibility Test** | This step shows how to override the IsVisible() method of SimpleAbstractNodeStyle. 
-|**10 Custom Label Style** | Shows how to create a custom label style. 
-|**11 Label Preferred Size** | Shows how to override the GetPreferredSize() method to  set the size of the label dependent on the size of its text. 
-|**12 Label Edit Button** | Shows how to implement a button within a label to open the label editor. 
-|**13 Button Visibility** | This step shows how to hide the button dependent on the zoom level. 
-|**14 Using Data in Label Tag** | Shows how to use data from a business object, which is stored in the label's tag, for rendering. 
-|**15 Custom Edge Style** | Shows how to create a custom edge style which allows to specify the edge thickness by setting a property on the style. 
-|**16 Edge Hit Test** | This step shows how to take the thickness of the edge into account when checking if the edge was clicked. 
-|**17 Edge Cropping** | Shows how to crop an edge at the node bounds. 
-|**18 Custom Arrow** | Shows how to create a custom arrow. 
-|**19 Arrow Thickness** | Shows how to render the arrow dependent on a property of the edge it belongs to. 
-|**20 Custom Ports** | Shows how to implement a custom port style. 
-|**21 Style Decorator** | Shows how to create a style that decorates an existing style. 
-|**22 Bridge Support** | Shows how to enable bridges for a custom edge style. 
+| Name | Description |
+|:---|:---|
+|**01 Custom Node Style** | Shows how to create a custom node style. |
+|**02 Node Color** | Shows how to create properties so that the style can be changed dynamically. |
+|**03 Dropshadow** | This step shows how to add a drop shadow to the custom node style. |
+|**04 IsInside** | Shows how to override IsInside() and GetIntersection() in SimpleAbstractNodeStyle&lt;TVisual&gt;. |
+|**05 Hit Test** | Shows how to override IsHit() and IsInBox() in SimpleAbstractNodeStyle&lt;TVisual&gt;. |
+|**06 GetBounds** | Shows how to override the SimpleAbstractNodeStyle&lt;TVisual&gt;.GetBounds() method. |
+|**07 Rendering Performance** | Shows how to pre-render the drop shadow of nodes in order to improve the rendering performance in comparison to the built-in effect. |
+|**08 Edge from Node to Label** | Shows how to visually connect a node to its label(s) by means of edges. |
+|**09 Visibility Test** | This step shows how to override the IsVisible() method of SimpleAbstractNodeStyle. |
+|**10 Custom Label Style** | Shows how to create a custom label style. |
+|**11 Label Preferred Size** | Shows how to override the GetPreferredSize() method to  set the size of the label dependent on the size of its text. |
+|**12 Label Edit Button** | Shows how to implement a button within a label to open the label editor. |
+|**13 Button Visibility** | This step shows how to hide the button dependent on the zoom level. |
+|**14 Using Data in Label Tag** | Shows how to use data from a business object, which is stored in the label's tag, for rendering. |
+|**15 Custom Edge Style** | Shows how to create a custom edge style which allows to specify the edge thickness by setting a property on the style. |
+|**16 Edge Hit Test** | This step shows how to take the thickness of the edge into account when checking if the edge was clicked. |
+|**17 Edge Cropping** | Shows how to crop an edge at the node bounds. |
+|**18 Custom Arrow** | Shows how to create a custom arrow. |
+|**19 Arrow Thickness** | Shows how to render the arrow dependent on a property of the edge it belongs to. |
+|**20 Custom Ports** | Shows how to implement a custom port style. |
+|**21 Style Decorator** | Shows how to create a style that decorates an existing style. |
+|**22 Bridge Support** | Shows how to enable bridges for a custom edge style. |
 
 ## Running the Demos
 
@@ -46,7 +46,7 @@ You will find the following programming samples in this package:
 
 #### See also
 [Product Page](https://www.yworks.com/products/yfiles.net)  
-[API Documentation](https://docs.yworks.com/yfiles.net/Index.html)    
+[API Documentation](https://docs.yworks.com/yfilesdotnet)    
 [Help and Support](https://www.yworks.com/products/yfiles/support)
 
 

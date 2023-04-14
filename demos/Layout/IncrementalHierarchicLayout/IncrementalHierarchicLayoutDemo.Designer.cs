@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -60,6 +60,7 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
       this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
       this.graphControl = new yWorks.Controls.GraphControl();
       this.toolStrip = new System.Windows.Forms.ToolStrip();
+      this.OpenButton = new System.Windows.Forms.ToolStripButton();
       this.ZoomInButton = new System.Windows.Forms.ToolStripButton();
       this.ZoomOutButton = new System.Windows.Forms.ToolStripButton();
       this.FitContentButton = new System.Windows.Forms.ToolStripButton();
@@ -115,16 +116,26 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
       // 
       this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
       this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OpenButton,
+            this.toolStripSeparator1,  
             this.ZoomInButton,
             this.ZoomOutButton,
-            this.FitContentButton,
-            this.toolStripSeparator1});
+            this.FitContentButton});
       this.toolStrip.Location = new System.Drawing.Point(0, 0);
       this.toolStrip.Name = "toolStrip";
       this.toolStrip.Padding = new System.Windows.Forms.Padding(4);
       this.toolStrip.Size = new System.Drawing.Size(706, 31);
       this.toolStrip.Stretch = true;
       this.toolStrip.TabIndex = 0;
+      // 
+      // openButton
+      // 
+      this.OpenButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.OpenButton.Image = global::Demo.yFiles.Layout.IncrementalHierarchicLayout.Properties.Resources.open_16;
+      this.OpenButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.OpenButton.Name = "OpenButton";
+      this.OpenButton.Size = new System.Drawing.Size(23, 20);
+      this.OpenButton.Text = "Open";
       // 
       // ZoomInButton
       // 
@@ -227,6 +238,7 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
 
     private System.Windows.Forms.ToolStripContainer toolStripContainer;
     private System.Windows.Forms.ToolStrip toolStrip;
+    private System.Windows.Forms.ToolStripButton OpenButton;
     private System.Windows.Forms.ToolStripButton ZoomInButton;
     private System.Windows.Forms.ToolStripButton ZoomOutButton;
     private System.Windows.Forms.ToolStripButton FitContentButton;

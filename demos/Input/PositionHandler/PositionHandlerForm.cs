@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -32,11 +32,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.Input.PositionHandler.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Graph.Input.PositionHandler
 {
@@ -59,18 +59,18 @@ namespace Demo.yFiles.Graph.Input.PositionHandler
 
           // Check if it is a known tag and choose the respective implementation.
           // Fallback to the default behavior otherwise.
-          if (!(nodeTag is Color)) {
+          if (!(nodeTag is Palette)) {
             return delegateHandler;
-          } else if (Color.Orange.Equals(nodeTag)) {
+          } else if (Themes.PaletteOrange.Equals(nodeTag)) {
             // This implementation delegates certain behavior to the default implementation
             return new OrangePositionHandler(boundaryRectangle, node, delegateHandler);
-          } else if (Color.Firebrick.Equals(nodeTag)) {
+          } else if (Themes.PaletteRed.Equals(nodeTag)) {
             // A simple implementation that prohibits moving
             return new RedPositionHandler();
-          } else if (Color.RoyalBlue.Equals(nodeTag)) {
+          } else if (Themes.PaletteLightblue.Equals(nodeTag)) {
             // Implementation that uses two levels of delegation to create a combined behavior
             return new OrangePositionHandler(boundaryRectangle, node, new GreenPositionHandler(delegateHandler));
-          } else if (Color.Green.Equals(nodeTag)) {
+          } else if (Themes.PaletteGreen.Equals(nodeTag)) {
             // Another implementation that delegates certain behavior to the default implementation
             return new GreenPositionHandler(delegateHandler);
           } else {
@@ -243,19 +243,18 @@ namespace Demo.yFiles.Graph.Input.PositionHandler
     #region Sample Graph Creation
 
     private static void CreateSampleGraph(IGraph graph) {
-      CreateNode(graph, 100, 100, 100, 30, Color.Firebrick, Color.WhiteSmoke, "Unmovable");
-      CreateNode(graph, 300, 100, 100, 30, Color.Green, Color.WhiteSmoke, "One Axis");
-      CreateNode(graph, 80, 250, 140, 40, Color.Orange, Color.Black, "Limited to Rectangle");
-      CreateNode(graph, 280, 250, 140, 40, Color.RoyalBlue, Color.WhiteSmoke, "Limited to Rectangle\nand One Axis");
+      CreateNode(graph, 100, 100, 100, 30, Themes.PaletteRed, "Unmovable");
+      CreateNode(graph, 300, 100, 100, 30, Themes.PaletteGreen, "One Axis");
+      CreateNode(graph, 80, 250, 140, 40, Themes.PaletteOrange, "Limited to Rectangle");
+      CreateNode(graph, 280, 250, 140, 40, Themes.PaletteLightblue, "Limited to Rectangle\nand One Axis");
     }
 
     /// <summary>
     /// Creates a sample node for this demo.
     /// </summary>
-    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Color fillColor, Color textColor, string labelText) {
-      var whiteTextLabelStyle = new DefaultLabelStyle { TextBrush = new SolidBrush(textColor) };
-      INode node = graph.CreateNode(new RectD(x, y, w, h), new ShinyPlateNodeStyle { Brush = new SolidBrush(fillColor) }, fillColor);
-      graph.SetStyle(graph.AddLabel(node, labelText), whiteTextLabelStyle);
+    private static void CreateNode(IGraph graph, double x, double y, double w, double h, Palette palette, string labelText) {
+      INode node = graph.CreateNode(new RectD(x, y, w, h), DemoStyles.CreateDemoNodeStyle(palette), palette);
+      graph.SetStyle(graph.AddLabel(node, labelText), DemoStyles.CreateDemoNodeLabelStyle(palette));
     }
     #endregion
 

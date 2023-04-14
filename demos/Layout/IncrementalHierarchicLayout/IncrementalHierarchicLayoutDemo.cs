@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -29,15 +29,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Demo.yFiles.Layout.IncrementalHierarchicLayout.Properties;
+using Demo.yFiles.Toolkit;
 using yWorks.Controls.Input;
 using yWorks.Controls;
 using yWorks.Geometry;
 using yWorks.Graph;
-using yWorks.Graph.Styles;
 using yWorks.Utils;
 using yWorks.Layout;
 using yWorks.Layout.Hierarchic;
@@ -64,6 +63,7 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
     public IncrementalHierarchicLayoutForm() 
     {
       InitializeComponent();
+      graphControl.FileOperationsEnabled = true;
 
       // Configure the GraphMLIOHandler so that a layout runs automatically after loading a graph
       graphControl.GraphMLIOHandler.Parsed += delegate {
@@ -75,10 +75,10 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
           layerVisualCreator.UpdateLayers(graphControl.Graph, layerIndices);
         }
       };
-
+      
+      OpenButton.SetCommand(Commands.Open, graphControl);
       ZoomInButton.SetCommand(Commands.IncreaseZoom, graphControl);
       ZoomOutButton.SetCommand(Commands.DecreaseZoom, graphControl);
-
       FitContentButton.SetCommand(Commands.FitGraphBounds, graphControl);
     }
 
@@ -295,15 +295,8 @@ namespace Demo.yFiles.Layout.IncrementalHierarchicLayout
       IGraph graph = graphControl.Graph;
 
       // set some nice defaults
-      graph.NodeDefaults.Style = new ShinyPlateNodeStyle { Brush = Brushes.Orange };
+      DemoStyles.InitDemoStyles(graph, Themes.Palette21, null, Themes.Palette21, null, Themes.Palette21);
       graph.NodeDefaults.Size = new SizeD(60, 30);
-
-      graph.GroupNodeDefaults.Style = new ShapeNodeStyle
-      {
-        Shape = ShapeNodeShape.RoundRectangle,
-        Pen = new Pen(Brushes.DarkBlue, 2),
-        Brush = null
-      };
 
       // register a custom PositionHandler for the nodes.
       // this enables interactive layer reassignment with layer preview

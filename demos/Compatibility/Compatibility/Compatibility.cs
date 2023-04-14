@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.4.
- ** Copyright (c) 2000-2021 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.5.
+ ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -98,11 +98,13 @@ namespace yWorks.Graph
           dm.RemoveValue(key);
           return value;
         }
-        var wm = mapper as WeakDictionaryMapper<K, V>;
-        if (wm != null) {
-          var value = wm[key];
-          wm.RemoveValue(key);
-          return value;
+        var mapperType = mapper.GetType();
+        var weakType = typeof(WeakDictionaryMapper<,>).MakeGenericType(typeof(K), typeof(V));
+        if (mapperType == weakType) {
+          var removeValue = mapperType.GetMethod("RemoveValue");
+          var result = mapper[key];
+          removeValue.Invoke(mapper, new object[] { key });
+          return result;
         }
         throw new NotSupportedException("Unknown mapper type");
       }
