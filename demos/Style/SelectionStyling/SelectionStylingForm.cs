@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -31,18 +31,12 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Markup;
 using Demo.yFiles.Graph.SelectionStyling.Properties;
 using Demo.yFiles.Toolkit;
 using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
-using yWorks.Graph;
-using yWorks.Graph.LabelModels;
 using yWorks.Graph.Styles;
-
-[assembly : XmlnsDefinition("http://www.yworks.com/yFiles.net/demos/SelectionStyling/1.0", "Demo.yFiles.Graph.SelectionStyling")]
-[assembly: XmlnsPrefix("http://www.yworks.com/yFiles.net/demos/SelectionStyling/1.0", "demo")]
 
 namespace Demo.yFiles.Graph.SelectionStyling
 {
@@ -51,12 +45,9 @@ namespace Demo.yFiles.Graph.SelectionStyling
   /// </summary>
   public partial class SelectionStylingForm : Form
   {
-    private IContextLookupChainLink nodeDecorationLookupChainLink;
-    private IContextLookupChainLink edgeDecorationLookupChainLink;
-    private IContextLookupChainLink labelDecorationLookupChainLink;
-    private NodeStyleDecorationInstaller nodeDecorationInstaller;
-    private EdgeStyleDecorationInstaller edgeDecorationInstaller;
-    private LabelStyleDecorationInstaller labelDecorationInstaller;
+    private IndicatorNodeStyleDecorator selectionNodeStyle;
+    private IndicatorEdgeStyleDecorator selectionEdgeStyle;
+    private IndicatorLabelStyleDecorator selectionLabelStyle;
     private StyleDecorationZoomPolicy[] styleDecorationZoomPolicies;
 
     /// <summary>
@@ -107,29 +98,23 @@ namespace Demo.yFiles.Graph.SelectionStyling
     }
 
     private void InitializeDecoration() {
-      nodeDecorationInstaller = new NodeStyleDecorationInstaller
-      {
-        NodeStyle = new ShapeNodeStyle {Shape = ShapeNodeShape.Rectangle, Pen = Pens.DeepSkyBlue, Brush = Brushes.Transparent},
-        Margins = new InsetsD(10.0)
-      };
-      edgeDecorationInstaller = new EdgeStyleDecorationInstaller
-      {
-        EdgeStyle = new PolylineEdgeStyle {Pen = new Pen(Brushes.DeepSkyBlue, 3)}
-      };
-      labelDecorationInstaller = new LabelStyleDecorationInstaller
-      {
-        LabelStyle = new NodeStyleLabelStyleAdapter(
-          new ShapeNodeStyle { Shape = ShapeNodeShape.RoundRectangle, Pen = Pens.DeepSkyBlue, Brush = Brushes.Transparent },
-          VoidLabelStyle.Instance),
-        Margins = new InsetsD(5.0)
-      };
+      selectionNodeStyle = new IndicatorNodeStyleDecorator(
+          new ShapeNodeStyle { Shape = ShapeNodeShape.Rectangle, Pen = Pens.DeepSkyBlue, Brush = Brushes.Transparent }
+      ) { Padding = new InsetsD(10.0) };
+      selectionEdgeStyle =
+          new IndicatorEdgeStyleDecorator(new PolylineEdgeStyle { Pen = new Pen(Brushes.DeepSkyBlue, 3) });
+      selectionLabelStyle = new IndicatorLabelStyleDecorator(new NodeStyleLabelStyleAdapter(
+          new ShapeNodeStyle {
+              Shape = ShapeNodeShape.RoundRectangle, Pen = Pens.DeepSkyBlue, Brush = Brushes.Transparent
+          },
+          VoidLabelStyle.Instance)) { Padding = new InsetsD(5.0) };
 
-      styleDecorationZoomPolicies = new[]
-                              {
-                                StyleDecorationZoomPolicy.Mixed,
-                                StyleDecorationZoomPolicy.WorldCoordinates,
-                                StyleDecorationZoomPolicy.ViewCoordinates
-                              };
+      styleDecorationZoomPolicies = new[] {
+          StyleDecorationZoomPolicy.Mixed, 
+          StyleDecorationZoomPolicy.NoDownscaling,
+          StyleDecorationZoomPolicy.WorldCoordinates, 
+          StyleDecorationZoomPolicy.ViewCoordinates
+      };
       zoomModeComboBox.ComboBox.DataSource = styleDecorationZoomPolicies;
       zoomModeComboBox.SelectedIndex = 0;
     }
@@ -140,33 +125,16 @@ namespace Demo.yFiles.Graph.SelectionStyling
     /// </summary>
     public void UpdateDecoration() {
       var selectedZoomMode = (StyleDecorationZoomPolicy) zoomModeComboBox.SelectedItem;
-      nodeDecorationInstaller.ZoomPolicy = selectedZoomMode;
-      edgeDecorationInstaller.ZoomPolicy = selectedZoomMode;
-      labelDecorationInstaller.ZoomPolicy = selectedZoomMode;
+      selectionNodeStyle.ZoomPolicy = selectedZoomMode;
+      selectionEdgeStyle.ZoomPolicy = selectedZoomMode;
+      selectionLabelStyle.ZoomPolicy = selectedZoomMode;
 
-      var graphDecorator = graphControl.Graph.GetDecorator();
-      var nodeDecorator = graphDecorator.NodeDecorator;
-      var edgeDecorator = graphDecorator.EdgeDecorator;
-      var labelDecorator = graphDecorator.LabelDecorator;
-
-      if (!IsChecked(CustomNodeDecoratorButton) && nodeDecorationLookupChainLink != null) {
-        nodeDecorator.Remove(nodeDecorationLookupChainLink);
-        nodeDecorationLookupChainLink = null;
-      } else if (IsChecked(CustomNodeDecoratorButton) && nodeDecorationLookupChainLink == null) {
-        nodeDecorationLookupChainLink = nodeDecorator.SelectionDecorator.SetFactory(node => nodeDecorationInstaller);
-      }
-      if (!IsChecked(CustomEdgeDecoratorButton) && edgeDecorationLookupChainLink != null) {
-        edgeDecorator.Remove(edgeDecorationLookupChainLink);
-        edgeDecorationLookupChainLink = null;
-      } else if (IsChecked(CustomEdgeDecoratorButton) && edgeDecorationLookupChainLink == null) {
-        edgeDecorationLookupChainLink = edgeDecorator.SelectionDecorator.SetFactory(edge => edgeDecorationInstaller);
-      }
-      if (!IsChecked(CustomLabelDecoratorButton) && labelDecorationLookupChainLink != null) {
-        labelDecorator.Remove(labelDecorationLookupChainLink);
-        labelDecorationLookupChainLink = null;
-      } else if (IsChecked(CustomLabelDecoratorButton) && labelDecorationLookupChainLink == null) {
-        labelDecorationLookupChainLink = labelDecorator.SelectionDecorator.SetFactory(label => labelDecorationInstaller);
-      }
+      graphControl.SelectionIndicatorManager = new GraphSelectionIndicatorManager
+      {
+          NodeStyle = IsChecked(CustomNodeDecoratorButton) ? selectionNodeStyle : null,
+          EdgeStyle = IsChecked(CustomEdgeDecoratorButton) ? selectionEdgeStyle : null,
+          LabelStyle = IsChecked(CustomLabelDecoratorButton) ? selectionLabelStyle : null
+      };
     }
 
     private static bool IsChecked(ToolStripButton button) {

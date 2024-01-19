@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -143,22 +143,23 @@ namespace Demo.yFiles.Algorithms.GraphAnalysis
       graph.EdgeDefaults.Style = new PolylineEdgeStyle(new AnalysisPolylineEdgeStyleRenderer());
 
       // use a special decorator for selection
-      var selectionInstaller = new NodeStyleDecorationInstaller {
-          NodeStyle = new ShapeNodeStyle
-              { Shape = ShapeNodeShape.Ellipse, Pen = (Pen) new Pen(Brushes.Gray, 5), Brush = null }
-      };
+      var selectionNodeStyle = new IndicatorNodeStyleDecorator(
+          new ShapeNodeStyle
+              { Shape = ShapeNodeShape.Ellipse, Pen = new Pen(Brushes.Gray, 5), Brush = null }
+      );
 
       // use a special decorator for focus
-      var focusIndicatorInstaller = new NodeStyleDecorationInstaller {
-          NodeStyle = new ShapeNodeStyle {
+      var focusNodeStyle = new IndicatorNodeStyleDecorator(
+          new ShapeNodeStyle
+          {
               Shape = ShapeNodeShape.Ellipse,
-              Pen = (Pen) new Pen(Brushes.LightGray, 3) { DashStyle = DashStyle.Dash },
+              Pen = new Pen(Brushes.LightGray, 3) { DashStyle = DashStyle.Dash },
               Brush = null
           }
-      };
-      var decorator = graph.GetDecorator();
-      decorator.NodeDecorator.SelectionDecorator.SetImplementation(selectionInstaller);
-      decorator.NodeDecorator.FocusIndicatorDecorator.SetImplementation(focusIndicatorInstaller);
+      );
+
+      graphControl.SelectionIndicatorManager = new GraphSelectionIndicatorManager { NodeStyle = selectionNodeStyle }; ;
+      graphControl.FocusIndicatorManager = new GraphFocusIndicatorManager() { NodeStyle = focusNodeStyle };
 
       graph.EdgeDefaults.Labels.LayoutParameter = FreeEdgeLabelModel.Instance.CreateDefaultParameter();
 

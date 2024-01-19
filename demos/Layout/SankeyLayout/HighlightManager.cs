@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -35,15 +35,31 @@ using yWorks.Graph.Styles;
 
 namespace Demo.yFiles.Layout.SankeyLayout
 {
-  public class HighlightManager : HighlightIndicatorManager<IModelItem>
+  public class HighlightManager : GraphHighlightIndicatorManager
   {
     private ICanvasObjectGroup edgeHighlightGroup;
 
+    public HighlightManager() {
+      LabelStyle =
+          new IndicatorLabelStyleDecorator(new NodeStyleLabelStyleAdapter(
+              new ShapeNodeStyle {
+                  Shape = ShapeNodeShape.RoundRectangle, Pen = new Pen(Brushes.DodgerBlue, 2), Brush = null
+              }, VoidLabelStyle.Instance)) {
+              Padding = new InsetsD(3), ZoomPolicy = StyleDecorationZoomPolicy.WorldCoordinates
+          };
+    }
+
     public override void Install(CanvasControl canvas) {
       base.Install(canvas);
-      var graphModelManager = ((GraphControl) canvas).GraphModelManager;
+      var graphControl = ((GraphControl) canvas);
+      var graphModelManager = graphControl.GraphModelManager;
       edgeHighlightGroup = graphModelManager.ContentGroup.AddGroup();
       edgeHighlightGroup.Below(graphModelManager.EdgeLabelGroup);
+
+      EdgeStyle = new IndicatorEdgeStyleDecorator(new BezierEdgeStyle(new DemoEdgeStyleRenderer(true)))
+      {
+          ZoomPolicy = StyleDecorationZoomPolicy.WorldCoordinates
+      };
     }
 
     public override void Uninstall(CanvasControl canvas) {
@@ -53,30 +69,6 @@ namespace Demo.yFiles.Layout.SankeyLayout
 
     protected override ICanvasObjectGroup GetCanvasObjectGroup(IModelItem item) {
       return item is IEdge ? edgeHighlightGroup : base.GetCanvasObjectGroup(item);
-    }
-
-    protected override ICanvasObjectInstaller GetInstaller(IModelItem item) {
-      if (item is IEdge) {
-        return new EdgeStyleDecorationInstaller
-        {
-          EdgeStyle = new BezierEdgeStyle(new DemoEdgeStyleRenderer(true)),
-          ZoomPolicy = StyleDecorationZoomPolicy.WorldCoordinates
-        };
-      }
-      if (item is ILabel) {
-        return new LabelStyleDecorationInstaller
-        {
-          LabelStyle = new NodeStyleLabelStyleAdapter(new ShapeNodeStyle
-          {
-            Shape = ShapeNodeShape.RoundRectangle,
-            Pen = new Pen(Brushes.DodgerBlue, 2),
-            Brush = null
-          }, VoidLabelStyle.Instance),
-          Margins = new InsetsD(3),
-          ZoomPolicy = StyleDecorationZoomPolicy.WorldCoordinates
-        };
-      }
-      return base.GetInstaller(item);
     }
   }
 }

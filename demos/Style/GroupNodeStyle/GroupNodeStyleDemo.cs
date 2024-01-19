@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -34,6 +34,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Demo.yFiles.Graph.GroupNodes.Properties;
 using Demo.yFiles.Toolkit;
+using yWorks.Controls;
 using yWorks.Controls.Input;
 using yWorks.Geometry;
 using yWorks.Graph;
@@ -55,7 +56,22 @@ namespace Demo.yFiles.Graph.GroupNodes
       InitializeInputMode();
       InitializeDefaultStyles();
       CreateSampleGraph();
+      InitializeGridVisual();
       description.LoadFile(new MemoryStream(Resources.description), RichTextBoxStreamType.RichText);
+    }
+
+    /// <summary>
+    /// Initializes the visualization of the grid feature.
+    /// </summary>
+    private void InitializeGridVisual() {
+      var grid = new GridVisualCreator(new GridInfo())
+      {
+          GridStyle = GridStyle.Lines,
+          
+          Pen = Pens.LightGray,
+          VisibilityThreshold = 10,
+      };
+      graphControl.BackgroundGroup.AddChild(grid, CanvasObjectDescriptors.AlwaysDirtyInstance);
     }
 
     /// <summary>
@@ -90,6 +106,7 @@ namespace Demo.yFiles.Graph.GroupNodes
         if (args.Item is INode node) {
           if (Commands.ToggleExpansionState.CanExecute(node, graphControl)) {
             Commands.ToggleExpansionState.Execute(node, graphControl);
+            graphControl.Selection.SetSelected(node, false);
             args.Handled = true;
           }
         }
@@ -125,7 +142,17 @@ namespace Demo.yFiles.Graph.GroupNodes
       // for tabs that are placed at the top of the respective node ...
       GroupNodeStyle[] stylesWithTabAtTop = {
           // style for red nodes
-          new GroupNodeStyle { FolderIcon = GroupNodeStyleIconType.None, TabBrush = red.Fill },
+          new GroupNodeStyle {
+            FolderIcon = GroupNodeStyleIconType.None,
+            TabBrush = red.Fill,
+            TabBackgroundBrush = red.Fill,
+            // tab width 0 together with a leading or trailing tab position prevents corner rounding for
+            // the "inner" corners of the tab stroke and the content area
+            TabPosition = GroupNodeStyleTabPosition.TopLeading,
+            TabWidth = 0.0,
+            TabHeight = 24.0,
+            Pen = new Pen(red.Stroke, 1)
+          },
           // style for green nodes
           new GroupNodeStyle {
               CornerRadius = 0,
@@ -178,7 +205,8 @@ namespace Demo.yFiles.Graph.GroupNodes
       GroupNodeStyle[] stylesWithTabAtMiscPositions = {
           // style for gold nodes
           new GroupNodeStyle {
-              GroupIcon = GroupNodeStyleIconType.Minus, IconForegroundBrush = gold.Fill, TabBrush = gold.Fill
+              GroupIcon = GroupNodeStyleIconType.Minus, IconForegroundBrush = gold.Fill, TabBrush = gold.Fill, 
+              ContentAreaBrush = Brushes.Transparent, RenderTransparentContentArea = true
           },
           // style for gray nodes
           new GroupNodeStyle {

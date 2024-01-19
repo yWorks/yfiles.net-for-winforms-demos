@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -87,7 +87,9 @@ namespace Demo.yFiles.Graph.RenderPolicies
       SetGraphDefaults();
 
       // ... the default layer policies for labels and ports
-      graphControl.GraphModelManager.LabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.NodeLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.EdgeLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.PortLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
       graphControl.GraphModelManager.PortLayerPolicy = PortLayerPolicy.SeparateLayer;
       graphControl.GraphModelManager.HierarchicNestingPolicy = HierarchicNestingPolicy.NodesAndEdges;
       graphControl.GraphModelManager.EdgeGroup.Below(graphControl.GraphModelManager.NodeGroup);
@@ -114,7 +116,9 @@ namespace Demo.yFiles.Graph.RenderPolicies
       var selectedItem = renderingOrderComboxBox.SelectedIndex;
 
       // set to default first
-      graphControl.GraphModelManager.LabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.NodeLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.EdgeLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
+      graphControl.GraphModelManager.PortLabelLayerPolicy = LabelLayerPolicy.SeparateLayer;
       graphControl.GraphModelManager.PortLayerPolicy = PortLayerPolicy.SeparateLayer;
       graphControl.GraphModelManager.HierarchicNestingPolicy = HierarchicNestingPolicy.NodesAndEdges;
       graphControl.GraphModelManager.EdgeGroup.Below(graphControl.GraphModelManager.NodeGroup);
@@ -125,12 +129,16 @@ namespace Demo.yFiles.Graph.RenderPolicies
           break;
         case 1:
           // at owner
-          graphControl.GraphModelManager.LabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.NodeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.EdgeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.PortLabelLayerPolicy = LabelLayerPolicy.AtOwner;
           graphControl.GraphModelManager.PortLayerPolicy = PortLayerPolicy.AtOwner;
           break;
         case 2:
           // edges on top
-          graphControl.GraphModelManager.LabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.NodeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.EdgeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
+          graphControl.GraphModelManager.PortLabelLayerPolicy = LabelLayerPolicy.AtOwner;
           graphControl.GraphModelManager.PortLayerPolicy = PortLayerPolicy.AtOwner;
           graphControl.GraphModelManager.HierarchicNestingPolicy = HierarchicNestingPolicy.Nodes;
           graphControl.GraphModelManager.EdgeGroup.Above(graphControl.GraphModelManager.NodeGroup);

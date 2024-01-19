@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -320,6 +320,7 @@ namespace Demo.yFiles.GraphEditor.Modules.Layout
       }
       ISelectionModel<IModelItem> selectionModel = newContext.Lookup<ISelectionModel<IModelItem>>();
       LayoutGraphAdapter adapter = new LayoutGraphAdapter(graph, selectionModel);
+      adapter.CopyStyles = true;
       this.layoutGraph = adapter.CreateCopiedLayoutGraph();
       ILookup additionalLookup = Lookups.Single(layoutGraph, typeof (LayoutGraph));
       ILookup wrappedLookup = Lookups.Wrapped(newContext, additionalLookup);

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -207,7 +207,7 @@ namespace Demo.yFiles.Complete.IsometricDrawing
     private void InitializeGridVisual() {
       var grid = new GridVisualCreator(new GridInfo()) {
           GridStyle = GridStyle.Lines,
-          Pen = new Pen(Color.FromArgb(255, 210, 210, 210), 0.1f),
+          Pen = new Pen(Brushes.LightGray, 0.5f),
           VisibilityThreshold = 10,
       };
       graphControl.BackgroundGroup.AddChild(grid, CanvasObjectDescriptors.AlwaysDirtyInstance);
@@ -528,7 +528,8 @@ namespace Demo.yFiles.Complete.IsometricDrawing
     private void ConfigureGraphModelManager() {
       var manager = graphControl.GraphModelManager;
       manager.HierarchicNestingPolicy = HierarchicNestingPolicy.GroupNodes;
-      manager.LabelLayerPolicy = LabelLayerPolicy.AtOwner;
+      manager.NodeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
+      manager.EdgeLabelLayerPolicy = LabelLayerPolicy.AtOwner;
       // use a custom comparer to render nodes which appear in the background of the current perspective first.
       manager.NodeManager.Comparer = new IsometricComparer(graphControl);
       // The comparer needs the user object (=node) to be set on the main canvas object

@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -168,7 +168,7 @@ namespace Demo.yFiles.Graph.TextWrapping
       var furtherNorthLabelModel = new ExteriorLabelModel { Insets = new InsetsD(110) };
       var furtherNorthParameter = furtherNorthLabelModel.CreateParameter(ExteriorLabelModel.Position.North);
       var wrapNoTrimNoClipStyle = new DefaultLabelStyle {
-          StringFormat = new StringFormat { Trimming = StringTrimming.None, LineAlignment = StringAlignment.Center },
+          StringFormat = new StringFormat { Trimming = StringTrimming.None, LineAlignment = StringAlignment.Near },
           ClipText = false
       };
       wrapNoTrimNoClipStyle.Font = new Font(wrapNoTrimNoClipStyle.Font.FontFamily, 12f);
@@ -178,7 +178,7 @@ namespace Demo.yFiles.Graph.TextWrapping
       // A label that is wrapped and trimmed at characters at the end.
       var wrapCharTrimStyle = new DefaultLabelStyle {
           StringFormat = new StringFormat {
-              Trimming = StringTrimming.EllipsisCharacter, LineAlignment = StringAlignment.Center
+              Trimming = StringTrimming.EllipsisCharacter, LineAlignment = StringAlignment.Near
           }
       };
       wrapCharTrimStyle.Font = new Font(wrapCharTrimStyle.Font.FontFamily, 12f);
@@ -188,7 +188,7 @@ namespace Demo.yFiles.Graph.TextWrapping
       // A label that is wrapped and trimmed at word boundaries.
       var wrapWordTrimStyle = new DefaultLabelStyle {
           StringFormat = new StringFormat {
-              Trimming = StringTrimming.EllipsisWord, LineAlignment = StringAlignment.Center
+              Trimming = StringTrimming.EllipsisWord, LineAlignment = StringAlignment.Near
           }
       };
       wrapWordTrimStyle.Font = new Font(wrapWordTrimStyle.Font.FontFamily, 12f);

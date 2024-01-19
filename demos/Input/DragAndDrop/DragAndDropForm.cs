@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -193,7 +193,7 @@ namespace Demo.yFiles.Input.DragAndDrop
       
       // Create some nodes
       nodeContainer.CreateNode(new RectD(0, 0, nodeWidth, nodeHeight), DemoStyles.CreateDemoShapeNodeStyle(ShapeNodeShape.Rectangle));
-      nodeContainer.CreateNode(new RectD(0, 0, nodeWidth, nodeHeight));
+      nodeContainer.CreateNode(new RectD(0, 0, nodeWidth, nodeHeight), DemoStyles.CreateDemoShapeNodeStyle(ShapeNodeShape.Ellipse));
 
       INode node = nodeContainer.CreateGroupNode(layout:new RectD(0, 0, 70, 70));
       nodeContainer.AddLabel(node, "Group Node");

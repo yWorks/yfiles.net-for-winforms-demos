@@ -1,7 +1,7 @@
 /****************************************************************************
  ** 
- ** This demo file is part of yFiles.NET 5.5.
- ** Copyright (c) 2000-2023 by yWorks GmbH, Vor dem Kreuzberg 28,
+ ** This demo file is part of yFiles.NET 5.6.
+ ** Copyright (c) 2000-2024 by yWorks GmbH, Vor dem Kreuzberg 28,
  ** 72070 Tuebingen, Germany. All rights reserved.
  ** 
  ** yFiles demo files exhibit yFiles.NET functionalities. Any redistribution
@@ -60,6 +60,7 @@ namespace Demo.yFiles.Layout.Configurations
       MinimumNodeDistanceItem = 10;
       AvoidNodeEdgeOverlapsItem = layout.NodeEdgeOverlapAvoided;
       CompactnessItem = layout.CompactnessFactor;
+      OrientationItem = Orientation.None;
       ClusteringPolicyItem = layout.ClusteringPolicy;
       ClusteringQualityItem = layout.ClusteringQuality;
 
@@ -93,7 +94,7 @@ namespace Demo.yFiles.Layout.Configurations
       ClusterAsGroupSubstructureItem = false;
 
       ConsiderNodeLabelsItem = layout.ConsiderNodeLabels;
-      EdgeLabelingItem = false;
+      EdgeLabelingItem = EdgeLabeling.None;
       LabelPlacementAlongEdgeItem = EnumLabelPlacementAlongEdge.Centered;
       LabelPlacementSideOfEdgeItem = EnumLabelPlacementSideOfEdge.OnEdge;
       LabelPlacementOrientationItem = EnumLabelPlacementOrientation.Horizontal;
@@ -117,15 +118,30 @@ namespace Demo.yFiles.Layout.Configurations
       layout.MaximumDuration = 1000 * MaximumDurationItem;
       layout.QualityTimeRatio = QualityTimeRatioItem;
 
-      if (EdgeLabelingItem) {
-        var genericLabeling = new GenericLabeling {
-            PlaceEdgeLabels = true,
-            PlaceNodeLabels = false,
-            ReduceAmbiguity = ReduceAmbiguityItem
-        };
-        layout.LabelingEnabled = true;
-        layout.Labeling = genericLabeling;
+      var orientation = GetLayoutOrientation(OrientationItem);
+      if (orientation != null) {
+        layout.LayoutOrientation = orientation.Value;
       }
+
+      if (EdgeLabelingItem != EdgeLabeling.None) {
+        if (EdgeLabelingItem == EdgeLabeling.Generic) {
+          layout.IntegratedEdgeLabeling = false;
+  
+          var genericLabeling = new GenericLabeling
+          {
+              PlaceEdgeLabels = true,
+              PlaceNodeLabels = false,
+              ReduceAmbiguity = ReduceAmbiguityItem
+          };
+          layout.LabelingEnabled = true;
+          layout.Labeling = genericLabeling;
+        } else if (EdgeLabelingItem == EdgeLabeling.Integrated) {
+          layout.IntegratedEdgeLabeling = true;
+        }
+      } else {
+        layout.IntegratedEdgeLabeling = false;
+      }
+
       ((ComponentLayout)layout.ComponentLayout).Style = ComponentArrangementStyles.MultiRows;
 
       ConfigureOutputRestrictions(graphControl, layout);
@@ -143,7 +159,7 @@ namespace Demo.yFiles.Layout.Configurations
       layout.GroupSubstructureScope = GroupSubstructureScopeItem;
       layout.GroupSubstructureSize = GroupSubstructureSizeItem;
       layout.ClusterAsGroupSubstructureAllowed = ClusterAsGroupSubstructureItem;
-      
+
       return layout;
     }
 
@@ -190,6 +206,18 @@ namespace Demo.yFiles.Layout.Configurations
       if (UseEdgeGroupingItem) {
         layoutData.SourceGroupIds.Constant = "Group";
         layoutData.TargetGroupIds.Constant = "Group";
+      }
+
+      if (OrientationItem != Orientation.None) {
+        layoutData.EdgeOrientations.Delegate = edge => {
+          if (edge.Style is PolylineEdgeStyle pes &&
+              pes.TargetArrow != null &&
+              pes.TargetArrow != Arrows.None
+             ) {
+            return 1;
+          }
+          return 0;
+        };
       }
 
       return layoutData.CombineWith(
@@ -404,9 +432,20 @@ namespace Demo.yFiles.Layout.Configurations
     [MinMax(Min = 0.0d, Max = 1.0d, Step = 0.1d)]
     [ComponentType(ComponentTypes.Slider)]
     public double CompactnessItem { get; set; }
+
+
+    [Label("Orientation")]
+    [OptionGroup("VisualGroup", 80)]
+    [DefaultValue(null)]
+    [EnumValue("None", Orientation.None)]
+    [EnumValue("Top to Bottom", Orientation.TopToBottom)]
+    [EnumValue("Left to Right", Orientation.LeftToRight)]
+    [EnumValue("Bottom to Top", Orientation.BottomToTop)]
+    [EnumValue("Right to Left", Orientation.RightToLeft)]
+    public Orientation OrientationItem { get; set; }
     
     [Label("Clustering")]
-    [OptionGroup("VisualGroup", 80)]
+    [OptionGroup("VisualGroup", 100)]
     [DefaultValue(ClusteringPolicy.None)]
     [EnumValue("None", ClusteringPolicy.None)]
     [EnumValue("Edge Betweenness",ClusteringPolicy.EdgeBetweenness)]
@@ -415,7 +454,7 @@ namespace Demo.yFiles.Layout.Configurations
     public ClusteringPolicy ClusteringPolicyItem { get; set; }
 
     [Label("Edge Betweenness Clustering Quality")]
-    [OptionGroup("VisualGroup", 90)]
+    [OptionGroup("VisualGroup", 110)]
     [DefaultValue(1.0d)]
     [MinMax(Min = 0.0d, Max = 1.0d, Step = 0.01d)]
     [ComponentType(ComponentTypes.Slider)]
@@ -687,15 +726,18 @@ namespace Demo.yFiles.Layout.Configurations
 
     [Label("Edge Labeling")]
     [OptionGroup("EdgePropertiesGroup", 10)]
-    [DefaultValue(false)]
-    public bool EdgeLabelingItem { get; set; }
+    [DefaultValue(EdgeLabeling.None)]
+    [EnumValue("None", EdgeLabeling.None)]
+    [EnumValue("Integrated", EdgeLabeling.Integrated)]
+    [EnumValue("Generic", EdgeLabeling.Generic)]
+    public EdgeLabeling EdgeLabelingItem { get; set; }
 
     [Label("Reduce Ambiguity")]
     [OptionGroup("EdgePropertiesGroup", 20)]
     public bool ReduceAmbiguityItem { get; set; }
 
     public bool ShouldDisableReduceAmbiguityItem {
-      get { return !EdgeLabelingItem; }
+      get { return EdgeLabelingItem != EdgeLabeling.Generic; }
     }
 
     [Label("Orientation")]
@@ -708,7 +750,7 @@ namespace Demo.yFiles.Layout.Configurations
     public EnumLabelPlacementOrientation LabelPlacementOrientationItem { get; set; }
 
     public bool ShouldDisableLabelPlacementOrientationItem {
-      get { return !EdgeLabelingItem; }
+      get { return EdgeLabelingItem == EdgeLabeling.None; }
     }
 
     [Label("Along Edge")]
@@ -721,7 +763,7 @@ namespace Demo.yFiles.Layout.Configurations
     public EnumLabelPlacementAlongEdge LabelPlacementAlongEdgeItem { get; set; }
 
     public bool ShouldDisableLabelPlacementAlongEdgeItem {
-      get { return !EdgeLabelingItem; }
+      get { return EdgeLabelingItem == EdgeLabeling.None; }
     }
 
     [Label("Side of Edge")]
@@ -735,7 +777,7 @@ namespace Demo.yFiles.Layout.Configurations
     public EnumLabelPlacementSideOfEdge LabelPlacementSideOfEdgeItem { get; set; }
 
     public bool ShouldDisableLabelPlacementSideOfEdgeItem {
-      get { return !EdgeLabelingItem; }
+      get { return EdgeLabelingItem == EdgeLabeling.None; }
     }
 
     [Label("Distance")]
@@ -746,7 +788,27 @@ namespace Demo.yFiles.Layout.Configurations
     public double LabelPlacementDistanceItem { get; set; }
 
     public bool ShouldDisableLabelPlacementDistanceItem {
-      get { return !EdgeLabelingItem || LabelPlacementSideOfEdgeItem == EnumLabelPlacementSideOfEdge.OnEdge; }
+      get { return EdgeLabelingItem == EdgeLabeling.None || LabelPlacementSideOfEdgeItem == EnumLabelPlacementSideOfEdge.OnEdge; }
+    }
+
+    private LayoutOrientation? GetLayoutOrientation(Orientation orientation) {
+      switch (orientation) {
+        case Orientation.None:
+          return null;
+        case Orientation.TopToBottom:
+          return LayoutOrientation.TopToBottom;
+        case Orientation.BottomToTop:
+          return LayoutOrientation.BottomToTop;
+        case Orientation.LeftToRight:
+          return LayoutOrientation.LeftToRight;
+        case Orientation.RightToLeft:
+          return LayoutOrientation.RightToLeft;
+      }
+      return null;
+    }
+    public enum Orientation
+    {
+      None, TopToBottom, LeftToRight, BottomToTop, RightToLeft
     }
   }
 }
